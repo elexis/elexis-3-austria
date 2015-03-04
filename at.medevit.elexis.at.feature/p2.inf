@@ -1,0 +1,2 @@
+instructions.install = \
+	addJvmArg(jvmArg:-Djava.awt.headless=true);
