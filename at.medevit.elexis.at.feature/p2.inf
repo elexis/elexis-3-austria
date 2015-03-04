@@ -1,2 +1,2 @@
 instructions.install = \
-	addJvmArg(jvmArg:-Djava.awt.headless=true);
+	org.eclipse.equinox.p2.touchpoint.eclipse.addJvmArg(jvmArg:-Djava.awt.headless=true);
