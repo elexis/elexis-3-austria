@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="at.medevit.elexis.kassen.edivka">
+   <implementation class="at.medevit.elexis.kassen.edivka.EdivkaService"/>
+   <service>
+      <provide interface="at.medevit.elexis.kassen.edivka.IEdivkaService"/>
+   </service>
+</scr:component>

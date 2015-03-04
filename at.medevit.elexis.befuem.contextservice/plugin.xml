@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.befuem.contextservice.networkparticipant.NetworkParticipantFactory"
+            name="Network Participant">
+      </Factory>
+      <Factory
+            Class="at.medevit.elexis.befuem.contextservice.finding.PersistentFindingFactory"
+            name="Persistent Finding">
+      </Factory>
+   </extension>
+
+</plugin>

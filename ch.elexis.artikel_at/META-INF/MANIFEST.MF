@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Artikel Österreich
+Bundle-SymbolicName: ch.elexis.artikel_at;singleton:=true
+Bundle-Version: 0.3.10.qualifier
+Bundle-Vendor: elexis.ch
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.forms,
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.rgw.utility;bundle-version="3.0.0",
+ ch.elexis.core.data;bundle-version="3.0.0",
+ ch.elexis.core.ui;bundle-version="3.0.0",
+ ch.elexis.core.ui.icons,
+ jdom
+Bundle-ClassPath: .
+Bundle-Activator: ch.elexis.artikel_at.Activator
+Bundle-ActivationPolicy: lazy
+Export-Package: ch.elexis.artikel_at.data
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.slf4j

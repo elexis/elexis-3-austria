@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.medevit.at/RezeptAT"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.medevit.at/RezeptAT">
+
+	<element name="RezeptAT">
+		<complexType>
+			<sequence>
+				<element name="PatientName" type="string" maxOccurs="1"
+					minOccurs="1">
+				</element>
+				<element name="PatientVersicherungsnummer" type="string"
+					maxOccurs="1" minOccurs="1">
+				</element>
+				<element name="PatientAnschrift" type="string" maxOccurs="1"
+					minOccurs="1">
+				</element>
+				<element name="Datum" type="string" maxOccurs="1" minOccurs="1">
+				</element>
+				<element name="Verschreibungen">
+					<complexType>
+						<sequence>
+							<element name="Verschreibung" type="tns:Verschreibung"
+								maxOccurs="unbounded" minOccurs="1">
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+			<attribute name="bgimg" type="string" use="optional">
+				<annotation>
+					<documentation>Sets a background image on the Rezept (for preview
+						purposes)</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+
+	<complexType name="Verschreibung">
+		<sequence>
+			<element name="Artikelname" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="Einnahmevorschrift" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="Dosierung" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="Originalpackung" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="Bemerkung" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</schema>

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Model
+Bundle-SymbolicName: at.medevit.elexis.kassen.core.model;singleton:=true
+Bundle-Version: 1.0.3.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: at.medevit.elexis.kassen.core.model,
+ at.medevit.elexis.kassen.core.model.expressions
+Require-Bundle: ch.rgw.utility,
+ org.eclipse.core.expressions,
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.elexis.core.data;bundle-version="[3.0.0,3.0.100)",
+ ch.elexis.core.ui;bundle-version="3.0.0"
+Import-Package: org.eclipse.core.runtime,
+ org.eclipse.jface.preference,
+ org.eclipse.jface.viewers

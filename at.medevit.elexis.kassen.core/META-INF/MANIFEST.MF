@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Kassen Core
+Bundle-SymbolicName: at.medevit.elexis.kassen.core;singleton:=true
+Bundle-Version: 1.0.5.qualifier
+Bundle-Activator: at.medevit.elexis.kassen.core.Activator
+Bundle-Vendor: medevit.at
+Require-Bundle: org.eclipse.core.runtime,
+ ch.rgw.utility,
+ org.eclipse.ui,
+ org.eclipse.ui.forms,
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.elexis.core.data;bundle-version="3.0.0",
+ ch.elexis.core.ui;bundle-version="3.0.0",
+ org.smooks;bundle-version="1.4.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Eclipse-RegisterBuddy: org.smooks
+Export-Package: at.medevit.elexis.kassen.core.importer,
+ at.medevit.elexis.kassen.core.importer.model,
+ at.medevit.elexis.kassen.core.ui
+Import-Package: at.medevit.elexis.formattedoutput,
+ at.medevit.elexis.kassen.core.model,
+ at.medevit.elexis.kassen.core.model.expressions,
+ at.medevit.elexis.kassen.edivka,
+ org.slf4j;version="1.7.2"
+Service-Component: OSGI-INF/edivkaconsumer.xml, OSGI-INF/formattedoutputconsumer.xml
+Bundle-ClassPath: .

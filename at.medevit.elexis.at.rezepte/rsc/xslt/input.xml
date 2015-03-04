@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RezeptAT bgimg="url(/Users/marco/Desktop/RezVGKKVlg.jpg)">
+	<PatientName>Franz Muster</PatientName>
+	<PatientVersicherungsnummer>0815</PatientVersicherungsnummer>
+	<PatientAnschrift>Rheingasse 17b, 6841 Koblach</PatientAnschrift>
+	<Datum>15.02.2011</Datum>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>½-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-½-3-4</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Dosierung>⅓-1-1/2</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-¼-Ab</Dosierung>
+			<Originalpackung></Originalpackung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift>Das ist eine Einnahmevorschrift die unbedingt
+				beachtet werden muss!</Einnahmevorschrift>
+			<Dosierung>1-⅔-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-2-3-4</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Dosierung>1-1-1/2</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-Ab</Dosierung>
+			<Originalpackung></Originalpackung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift>Das ist eine Einnahmevorschrift die unbedingt
+				beachtet werden muss!</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Holzknopfaugen</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+	</Verschreibungen>
+	<Verschreibungen>
+		<Verschreibung>
+			<Artikelname>Schnittlauchsandwich</Artikelname>
+			<Einnahmevorschrift></Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+		<Verschreibung>
+			<Artikelname>Nudlaugenschlapfen</Artikelname>
+			<Einnahmevorschrift>immer dienstags
+</Einnahmevorschrift>
+			<Dosierung>1-1-1</Dosierung>
+			<Originalpackung></Originalpackung>
+			<Bemerkung>Bemerkung</Bemerkung>
+		</Verschreibung>
+
+	</Verschreibungen>
+</RezeptAT>

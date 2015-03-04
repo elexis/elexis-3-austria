@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.privat.ui.PrivatPreferencePage"
+            id="at.medevit.elexis.kassen.privat.PrivatPreferences"
+            name="Privat">
+      </page>
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen/at.medevit.elexis.kassen.privat.PrivatPreferences/"
+            class="at.medevit.elexis.kassen.privat.ui.AdditionalPreferencePage"
+            id="at.medevit.elexis.kassen.privat.AdditionalPreferences"
+            name="Zusatz">
+      </page>
+   </extension>
+   <extension
+         point="ch.elexis.core.data.VerrechnungscodeAdjuster">
+      <adjuster
+            class="at.medevit.elexis.kassen.privat.PrivatKassenAdjuster"
+            id="PrivatKassenAdjuster">
+      </adjuster>
+   </extension>
+
+</plugin>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*******************************************************************************
+ * Copyright (c) 2015 MEDEVIT and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     MEDEVIT <office@medevit.at> - initial API and implementation
+ *******************************************************************************/
+ -->
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.4.xsd">
+
+	<medi:description name="MEDEVIT EDI Text Finding" version="1.0" />
+
+    <medi:delimiters segment="'" field="+" component=":" sub-component="~" escape="?"/>
+
+	<medi:segments xmltag="document">
+
+		<!-- ignore starting segments  -->
+		<medi:segment segcode="UNA:" xmltag="ignore" minOccurs="0" ignoreUnmappedFields="true">
+        </medi:segment>
+        
+		<medi:segment segcode="UNB" xmltag="docinfo" minOccurs="0" ignoreUnmappedFields="true">
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="sender" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />
+        </medi:segment>
+        
+        <medi:segmentGroup xmltag="finding" minOccurs="0" maxOccurs="-1">
+			<medi:segment segcode="UNH" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+	        </medi:segment>
+	        
+	        <medi:segment segcode="BGM" xmltag="findingid" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+	        	<medi:field xmltag="field" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="date" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="insurance" />
+	        	<medi:field xmltag="birthdate" />
+	        </medi:segment>
+	
+			<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="description" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="textfield" truncatable="true">
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+				</medi:field>
+			</medi:segment>
+			
+			<medi:segment segcode="NAD" xmltag="patient" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="description" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="id" truncatable="true">
+				 	<medi:component dataType="String" xmltag="lastname"/>
+				 	<medi:component dataType="String" xmltag="firstname"/>
+				 	<medi:component dataType="String" xmltag="title"/>
+				 	<medi:component dataType="String" xmltag="street1"/>
+				 	<medi:component dataType="String" xmltag="street2"/>
+				 	<medi:component dataType="String" xmltag="ignore"/>
+				</medi:field>
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="city" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="zip" />
+			</medi:segment>
+			
+			<!-- ignore end segments  -->
+			<medi:segment minOccurs="0" segcode="UNT" xmltag="ignore" ignoreUnmappedFields="true">
+	        </medi:segment>
+        </medi:segmentGroup>
+        
+        <medi:segment minOccurs="0" segcode="UNZ" xmltag="ignore" ignoreUnmappedFields="true">
+        </medi:segment>
+	</medi:segments>
+</medi:edimap>

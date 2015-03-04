@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Artikel
+            CodeDetailDisplay="ch.elexis.artikel_at.views.MedikamentDetail"
+            CodeSelectorFactory="ch.elexis.artikel_at.views.MedikamentSelector2"
+            ElementFactory="ch.elexis.artikel_at.data.ArtikelFactory"
+            ImporterClass="ch.elexis.artikel_at.data.MedikamentImporterVidal"
+            name="Medikamente (A)"/>
+   </extension>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="ch.elexis.artikel_at.data.ArtikelFactory"
+            name="Medikament (A)"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="ch.elexis.artikel_at.views.ZeichenErklaerung"
+            id="elexis-artikel-oesterreich.zeichenerklaerung"
+            name="Zeichenerklärung">
+      </view>
+      <view
+            class="ch.elexis.artikel_at.views.FachinformationArzneimittel"
+            id="elexis-artikel-oesterreich.fachinformationarzneimittel"
+            name="Fachinformation Arzneimittel">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="ch.elexis.artikel_at.preferences.Artikel_AT"
+            id="ch.elexis.artikel_at.preferences.Artikel_AT"
+            name="Medikamente (AT)">
+      </page>
+   </extension>
+
+</plugin>

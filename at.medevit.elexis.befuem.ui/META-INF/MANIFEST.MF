@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ui
+Bundle-SymbolicName: at.medevit.elexis.befuem.ui;singleton:=true
+Bundle-Version: 1.0.3.qualifier
+Bundle-Activator: at.medevit.elexis.befuem.ui.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ ch.rgw.utility,
+ org.eclipse.core.databinding.beans,
+ org.eclipse.jface.databinding,
+ org.eclipse.core.expressions,
+ org.eclipse.core.databinding,
+ ch.elexis.core.data;bundle-version="3.0.0",
+ ch.elexis.core.ui;bundle-version="3.0.0",
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.elexis.core.ui.laboratory,
+ ch.elexis.core.ui.icons;bundle-version="3.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: at.medevit.elexis.befuem.contextservice,
+ at.medevit.elexis.befuem.contextservice.finding,
+ at.medevit.elexis.befuem.contextservice.networkparticipant,
+ at.medevit.elexis.befuem.netservice,
+ at.medevit.elexis.formattedoutput
+Service-Component: OSGI-INF/netserviceconsumer.xml, OSGI-INF/contextserviceconsumer.xml
+Bundle-Localization: plugin

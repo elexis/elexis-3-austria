@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="false" name="at.medevit.elexis.befuem.netservice">
+   <implementation class="at.medevit.elexis.befuem.netservice.NetClientServiceFactory"/>
+   <service>
+      <provide interface="at.medevit.elexis.befuem.netservice.INetClientServiceFactory"/>
+   </service>
+</scr:component>

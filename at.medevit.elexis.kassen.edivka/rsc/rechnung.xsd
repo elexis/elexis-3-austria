@@ -1,0 +1,3194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+  <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="schema_w3.org.2000.09.xmldsig.xsd"/>
+  <xsd:element name="PKVRechnung">
+    <xsd:annotation>
+      <xsd:documentation>Nachricht Rechnung/Nachtragsrechnung/Storno einer Rechnung  zwischen einer Krankenanstalt  (Dokumentenaussteller) und einer Privatversicherung (XML-Schemata)</xsd:documentation>
+      <xsd:documentation>Alle Codelisten-Hinweise  beziehen sich auf die Codelisten, die in der ÖNorm K2201 als Anhang veröffentlicht wurden. Die Aktualisierung der Codelisten erfolgt mittels der XML-Nachricht PKVCodeList (NachrichtenArt C01) im Rahmen des EDIVKA-Projekts.</xsd:documentation>
+      <xsd:documentation>Die Nachricht/das Schema  Rechnung  ist mit der Möglichkeit der Verwendung der elektronischen Signatur ausgestattet (eine Kann-Funktion). Ob sie verwendet wird oder nicht ist dem Ersteller der Rechnung überlassen. Auch die anderen Schemata sind mit der Kann-Funktion der  elektronischen Signatur versehen. Sollte eine andere Nachricht mit einer elektronischen Signatur verwendet werden, so sollte der Empfänger (zB. das Versicherungsunternehmen) prizipiell vorher darüber verständigt werden .</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="DokumentKopfInformationen">
+          <xsd:annotation>
+            <xsd:documentation>Die Meta-Daten des Dokumentes</xsd:documentation>
+            <xsd:documentation>es werden nur die Mindestanforderungen ausgefüllt</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="Leistender">
+                <xsd:annotation>
+                  <xsd:documentation>Alle Daten des Leistenden. Der Leistende ist der Ersteller des Dokumentes, also jene Stelle, die die Verantwortung für den Inhalt des Dokumentes übernimmt.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:all>
+                    <xsd:element name="Stelle">
+                      <xsd:annotation>
+                        <xsd:documentation>Gruppenbegriff für die Informationen zum Leistungserbringer bzw. Anforderer.</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:all>
+                          <xsd:element ref="BetriebsStelleKey">
+                            <xsd:annotation>
+                              <xsd:documentation>Betriebsstellenkey des Leistenden aus dem eVGA</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="GesamterName" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Name unter dem die gegenstaendliche Stelle bekannt ist (z.B. &quot;Ordination Dr. Meier&quot;)</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="FamilienName" minOccurs="0"/>
+                          <xsd:element ref="VorName" minOccurs="0"/>
+                          <xsd:element ref="Titel" minOccurs="0"/>
+                          <xsd:element ref="eMail" minOccurs="0"/>
+                          <xsd:element ref="ZustellInfo" minOccurs="0"/>
+                          <xsd:element ref="PublicCertificateKey" minOccurs="0"/>
+                          <xsd:element ref="Rollen" minOccurs="0"/>
+                          <xsd:element ref="Adresse" minOccurs="0"/>
+                          <xsd:element ref="Kommunikation" minOccurs="0"/>
+                          <xsd:element name="StellenZusatzInformation" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Abbildung aller Felder, die im eVGA geführt werden.</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:all>
+                                <xsd:element name="Leiter" type="tpcPerson" minOccurs="0"/>
+                                <xsd:element name="TechnischeStellenParameter" minOccurs="0">
+                                  <xsd:complexType>
+                                    <xsd:all>
+                                      <xsd:element name="BefundTransportProvider" type="tpsBefundTransportProvider" minOccurs="0"/>
+                                      <xsd:element name="TechnischeAnschlussArt" type="tpsTechnischeAnschlussArt" minOccurs="0"/>
+                                      <xsd:element name="AnschlussZeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnschlussZeit" type="xsd:string" maxOccurs="unbounded">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+Beschreibt wie oft diese Stelle am Netz ist. Daraus laesst sich auf voraussichtliche Antwortzeiten schliessen.
+Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich
+TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten
+TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden
+TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden
+                                                </xsd:documentation>
+                                                <xsd:documentation>Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich</xsd:documentation>
+                                                <xsd:documentation>TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten</xsd:documentation>
+                                                <xsd:documentation>TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden</xsd:documentation>
+                                                <xsd:documentation>TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden</xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="AnschlussUnterbrechungsGruende" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnschlussUnterbrechungsGrund" maxOccurs="unbounded">
+                                              <xsd:simpleType>
+                                                <xsd:restriction base="xsd:string">
+                                                  <xsd:enumeration value="Betriebsferien">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Organisatorsich bedingter Betriebsstillstand, der aus den Öffnungszeiten erkennbar ist - in der Regel Betriebsferien, Übersiedlungen, ..</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="DerzeitKeinTeilnehmer">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Derzeit ist der angesprochene Partner kein Teilnehmer am Befundversand</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="OrganisatorischeBetriebsUnterbrechung">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Organisatorisch bedingte BetriebsUnterbrechung, die nach Änderung organisatorischer Fakten wieder weg sein wird.</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="TechnischeBetriebsUnterbrechung">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Technisch bedingte BetriebsUnterbrechung, die nach Behebung wieder weg sein wird. Die Stillstandszeit ist nicht exakt angebbar. Der Partner verarbeitet konventionell transportierte Nachrichten - alternative Transportwege sind daher sinnvoll</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                </xsd:restriction>
+                                              </xsd:simpleType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="TechnischeInterpretationsMoeglichkeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="TechnischeInterpretationsMoeglichkeit" type="tpsTechnischeInterpretationsMoeglichkeit" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="LokaleEDVSysteme" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="LokalesEDVSystem" type="tpsLokalesEDVSystem" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Hinweise" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Hinweis" type="xsd:string" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="ProxyEMail" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="MAntwortVerhalten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AntwortVerhalten" type="tpsAntwortVerhalten" maxOccurs="unbounded"/>
+
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Bemerkung" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="rootVendorId" type="xsd:string" minOccurs="0"/>
+                                    </xsd:all>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="OrganisatorischeStellenParameter" minOccurs="0">
+                                  <xsd:complexType>
+                                    <xsd:all>
+                                      <xsd:element name="OeffnungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                                      <xsd:element name="TerminVereinbarungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                                      <xsd:element name="Urlaube" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Urlaub" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="UrlaubVon" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="UrlaubBis" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Vertretungen" minOccurs="0">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Vertretung" maxOccurs="unbounded">
+                                                          <xsd:complexType>
+                                                            <xsd:all>
+                                                              <xsd:element ref="BetriebsStelleKey" minOccurs="0"/>
+                                                              <xsd:element name="GesamterName" type="xsd:string" minOccurs="0"/>
+                                                            </xsd:all>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Erreichbarkeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnfahrtsWeg" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="VerkehrsMittel" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Station" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="GehZeit" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Beschreibung" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="Versicherungen" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Versicherung" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Art" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Organisation" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="SubOrganisation" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="FachBereiche" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="FachBereich" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:all>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:all>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element ref="Identifikationen" minOccurs="0"/>
+                          <xsd:element ref="Geschlecht" minOccurs="0"/>
+                          <xsd:element ref="GeburtsName" minOccurs="0"/>
+                          <xsd:element name="HCPKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: healthCategory, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="HCPSubKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: healthCategoryOu, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="HCPUserIDInSubKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: orgUid, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="StoreTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateStored</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="ModifyTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateModified</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="ExpirationTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateExpired</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="Status" minOccurs="0"/>
+                          <xsd:element ref="Beziehungen" minOccurs="0"/>
+                        </xsd:all>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="Aufenthalt">
+                      <xsd:annotation>
+                        <xsd:documentation>Aufenthalts-Daten. Informationen über den Aufenthalt eines Patienten beim Leistenden bzw. Anforderer.</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:all>
+                          <xsd:element ref="AufenthaltsKey">
+                            <xsd:annotation>
+                              <xsd:documentation>Aufnahmezahl des Patienten beim Leistungserbringer</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="BetriebsStelleKey">
+                            <xsd:annotation>
+                              <xsd:documentation>Betriebsstellenkey des Leistenden laut eVGA</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="BetriebsStelleText" minOccurs="0"/>
+                          <xsd:element name="Patient" type="tpcPerson" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Identifikationen und Informationen zu einem Patienten</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="Beziehungen" minOccurs="0"/>
+                          <xsd:element ref="FamilienName">
+                            <xsd:annotation>
+                              <xsd:documentation>Familiennamen des Patienten</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="VorName">
+                            <xsd:annotation>
+                              <xsd:documentation>Vorname des Patienten</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="Geschlecht">
+                            <xsd:annotation>
+                              <xsd:documentation>Geschlecht des Patienten laut Codeliste D81</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="GeburtsDatum">
+                            <xsd:annotation>
+                              <xsd:documentation>Geburtsdatum des Patienten</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="SVNummer" minOccurs="0"/>
+                          <xsd:element name="AufenthaltsArt" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Informationen zu der Art des Aufenthalts (Art der Behandlung in einer medizinischen Organisation, wie stationär, Tagesklinik, ambulant) einer Person</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                  <xsd:attribute name="Bereich" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Verzeichnis" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Code" type="xsd:string" use="optional"/>
+                                </xsd:extension>
+                              </xsd:simpleContent>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="Status" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Allgemeine Statusbeschreibungen</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="aufgenommen"/>
+                                <xsd:enumeration value="entlassen"/>
+                                <xsd:enumeration value="storniert"/>
+                                <xsd:enumeration value="voradministriert"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="AufnahmeZeit" type="tpsDatumZeitEmpty" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Datum und Uhrzeit des Beginns des Aufenthalts</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="AufnahmeArt" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Informationen zu der Art der Aufnahme (zB. Einweisung, Rettung, selbst) in einer medizinischen Organisation</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                  <xsd:attribute name="Bereich" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Verzeichnis" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Code" type="xsd:string" use="optional"/>
+                                </xsd:extension>
+                              </xsd:simpleContent>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="EntlassungsZeit" type="tpsDatumZeitEmpty" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>wk.makro: RT_ENTLASSUNGS_ZEIT</xsd:documentation>
+                              <xsd:documentation>Datum und Uhrzeit des Endes des Aufenthalts</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="EntlassungsArt" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Informationen zu der Art der Entlassunge (zB. Entlassung aus dem Krankenhaus, Verlegung, Urlaub, Sterbefall ) aus einer medizinischen Organisation</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                  <xsd:attribute name="Bereich" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Verzeichnis" type="xsd:string" use="optional"/>
+                                  <xsd:attribute name="Code" type="xsd:string" use="optional"/>
+                                </xsd:extension>
+                              </xsd:simpleContent>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="AufenthaltsPfad" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Wenn grosse Organisationen mit File-gestuetzten Systemen arbeiten ist es sinnvoll den Pfad zu den Aufenthaltsdaten zu teilen. Wenn dies geschieht, kann es hier angegeben werden. Trennung der Pfade durch \.</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                        </xsd:all>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="Dokument" type="tpcDokument">
+                      <xsd:annotation>
+                        <xsd:documentation>
+Im Leistenden: Informationen zu diesem Dokument.
+Im Anforderer: Referenz-Informationen zu dem Dokument, mit dem die Leistung angefordert wurde.
+                        </xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:all>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="Anforderer">
+                <xsd:annotation>
+                  <xsd:documentation>Falls eine andere Stelle, als der Leistende, das Dokument bzw. die Untersuchung angefordert hat, sind hier dessen Daten zu finden.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:all>
+                    <xsd:element name="Stelle">
+                      <xsd:annotation>
+                        <xsd:documentation>Gruppenbegriff für die Informationen zum Leistungserbringer bzw. Anforderer.</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:all>
+                          <xsd:element ref="BetriebsStelleKey">
+                            <xsd:annotation>
+                              <xsd:documentation>Der BetriebsStelleKey (BSK) der  Privatversicherung als Träger der Leistungen hat folgendes Format: &quot;E46XXXELEI&quot;  =  healthCategory und  healthCategoryOu: immer &quot;E46&quot;,: orgUid: immer &quot;XXXELEI&quot; (XXX steht für den Wert aus der Codeliste D05, dreistellig mit führenden Nullen,  &quot;ELEI&quot; ist ein fixer Eintrag, der sich an den Wert aus der Codeliste D05 anschließt).</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="GesamterName" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Name unter dem die gegenstaendliche Stelle bekannt ist (z.B. &quot;Ordination Dr. Meier&quot;)</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="FamilienName" minOccurs="0"/>
+                          <xsd:element ref="VorName" minOccurs="0"/>
+                          <xsd:element ref="Titel" minOccurs="0"/>
+                          <xsd:element ref="eMail" minOccurs="0"/>
+                          <xsd:element ref="ZustellInfo" minOccurs="0"/>
+                          <xsd:element ref="PublicCertificateKey" minOccurs="0"/>
+                          <xsd:element ref="Rollen" minOccurs="0"/>
+                          <xsd:element ref="Adresse" minOccurs="0"/>
+                          <xsd:element ref="Kommunikation" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Codeliste E02</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="StellenZusatzInformation" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>Abbildung aller Felder, die im eVGA geführt werden.</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:all>
+                                <xsd:element name="Leiter" type="tpcPerson" minOccurs="0"/>
+                                <xsd:element name="TechnischeStellenParameter" minOccurs="0">
+                                  <xsd:complexType>
+                                    <xsd:all>
+                                      <xsd:element name="BefundTransportProvider" type="tpsBefundTransportProvider" minOccurs="0"/>
+                                      <xsd:element name="TechnischeAnschlussArt" type="tpsTechnischeAnschlussArt" minOccurs="0"/>
+                                      <xsd:element name="AnschlussZeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnschlussZeit" type="xsd:string" maxOccurs="unbounded">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+Beschreibt wie oft diese Stelle am Netz ist. Daraus laesst sich auf voraussichtliche Antwortzeiten schliessen.
+Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich
+TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten
+TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden
+TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden
+                                                </xsd:documentation>
+                                                <xsd:documentation>Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich</xsd:documentation>
+                                                <xsd:documentation>TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten</xsd:documentation>
+                                                <xsd:documentation>TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden</xsd:documentation>
+                                                <xsd:documentation>TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden</xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="AnschlussUnterbrechungsGruende" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnschlussUnterbrechungsGrund" maxOccurs="unbounded">
+                                              <xsd:simpleType>
+                                                <xsd:restriction base="xsd:string">
+                                                  <xsd:enumeration value="Betriebsferien">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Organisatorsich bedingter Betriebsstillstand, der aus den Öffnungszeiten erkennbar ist - in der Regel Betriebsferien, Übersiedlungen, ..</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="DerzeitKeinTeilnehmer">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Derzeit ist der angesprochene Partner kein Teilnehmer am Befundversand</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="OrganisatorischeBetriebsUnterbrechung">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Organisatorisch bedingte BetriebsUnterbrechung, die nach Änderung organisatorischer Fakten wieder weg sein wird.</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                  <xsd:enumeration value="TechnischeBetriebsUnterbrechung">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>Technisch bedingte BetriebsUnterbrechung, die nach Behebung wieder weg sein wird. Die Stillstandszeit ist nicht exakt angebbar. Der Partner verarbeitet konventionell transportierte Nachrichten - alternative Transportwege sind daher sinnvoll</xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:enumeration>
+                                                </xsd:restriction>
+                                              </xsd:simpleType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="TechnischeInterpretationsMoeglichkeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="TechnischeInterpretationsMoeglichkeit" type="tpsTechnischeInterpretationsMoeglichkeit" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="LokaleEDVSysteme" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="LokalesEDVSystem" type="tpsLokalesEDVSystem" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Hinweise" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Hinweis" type="xsd:string" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="ProxyEMail" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="MAntwortVerhalten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AntwortVerhalten" type="tpsAntwortVerhalten" maxOccurs="unbounded"/>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Bemerkung" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="rootVendorId" type="xsd:string" minOccurs="0"/>
+                                    </xsd:all>
+                                  </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="OrganisatorischeStellenParameter" minOccurs="0">
+                                  <xsd:complexType>
+                                    <xsd:all>
+                                      <xsd:element name="OeffnungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                                      <xsd:element name="TerminVereinbarungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                                      <xsd:element name="Urlaube" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Urlaub" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="UrlaubVon" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="UrlaubBis" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Vertretungen" minOccurs="0">
+                                                    <xsd:complexType>
+                                                      <xsd:sequence>
+                                                        <xsd:element name="Vertretung" maxOccurs="unbounded">
+                                                          <xsd:complexType>
+                                                            <xsd:all>
+                                                              <xsd:element ref="BetriebsStelleKey" minOccurs="0"/>
+                                                              <xsd:element name="GesamterName" type="xsd:string" minOccurs="0"/>
+                                                            </xsd:all>
+                                                          </xsd:complexType>
+                                                        </xsd:element>
+                                                      </xsd:sequence>
+                                                    </xsd:complexType>
+                                                  </xsd:element>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Erreichbarkeiten" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="AnfahrtsWeg" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="VerkehrsMittel" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Station" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="GehZeit" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Beschreibung" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="Versicherungen" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Versicherung" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Art" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <xsd:element name="Organisation" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="SubOrganisation" type="xsd:string" minOccurs="0"/>
+                                      <xsd:element name="FachBereiche" minOccurs="0">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="FachBereich" maxOccurs="unbounded">
+                                              <xsd:complexType>
+                                                <xsd:all>
+                                                  <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                                                  <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                                                </xsd:all>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                    </xsd:all>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:all>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element ref="Identifikationen" minOccurs="0"/>
+                          <xsd:element ref="Geschlecht" minOccurs="0"/>
+                          <xsd:element ref="GeburtsName" minOccurs="0"/>
+                          <xsd:element name="HCPKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: healthCategory, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="HCPSubKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: healthCategoryOu, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="HCPUserIDInSubKategorie" type="xsd:string" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: orgUid, Teil des BetriebsStelleKey</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="StoreTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateStored</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="ModifyTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateModified</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="ExpirationTimeStamp" type="tpsDatumZeit" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>eVGA-Feld: dateExpired</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="Status" minOccurs="0"/>
+                          <xsd:element ref="Beziehungen" minOccurs="0"/>
+                        </xsd:all>
+                      </xsd:complexType>
+                    </xsd:element>
+
+                    <xsd:element name="Aufenthalt" type="tpcAufenthalt" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Aufenthalts-Daten. Informationen über den Aufenthalt eines Patienten beim Leistenden bzw. Anforderer.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Dokument" type="tpcDokument" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>
+Im Leistenden: Informationen zu diesem Dokument.
+Im Anforderer: Referenz-Informationen zu dem Dokument, mit dem die Leistung angefordert wurde.
+                        </xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                  </xsd:all>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="Patient">
+                <xsd:annotation>
+                  <xsd:documentation>Alle Patientendaten.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:all>
+                    <xsd:element ref="FamilienName">
+                      <xsd:annotation>
+                        <xsd:documentation>Der Familienname des Patienten</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="VorName">
+                      <xsd:annotation>
+                        <xsd:documentation>Der Vorname des Patienten</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Titel" minOccurs="0"/>
+                    <xsd:element ref="GeburtsDatum">
+                      <xsd:annotation>
+                        <xsd:documentation>Das Geburtsdatum des Patienten</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Geschlecht">
+                      <xsd:annotation>
+                        <xsd:documentation>Das Geschlecht des Patienten laut Codeliste D81</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="eMail" minOccurs="0"/>
+                    <xsd:element ref="Rollen" minOccurs="0"/>
+                    <xsd:element ref="PublicCertificateKey" minOccurs="0"/>
+                    <xsd:element ref="Kommunikation" minOccurs="0"/>
+                    <xsd:element ref="Identifikationen" minOccurs="0"/>
+                    <xsd:element ref="GeburtsName" minOccurs="0"/>
+                    <xsd:element name="SterbeDatum" type="tpsDatumZeit" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Datum und evtl. Zeitpunkt des festgestellten Todes einer Person oder eines Subjekts</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="StaatsBuergerschaft" type="xsd:string" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Staatsbuergerschaft einer Person auf Basis Codeliste D28 (ISO-Codeliste, ÖNorm)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="FamilienStand" type="xsd:string" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Familienstand einer Person</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Adresse" minOccurs="0"/>
+                    <xsd:element name="PfadDerAufenthalte" type="xsd:string" minOccurs="0"/>
+                    <xsd:element ref="Beziehungen" minOccurs="0"/>
+                    <xsd:element name="AusuebenderBeruf" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Information zu dem ausgeübten Beruf einer Person</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:extension base="xsd:string">
+                            <xsd:attribute name="Bereich" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="Verzeichnis" type="xsd:string" use="optional"/>
+                            <xsd:attribute name="Code" type="xsd:string" use="optional"/>
+                          </xsd:extension>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:all>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="SchemaIdentifikation">
+          <xsd:annotation>
+            <xsd:documentation>aktuelle Version: RECHNUNG05.0</xsd:documentation>
+            <xsd:documentation>Die Nachricht Rechnung (RECHNUNG) wird verwendet, um die Verrechnung von Leistungen für einen Patienten zwischen einem Leistungserbringer (Krankenanstalt/Arzt/Arztgemeinschaft) und einer Privatversicherung auszutauschen. Die Nachricht wird ebenso verwendet, um Stornierungen von schon einmal gesendeten Nachrichten zu bewirken.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="NachrichtenArt">
+          <xsd:annotation>
+            <xsd:documentation>hier werden die folgenden Codes der Nachrichtenart  P09 - P16 verwendet</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="NachrichtenArtBezeichnung"/>
+        <xsd:element ref="NachrichtenNummer">
+          <xsd:annotation>
+            <xsd:documentation>Nummer der Nachricht Rechnung</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="NachrichtenDatum">
+          <xsd:annotation>
+            <xsd:documentation>Erstellungsdatum der Rechnung</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="RechnungsNummer"/>
+        <xsd:element ref="RechnungsDatum"/>
+        <xsd:element ref="ReferenzAufNachricht" minOccurs="0"/>
+        <xsd:element ref="ReferenzAufRechnung" minOccurs="0" maxOccurs="9">
+          <xsd:annotation>
+            <xsd:documentation>Referenz auf andere Rechnungen, die zu dieser hier beschriebenen Rechnung im Zusammenhang stehen</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="Waehrung"/>
+        <xsd:element name="DokumentAussteller">
+          <xsd:annotation>
+            <xsd:documentation>Aussteller eines Dokuments, näher definiert durch den Rollencode</xsd:documentation>
+            <xsd:documentation>Aussteller der Rechnung (als Sender der Nachricht).</xsd:documentation>
+            <xsd:documentation>Hier kann das eine Krankenanstalt oder ein Arzt oder eine Arztgemeinschaft oder eine Verrechnungsstelle sein</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="RollenArt"/>
+              <xsd:element ref="BetriebsStelleKey">
+                <xsd:annotation>
+                  <xsd:documentation>hier: der BSK einer Krankenanstalt auf Basis der Codeliste D72 (Katasternummer) oder BSK eines Arzts auf Basis der Codeliste D73 (Arztnummer/Identnummer) oder der BSK einer Verrechnungsstelle.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="GesamterName">
+                <xsd:annotation>
+                  <xsd:documentation>Name des Dokumentenausstellers, des Arzts, derArztgemeinschaft, der Krankenanstalt oder der Verrechnungsstelle</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="Adresse" minOccurs="0"/>
+              <xsd:element ref="Kommunikation" minOccurs="0"/>
+              <xsd:element ref="KontoNummer">
+                <xsd:annotation>
+                  <xsd:documentation>Kontonummer für die Verrechnung mit dem KH</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="BankLeitzahl">
+                <xsd:annotation>
+                  <xsd:documentation>Bankleitzahl für die Verrechnung mit dem KH</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="BankName" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Bankname für die Verrechnung mit dem KH</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="BearbeiterName" minOccurs="0"/>
+              <xsd:element ref="UIDNummer" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Die UID-Nummer ist bei Rechnungen  &gt;  EURO 10.000 eine Muss-Eintragung</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="DVRNummer" minOccurs="0"/>
+              <xsd:element ref="FirmenbuchNummer" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="DokumentEmpfaenger">
+          <xsd:annotation>
+            <xsd:documentation>hier: die Privatversicherung als Empfänger einer Rechnung</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="LeistungsErbringer">
+          <xsd:annotation>
+            <xsd:documentation>Der Leistungserbringer  wird auch als Haus bezeichnet, dem leistungserbringende Ärzte und oder Abteilungen zugeordnet sein können. Der Leistunserbringer kann eine Krankenanstalt, ein Arzt oder eine Arztgemeinschaft sein</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="RollenArt"/>
+              <xsd:element ref="BetriebsStelleKey"/>
+              <xsd:element ref="GesamterName">
+                <xsd:annotation>
+                  <xsd:documentation>Name der Krankenanstalt, des Arzts oder der Arztgemeinschaft</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="SequenzNummer">
+                <xsd:annotation>
+                  <xsd:documentation>siehe LeistungenDetails/Leistung - Berechnung von Leistungspositionen - ReferenzSequenzNummer</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="Adresse" minOccurs="0"/>
+              <xsd:element ref="Kommunikation" minOccurs="0"/>
+              <xsd:element ref="VereinbarungsNummer">
+                <xsd:annotation>
+                  <xsd:documentation>Zum Aufnahmedatum gültiger KH-Vertrag (XML-Vertrag)</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="LeistungsErbringerInformationen" minOccurs="0" maxOccurs="99">
+          <xsd:annotation>
+            <xsd:documentation>Informationen zu einem Leistungserbringer, wie Arzt, Abteilung, sowie, wenn gewünscht, Abrechnungssumme eines Arzts</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="LeistungsErbringerArzt">
+                <xsd:annotation>
+                  <xsd:documentation>Identifikationen eines Arzts bei einem Leistungserbringer (behandelnd, verrechnend)</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="RollenArt"/>
+                    <xsd:element ref="SequenzNummer">
+                      <xsd:annotation>
+                        <xsd:documentation>siehe LeistungenDetails/Leistung - Berechnung von Leistungspositionen - ReferenzSequenzNummer</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="BetriebsStelleKey"/>
+                    <xsd:element ref="FamilienName">
+                      <xsd:annotation>
+                        <xsd:documentation>des behandelnden Arzts</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="VorName">
+                      <xsd:annotation>
+                        <xsd:documentation>des behandelnden Arzts</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="TitelBezeichnung" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>des behandelnden Arzts</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="FachbereichsInformation" maxOccurs="9"/>
+                    <xsd:element ref="LeistungsErbringerArt">
+                      <xsd:annotation>
+                        <xsd:documentation>einer der beteiligten Ärzte muss mittels Code &quot;AHB&quot; als Hauptbehandler gekennzeichnet sein.</xsd:documentation>
+                        <xsd:documentation>Die LeistungsErbringerArt des Leistungserbringenden Arzts wird hier in der Rechnung bzw. im Zahlungsavis angegeben. Im Vergleich zur vorherigen Version 04.0 ist aus dem Positionsteil der Rechnung/Zahlungsavis (LeistungenDetails/Leistung) die LeistungsErbringerArt gelöscht worden, weil eine redundante LeistungsErbringerArt nicht notwendig ist. Im Positionsteil der Rechnung wird durch die ReferenzSequenzNummer auf die gesamten Informationen des Leistungserbringenden Arzts Bezug genommen.</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Abteilung" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="SummeLeistungenJeArzt" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="GeldBetragJeArzt"/>
+                    <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="PrivatVersicherung">
+          <xsd:annotation>
+            <xsd:documentation>Hauptidentifikationen der Privatversicherung</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="RollenArt"/>
+              <xsd:element ref="BetriebsStelleKey">
+                <xsd:annotation>
+                  <xsd:documentation>Der BetriebsStelleKey (BSK) der  Privatversicherung als Träger der Leistungen hat folgendes Format: &quot;E46XXXELEI&quot;  =  healthCategory und  healthCategoryOu: immer &quot;E46&quot;,: orgUid: immer &quot;XXXELEI&quot; (XXX steht für den Wert aus der Codeliste D05, dreistellig mit führenden Nullen,  &quot;ELEI&quot; ist ein fixer Eintrag, der sich an den Wert aus der Codeliste D05 anschließt).</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="GesamterName"/>
+              <xsd:element ref="Adresse" minOccurs="0"/>
+              <xsd:element ref="LeistungsFallNummer">
+                <xsd:annotation>
+                  <xsd:documentation>Hier muss die bei der Kostenübernahmeerklärung (P05) an das KH übermittelte LeistungsFallNummer angegeben werden.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="BearbeiterName" minOccurs="0"/>
+              <xsd:element ref="AktenzeichenBearbeitung" minOccurs="0"/>
+              <xsd:element ref="Kommunikation" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="KostentraegerSozialVersicherung"/>
+        <xsd:element name="Patient">
+          <xsd:annotation>
+            <xsd:documentation>Identifikationen und Namen eines Patienten</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="RollenArt"/>
+              <xsd:element ref="SVNummer">
+                <xsd:annotation>
+                  <xsd:documentation>Hier SVNummer des Patienten auf Basis Codeliste D08</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="FamilienName"/>
+              <xsd:element ref="VorName"/>
+              <xsd:element ref="TitelBezeichnung" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>des Patienten</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="GeburtsName" minOccurs="0"/>
+              <xsd:element ref="Adresse"/>
+              <xsd:element ref="PolizzenNummer">
+                <xsd:annotation>
+                  <xsd:documentation>Hier muss die bei der Kostenübernahmeerklärung  (P05) angegebene PolizzenNummer angegeben werden.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="GeburtsDatum"/>
+              <xsd:element ref="AngehoerigkeitZumVersicherten" minOccurs="0"/>
+              <xsd:element ref="StaatsBuergerschaft" minOccurs="0"/>
+              <xsd:element ref="Geschlecht">
+                <xsd:annotation>
+                  <xsd:documentation>Geschlecht des Patienten laut Codeliste D81</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="FamilienStand" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>hier: Familienstand eines Patienten auf Basis der Codeliste D25</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="FamilienStandsBezeichnung" minOccurs="0"/>
+              <xsd:element ref="KundenNummerLeistungsErbringer" minOccurs="0" maxOccurs="99"/>
+              <xsd:element ref="SVNummerHauptversicherter" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Achtung: ist der Patient auch der Hauptversicherte, so ist diese Komponente leer zu lassen, da die SVNummer des Patienten ja auch gleichzeitig die des Hauptversicherten ist.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="ZessionsIndikator">
+                <xsd:annotation>
+                  <xsd:documentation>Codeliste E12</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="Aufenthalt">
+                <xsd:annotation>
+                  <xsd:documentation>Informationen zur Unterbringung/Aufenthalt/Entlassung eines Patienten.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="AufenthaltsKey"/>
+                    <xsd:element ref="AufenthaltsArt"/>
+                    <xsd:element ref="AufnahmeDatumZeit"/>
+                    <xsd:element name="UnterbringungsInformationen">
+                      <xsd:annotation>
+                        <xsd:documentation>Informationen (mehrere möglich) über die Unterbringung (Verweildauer, Gebührenklasse, Abteilung, Zimmernummer) eines Patienten in einer Gesundheitseinrichtung</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="UnterbringungsInformation" maxOccurs="99">
+                            <xsd:annotation>
+                              <xsd:documentation>Informationen zur Unterbringung (Verweildauer, Gebührenklasse, Abteilung, Zimmernummer) eines Patienten</xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element ref="DatumZeitVon"/>
+                                <xsd:element ref="DatumZeitBis"/>
+                                <xsd:element ref="Unterbringung"/>
+                                <xsd:element ref="Abteilung"/>
+                                <xsd:element ref="ZimmerNummer" minOccurs="0"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="AkutIndikator">
+                      <xsd:annotation>
+                        <xsd:documentation>Codeliste E13</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="Unterbrechung" minOccurs="0" maxOccurs="99">
+                      <xsd:annotation>
+                        <xsd:documentation>Informationen zu einer Unterbrechung oder zu einem  Unterbrechungszeitraum während eines Aufenthalts bei einem Leistungserbringer</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element ref="DatumZeitVon"/>
+                          <xsd:element ref="DatumZeitBis"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="EntlassungsArt"/>
+                    <xsd:element ref="EntlassungsDatumZeit"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="BegleitPerson" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>Hier wird eine Begleitperson mit ihren Merkmalen beschrieben</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="RollenArt"/>
+              <xsd:element ref="SVNummer" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>SVNummer der Begleitperson auf Basis Codeliste D08</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="FamilienName"/>
+              <xsd:element ref="VorName"/>
+              <xsd:element ref="Adresse" minOccurs="0"/>
+              <xsd:element ref="PolizzenNummer" minOccurs="0"/>
+              <xsd:element ref="GeburtsDatum"/>
+              <xsd:element ref="Geschlecht">
+                <xsd:annotation>
+                  <xsd:documentation>Geschlecht einer Begleitperson laut Codeliste D81</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="AngehoerigkeitZumPatienten"/>
+              <xsd:element ref="ReferenzAufenthaltsKey" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="KlinischeInformationDiagnosen">
+          <xsd:annotation>
+            <xsd:documentation>Klinische Informationen in Form von Diagnosen</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="HauptDiagnose">
+                <xsd:annotation>
+                  <xsd:documentation>Informationen zu einer Hauptdiagnose</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="DiagnoseCode">
+                      <xsd:annotation>
+                        <xsd:documentation>hier: als Hauptdiagnose auf Basis der Codeliste D80, ICD10-Codes</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DiagnoseBezeichnung"/>
+                    <xsd:element ref="FreiText" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>hier: zur Diagnose</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="QualifikationDiagnose" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="NebenDiagnose" minOccurs="0" maxOccurs="99">
+                <xsd:annotation>
+                  <xsd:documentation>Informationen zur einer Nebendiagnose</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="DiagnoseCode">
+                      <xsd:annotation>
+                        <xsd:documentation>hier: als Nebendiagnose auf Basis der Codeliste D80, ICD10-Codes</xsd:documentation>
+                        <xsd:documentation>neben den eigentlichen Nebendiagnosen können hier auch Einweisungs- und Ummeldediagnosen angegeben werden. Die Kennzeichnung dazu wird im Element QualifikationDiagnose angegeben</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DiagnoseBezeichnung"/>
+                    <xsd:element ref="FreiText" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>hier: zur Diagnose</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="QualifikationDiagnose" minOccurs="0"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="LeistungenDetails">
+          <xsd:annotation>
+            <xsd:documentation>Unter dieser Komponentengruppe werden die einzelnen Leistungen (Haus oder Arzt) aufgeführt. Neben den Einzelleistungen können auch Limitangaben (sog. Deckelungen) angeführt werden. Im Falle des Zahlungsavis können hier auch Korrekturen und/oder neue Positionen angegeben werden, besonders wenn es sich um Korrekturen (in Mengen,  in Beträgen oder anderen Informationen) zu Limitangaben (Deckelungen) handelt.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Leistung" maxOccurs="999">
+                <xsd:annotation>
+                  <xsd:documentation>Informationen zu einer medizinischen Leistung im Verrechnungsfalle</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element ref="PositionsNummer">
+                      <xsd:annotation>
+                        <xsd:documentation>Im Falle einer Rechnung steht hier die aktuelle Positionsnummer</xsd:documentation>
+                        <xsd:documentation>Im Falle eines Zahlungsavis kann es vorkommen, das eine oder mehrere Positionen eingefügt werden. Dan wird hier die neue Postionsnummer eingetragen. In einem anderen Datenfeld (ReferenzPositionsNummer), welches es nur im Zahlungsavis gibt, wird auf die entsprechende Positionsnummer aus der Rechnung verwiesen</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ReferenzSequenzNummer">
+                      <xsd:annotation>
+                        <xsd:documentation>Verweis auf:  LeistungsErbringer (überlicherweise SequenzNummer  = 01 für das KH) oder LeistungsErbringerInformationen/LeistungsErbringerArzt (überlicherweise SequenzNummer  = &gt; 01 für die abrechnenden Ärzte)</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="KorrekturFaktoren" minOccurs="0" maxOccurs="9">
+                      <xsd:annotation>
+                        <xsd:documentation>laut aktuellen Leistungstabellen</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="NebenBedingungen" minOccurs="0" maxOccurs="9">
+                      <xsd:annotation>
+                        <xsd:documentation>laut aktuellen Leistungstabellen</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="EingriffsInformationen" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Die Eingriffsinformationen müssen bei Operationen immer angegeben werden! Mussfelder beachten!</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="IdentifikationLeistung">
+                      <xsd:annotation>
+                        <xsd:documentation>Identifikationsmerkmale zu einer Leistung</xsd:documentation>
+                        <xsd:documentation>Identifikation einer Leistung Haus oder Arzt</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element ref="LeistungsIdentifikation">
+                            <xsd:annotation>
+                              <xsd:documentation>Information aus zugehörigem Vertrag (/PKVVereinBa/VereinbarungGesamt/LeistungsTabelle/LeistungsTabelleDetails/LeistungsTabelleDetail/LeistungsIdentifikation).</xsd:documentation>
+                              <xsd:documentation>Bei der LeistungsIdentifikation muss der integrierte Fachcode immer ein Hauptfach,  z.B.&quot;F01&quot;,  sein,niemals ein Zusatzfach,  z.B. Z81!!!</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element ref="LeistungsIdentifikationsBezeichnung"/>
+                          <xsd:element ref="FreiText" minOccurs="0">
+                            <xsd:annotation>
+                              <xsd:documentation>hier: zur Leistungsidentifikation</xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="UebergeordneteLeistungsIdentifikation" minOccurs="0"/>
+                    <xsd:element ref="LeistungsDatumZeitVon"/>
+                    <xsd:element ref="LeistungsDatumZeitBis"/>
+                    <xsd:element ref="VerrechnungsArt"/>
+                    <xsd:element ref="MengeLeistung">
+                      <xsd:annotation>
+                        <xsd:documentation>bei Hausleistungen Tage, bei Arztleistungen Anzahl/Menge der Leistungen</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="PreisLeistung">
+                      <xsd:annotation>
+                        <xsd:documentation>Hausleistung oder Arztleistung auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="BetragLeistungNetto"/>
+                    <xsd:element ref="PositionsBetragSVAnteil" minOccurs="0">
+                      <xsd:annotation>
+                        <xsd:documentation>Der SV-Anteil hier hat keinen Einfluss auf den Rechnungspositionsbetrag. Die SV-Anteile werden summiert in das Element EndsummeSVAnteil in die Elementgruppe EndsummenRechnung gestellt. Weiters gilt:	EndsummeBrutto - EndsummeSVAnteil (-EndsummeSelbstbehalt) =  EndsummeBruttoBereinigt</xsd:documentation>
+                      </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="BearbeitungsHinweisText" minOccurs="0" maxOccurs="5"/>
+                    <xsd:element ref="SpitalsAnmerkungen" minOccurs="0" maxOccurs="5"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="KumulierteArztLeistungen" minOccurs="0"/>
+        <xsd:element ref="KumulierteHausLeistungen" minOccurs="0"/>
+        <xsd:element name="EndsummenRechnung">
+          <xsd:annotation>
+            <xsd:documentation>Sämtliche Informationen zur Berechnung und Darstellung von Endsummen in einer Abrechnung von Leistungen im Gesundheitswesen (wird verwendet in der Rechnung und im Zahlungsavis), auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+            <xsd:documentation>hier: Abrechnung von Leistungen zwischen Krankenanstalten und Privatversicherungen</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element ref="EndsummeBrutto"/>
+              <xsd:element ref="EndsummeNetto"/>
+              <xsd:element ref="UmsatzsteuerBerechnungen">
+                <xsd:annotation>
+                  <xsd:documentation>In der Elementgruppe UmsatzsteuerBerechnungen müssen die Umsatzsteuerberechnungen für alle in einer Rechnung vorkommenden Umsatzsteuerschlüssel angegeben werden. Dies gilt auch für die UmsatzsteuerBerechnung für den UmsatzsteuerSL = 0 !!!</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element ref="EndsummeUmsatzsteuer"/>
+              <xsd:element ref="EndsummeSelbstbehalt" minOccurs="0"/>
+              <xsd:element ref="EndsummeSVAnteil" minOccurs="0"/>
+              <xsd:element ref="EndsummeBruttoBereinigt"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element ref="DokumentenBeilage" minOccurs="0" maxOccurs="99">
+          <xsd:annotation>
+            <xsd:documentation>Die Elementgruppe DokumentenBeilage kann angegeben werden, um anzuzeigen, dass parallel zur Rechnung eine Nachricht P25 mit Befunden verschickt wurde (reine Referenzangabe).</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="BestaetigungsIndikator" minOccurs="0"/>
+        <xsd:element ref="ds:Signature" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>Erklärungen und Beschreibungen zur Verwendung und Handhabung der elektronischen Signatur (EDV-technische Informationen) sind in einem Datei-Ordner auf der CD-ROM, EDIVKA V05.0, zu ersehen (Signatur-Infos)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Abteilung">
+    <xsd:annotation>
+      <xsd:documentation>Identifikationen einer Abteilung bei einem Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="FunktionsCode">
+          <xsd:annotation>
+            <xsd:documentation>an..6</xsd:documentation>
+            <xsd:documentation>Identnummer der Abteilung mit Subabteilungsnummer auf Basis Codeliste D21</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="AbteilungsBezeichnung" minOccurs="0"/>
+        <xsd:element ref="KostenStelle" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AbteilungsBezeichnung" type="string1..256">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Abteilung (idR 20 Stellen)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Adresse" type="tpcAdresse">
+    <xsd:annotation>
+      <xsd:documentation>Ganz normale Adresse bestehend aus einzelnen Adresskomponenten oder gesamte Adresse in unstrukturierter Form</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AdresseKey" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Information über die Koordinaten für den Anfahrtsweg</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AktenzeichenBearbeitung" type="string1..26">
+    <xsd:annotation>
+      <xsd:documentation>Aktenzeichen des Bearbeiters</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AkutIndikator" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>Indikator, der aussagt, ob eine Aufnahme akut  (Code = 1) oder elektiv (Code = 0) oder nicht verfügbar (Code 2) ist/war.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AngehoerigkeitsBezeichnung" type="string1..30">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des Angehörigkeitsverhältnis oder des Beziehungsverhältnis einer Person zu einer anderen Person</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AngehoerigkeitsCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Angehörigenverhältnis oder Beziehungsverhältnis einer Person zu einer anderen Person auf Basis der Codeliste D26</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AngehoerigkeitZumPatienten">
+    <xsd:annotation>
+      <xsd:documentation>Beziehungsverhältnis einer Person zum Patienten</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="AngehoerigkeitsCode"/>
+        <xsd:element ref="AngehoerigkeitsBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AngehoerigkeitZumVersicherten">
+    <xsd:annotation>
+      <xsd:documentation>Beziehungsverhältnis einer Person zum Versicherten</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="AngehoerigkeitsCode"/>
+        <xsd:element ref="AngehoerigkeitsBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AufenthaltsArt">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu der Art des Aufenthalts (Art der Behandlung in einer medizinischen Organisation, wie stationär, Tagesklinik, ambulant) einer Person</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="AufenthaltsArtCode"/>
+        <xsd:element ref="AufenthaltsArtBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="AufenthaltsArtBezeichnung" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Aufenthaltsart laut Codeliste D83</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AufenthaltsArtCode" type="AufenthaltsArt">
+    <xsd:annotation>
+      <xsd:documentation>Code zur Art des Aufenthalts/Art der Behandlung, wie zB. Tagesklinik, ambulant, stationär, beim Leistungserbringer auf Basis der Codeliste D83</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AufenthaltsKey" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Der eindeutige Begriff mit dem der Ersteller in der Lage ist den Aufenthalt (Geschäftsfall) in seinem eingenen Bereich zu identifizieren.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="AufnahmeDatumZeit" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Datum und Zeit der Aufnahme beim Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BankLeitzahl" type="string1..8">
+    <xsd:annotation>
+      <xsd:documentation>Bankleitzahl des Zahlungsempfängers</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BankName" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Name der Bank des Zahlungsempfängers</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BearbeiterName" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Name des Bearbeiters</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BearbeitungsHinweisText" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Text zum Bearbeitungshinweis</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BestaetigungsIndikator" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>Indikator  mit dem Wert &quot;1&quot;, der aussagt, dass vom Empfänger dieser Nachricht eine Bestätigungsnachricht gewünscht wird. Wird der Wert &quot;0&quot; angegebn, so ist keine Bestätigungsnachricht zu senden.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BetragLeistungNetto">
+    <xsd:annotation>
+      <xsd:documentation>Netto-Positionsbetrag (ohne Umsatzsteuer) der Leistung (Menge x Preis) für Haus oder Arzt</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="PositionsBetrag">
+          <xsd:annotation>
+            <xsd:documentation>Netto-Positionsbetrag (Einzelpreis x Anzahl der Leistungen)  der Arztleistung oder Hausleistung auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="UmsatzsteuerSL"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="BetriebsStelleKey" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Kommunikationsweite eindeutige Bezeichnung der Stellen.</xsd:documentation>
+      <xsd:documentation>Der BetriebsStelleKey (BSK) besteht aus den folgenden Elementen des eVGA: healthCategory+healthCategoryOu+orgUid. Informationen zur richtigen Befüllung des BSK finden Sie in einem Dokument ausserhalb dieser Dokumentation: BSK-Erlaeuterung.doc</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="BetriebsStelleText" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Genaue Bezeichnung der Stelle</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Beziehungen">
+    <xsd:annotation>
+      <xsd:documentation>Es soll die Möglichkeit bieten, Stellen oder Personen, die in einer Beziehung zur beschriebenen Stelle oder Person stehen, zu dokumentieren.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="unbounded">
+        <xsd:choice>
+          <xsd:element name="Stelle">
+            <xsd:complexType>
+              <xsd:complexContent>
+                <xsd:extension base="tpcStelle">
+                  <xsd:attribute name="Eigenschaft" type="xsd:string" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation>Welche Eigenschaft besitzt diese Stelle in der Beziehung auf eine übergeordnete Stelle oder Person.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="Prioritaet" type="xsd:integer">
+                    <xsd:annotation>
+                      <xsd:documentation>Welche Priorität hat diese Stelle in der Beziehung auf eine übergeordnete Stelle oder Person.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="Person">
+            <xsd:complexType>
+              <xsd:complexContent>
+                <xsd:extension base="tpcPerson">
+                  <xsd:attribute name="Eigenschaft" type="xsd:string" use="required">
+                    <xsd:annotation>
+                      <xsd:documentation>Welche Eigenschaft besitzt diese Person in der Beziehung auf eine übergeordnete Stelle oder Person.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                  <xsd:attribute name="Prioritaet" type="xsd:integer">
+                    <xsd:annotation>
+                      <xsd:documentation>Welche Priorität hat diese Person in der Beziehung auf eine übergeordnete Stelle oder Person.</xsd:documentation>
+                    </xsd:annotation>
+                  </xsd:attribute>
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="BruttoBetragMitUmsatzsteuer" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>errechneter Bruttobetrag  auf Basis der Leistungen netto mit der errechneten Umsatzsteuer auf Basis des dazugehörigen Umsatzsteuerprozentsatzes</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DateiArt" type="string1..6">
+    <xsd:annotation>
+      <xsd:documentation>Dateiart, wie zB: doc, xsd, xls,  auf Basis der Codeliste E10</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DateiName" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Name evtl. auch Nummer einer Datei</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DatumZeitBis" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Datum bis (auch mit Zeit möglich)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DatumZeitVon" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Datum von (auch mit Zeit möglich)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DiagnoseBezeichnung" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Diagnose</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DiagnoseCode" type="string1..10">
+    <xsd:annotation>
+      <xsd:documentation>Code für die klinische Information Diagnose</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DokumentArt" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>Art des Dokuments auf Basis der Codeliste D71</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DokumentArtBezeichnung" type="string1..40">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Dokumentenart</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DokumentEmpfaenger">
+    <xsd:annotation>
+      <xsd:documentation>Empfänger eines Dokuments, näher definiert durch den Rollencode</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RollenArt"/>
+        <xsd:element ref="BetriebsStelleKey"/>
+        <xsd:element ref="GesamterName"/>
+        <xsd:element ref="Adresse" minOccurs="0"/>
+        <xsd:element ref="Kommunikation" minOccurs="0"/>
+        <xsd:element ref="UIDNummer" minOccurs="0"/>
+        <xsd:element ref="DVRNummer" minOccurs="0"/>
+        <xsd:element ref="FirmenbuchNummer" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="DokumentenBeilage">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu referenzierten Dokumenten.</xsd:documentation>
+      <xsd:documentation>Handelt sich es um eine Verwendung dieser Elementgruppe in der Nachricht Medizinische  Dokumente (PKVMediDoku) dann sind in diesem Fall die Informationen der beigefügten (und nicht referenzierten) Dokumente gemeint.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="DokumentArt"/>
+        <xsd:element ref="DokumentArtBezeichnung"/>
+        <xsd:element ref="DokumentNummer" minOccurs="0"/>
+        <xsd:element ref="DateiName" minOccurs="0"/>
+        <xsd:element ref="DateiArt" minOccurs="0"/>
+        <xsd:element ref="Kommunikation" minOccurs="0"/>
+        <xsd:element ref="MedienArt"/>
+        <xsd:element ref="SchemaIdentifikation" minOccurs="0"/>
+        <xsd:element ref="FreiText" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="DokumentenKey" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Eindeutige Bezeichnung des Dokumentes innerhalb seines Aufenthalts.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DokumentenZeit" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Datum und Uhrzeit der Erstellung dieses Dokumentes</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DokumentNummer" type="string1..35">
+    <xsd:annotation>
+      <xsd:documentation>Nummer des Dokuments</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="DVRNummer" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Die Datenverarbeitungsregister-Nummer der Stelle, die im BetriebsStelleKey angegeben ist.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EingriffsBezeichnung" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des Eingriffs</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EingriffsCode" type="string1..6">
+    <xsd:annotation>
+      <xsd:documentation>Code für den standardisierten Eingriffstext, welcher über alle OP-Schemata gleich ist. Bitte verwenden, sofern er verfügbar ist.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EingriffsInformationen">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu einem Eingriff und dem OP-Schema</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="EingriffsNummerKomplett"/>
+        <xsd:element ref="EingriffsBezeichnung"/>
+        <xsd:element ref="EingriffsCode" minOccurs="0"/>
+        <xsd:element ref="OPSchemaBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="EingriffsNummerKomplett" type="string1..8">
+    <xsd:annotation>
+      <xsd:documentation>Entspricht dem bekannten Eingriffscode aus der Codeliste D87 (OP-Schema) wie zB. UC1010</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="eMail" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>E-Mail-Adresse (SMTP).</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeBrutto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Rechnungsendsumme Brutto, Betrag inclusive Selbstbehalt und SV-Anteil, auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeBruttoBereinigt" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Rechnungsendsumme Brutto, bereinigt durch den Abzug von Selbstbehalt und Gesamt-SV-Anteil, entspricht dem Endbetrag der Rechnung, die der Rechnungsaussteller als Zahlungsbetrag anfordert, auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeNetto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Rechnungsendsumme Netto, Betrag inclusive Selbstbehalt und SV-Anteil, auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeSelbstbehalt" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Endsumme des Selbstbehalts, vom Leistungserbringer einbehalten, auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeSVAnteil" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Endsumme aller SV-Anteile in einer Rechnung  (vermindert die Abrechnungssumme), auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EndsummeUmsatzsteuer" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Rechnungsendsumme Umsatzsteuer berechnet aus allen Umsatzsteuerschlüsseln (Ergebnis aus den Umsatzsteuerberechnungen), auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EntlassungsArt">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu der Art der Entlassung laut ON K2201 Codeliste D36 (zB. Entlassung aus dem Krankenhaus, Urlaub, Entlassung gegen Revers)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="EntlassungsArtCode"/>
+        <xsd:element ref="EntlassungsArtBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="EntlassungsArtBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Entlassungsart auf Basis der Codeliste D36</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EntlassungsArtCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code für die Art der Entlassung auf Basis der ON K2201 Codeliste D36</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="EntlassungsDatumZeit" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Datum und Zeit der Entlassung beim Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FachbereichsBezeichnung" type="string1..256">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des Fachbereichs/Fachgebiets</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FachbereichsCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Fachbereich/Fachgebiet eines Mediziners oder einer medizinischen Organisation auf Basis der ON K2201 Codeliste D75 (Arztkategorie) oder D20 (Anstaltsart)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FachbereichsInformation">
+    <xsd:annotation>
+      <xsd:documentation>Fachbereich/Fachgebiet eines Mediziners oder einer medizinischen Organisation</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="FachbereichsCode"/>
+        <xsd:element ref="FachbereichsBezeichnung"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="FamilienName">
+    <xsd:annotation>
+      <xsd:documentation>Der derzeit gueltige Familienname</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:minLength value="1"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+  <xsd:element name="FamilienStand" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Familienstand einer Person</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FamilienStandsBezeichnung" type="string1..15">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des Familienstands</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FirmenbuchNummer" type="string1..7">
+    <xsd:annotation>
+      <xsd:documentation>Firmenbuchnummer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FreiText" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Text oder Kommentar zu einer Information</xsd:documentation>
+      <xsd:documentation>hier: Information im Gesundheitswesen, wie zB. klinische oder medizinische Information, Spezifikation, Texte und Kommentare zu Massnahmen, Aktivitäten oder andere Kommentare zur Vervollständigung und Klärung der angegeben Informationen</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="FunktionsCode" type="string1..10">
+    <xsd:annotation>
+      <xsd:documentation>Funktionscode einer Abteilung eines Leistungserbringers auf Basis der Codeliste im LKF System, Hilfstabelle unter Funktionscode</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="GeburtsDatum" type="tpsDatumZeit">
+
+    <xsd:annotation>
+      <xsd:documentation>Das Geburtsdatum einer Person oder eines Subjekts (zB. Tier)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="GeburtsName" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>eVGA-Feld: maidenName</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="GeldBetragJeArzt" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag der Arztleistungen je Arzt (alle Detailleistungsbeträge eines Arzts kumuliert)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="GesamterName" type="string1..256">
+    <xsd:annotation>
+      <xsd:documentation>Name der Organisation</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Geschlecht">
+    <xsd:annotation>
+      <xsd:documentation>eVGA-Feld: sex</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="0"/>
+        <xsd:enumeration value="1"/>
+        <xsd:enumeration value="2"/>
+        <xsd:enumeration value="3"/>
+        <xsd:enumeration value="9"/>
+        <xsd:enumeration value="F"/>
+        <xsd:enumeration value="M"/>
+        <xsd:enumeration value="U"/>
+        <xsd:enumeration value="W"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+  <xsd:element name="Identifikationen">
+    <xsd:annotation>
+      <xsd:documentation>Wie kann der/die Betroffene identifiziert werden (sowohl für den eigenen Bereich als auch für alle Komunikationsteilnehmer).</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Identifikation" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="Typ" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+beschreibt die Identifikationsart (z.B.: ChipCardID, KontaktKey, HauptverbandVPN, etc.)
+eCardID: Nummer der Chip-Karte
+KontaktKey:
+HauptverbandVPN: Vertragspartnernummer eines Arztes
+LokalePatientenKennung: Wie wird der Patient im eigenen Bereich identifiziert. Wenn der Eintrag gewaehlt wird, ist im Feld &quot;Bereich&quot; der BetriebsStellenKey, fuer den die LokalePatientenKennung gilt, anzugeben.
+SVNummer: Sozialversicherungsnummer. Im Feld &quot;Wert&quot; ist die SVNummer 10-stellig, ohne Sonderzeichen anzugeben.
+                  </xsd:documentation>
+                  <xsd:documentation>eCardID: Nummer der Chip-Karte</xsd:documentation>
+                  <xsd:documentation>KontaktKey:</xsd:documentation>
+                  <xsd:documentation>HauptverbandVPN: Vertragspartnernummer eines Arztes</xsd:documentation>
+                  <xsd:documentation>LokalePatientenKennung: Wie wird der Patient im eigenen Bereich identifiziert. Wenn der Eintrag gewaehlt wird, ist im Feld &quot;Bereich&quot; der BetriebsStellenKey, fuer den die LokalePatientenKennung gilt, anzugeben.</xsd:documentation>
+                  <xsd:documentation>SVNummer: Sozialversicherungsnummer. Im Feld &quot;Wert&quot; ist die SVNummer 10-stellig, ohne Sonderzeichen anzugeben.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="Bereich" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Enthaelt den BetriebsStellenKey fuer den diese Identifikation gilt. Ist das Feld nicht vorhanden, gilt diese Identifikation fuer alle Partner bzw. Institutionen.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="Wert" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>Der Wert, der den/die betroffenen identifiziert</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Kommunikation">
+    <xsd:annotation>
+      <xsd:documentation>Wo/wie ist der/die Betroffene erreichbar.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+
+        <xsd:element name="KommElement" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:all>
+              <xsd:element name="KommunikationsMittel" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>beschreibt die Art des Kommunikationsmittels (z.B.: eMail, Tel., Fax etc.)</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="WoErreichbar" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                  <xsd:documentation>Wo der/die Betroffene erreicht wird (z.B. Ordination, Privat, Station, etc.)</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="AdresseNummer" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>die Telefonnummer, die E-Mail-Adresse, etc.</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:all>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="KontoNummer" type="string1..15">
+    <xsd:annotation>
+      <xsd:documentation>Kontonummer des Zahlungsempfängers</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="KorrekturFaktorBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des Korrekturfaktors incl. dem Faktor mit 5 Nachkommastellen</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="KorrekturFaktorCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code des Korrekturfaktors für eine Leistung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="KorrekturFaktoren">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu einem oder mehreren Korrekturfaktoren zu einer Leistung</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="KorrekturFaktorCode"/>
+        <xsd:element ref="KorrekturFaktorBezeichnung"/>
+        <xsd:element ref="KorrekturFaktorWert"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="KorrekturFaktorWert" type="xsd:decimal">
+    <xsd:annotation>
+      <xsd:documentation>Wert eines Korrekturfaktors ausgedrückt als Faktor</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="KostenStelle" type="string1..40">
+    <xsd:annotation>
+      <xsd:documentation>Kostenstelle einer Abteilung eines Leistungserbringers</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="KostentraegerSozialVersicherung">
+    <xsd:annotation>
+      <xsd:documentation>Hauptidentifikationen zum Kostenträger Sozialversicherung</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RollenArt"/>
+        <xsd:element ref="BetriebsStelleKey">
+          <xsd:annotation>
+            <xsd:documentation>Hier wird im Gegensatz zu allen anderen BetriebsStelleKey-Elementen in den Nachrichten kein Betriebsstellenkey angegeben, sondern nur der Eintrag aus der Codeliste D05 für die zahlungspflichtige Sozialversicherung als Kostenträger (Wertangabe immer 2-stellig), zB. &quot;17&quot; für die Salzburger Gebietskrankenkasse.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="GesamterName">
+          <xsd:annotation>
+            <xsd:documentation>Format an..40</xsd:documentation>
+            <xsd:documentation>der Sozialversicherung</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="KumulierteArztLeistungen">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="PositionsNummer" minOccurs="0"/>
+        <xsd:element ref="SummeArztLeistungenBrutto" minOccurs="0"/>
+        <xsd:element ref="SummeArztLeistungenNetto" minOccurs="0"/>
+        <xsd:element ref="SummeArztLeistungenUmsatzsteuer" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="KumulierteHausLeistungen">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="PositionsNummer" minOccurs="0"/>
+        <xsd:element ref="SummeHausLeistungenBrutto" minOccurs="0"/>
+        <xsd:element ref="SummeHausLeistungenNetto" minOccurs="0"/>
+        <xsd:element ref="SummeHausLeistungenUmsatzsteuer" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="KundenNummerLeistungsErbringer" type="string1..26">
+    <xsd:annotation>
+      <xsd:documentation>Kundennummer einer Person beim Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsDatumZeitBis" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Leistungsdatum bis</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsDatumZeitVon" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Leistungsdatum von</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsErbringerArt" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Art des Leistungserbringers (Funktion, Arzttyp) auf Basis Codeliste E04</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsFallNummer" type="string1..35">
+    <xsd:annotation>
+      <xsd:documentation>Leistungsfallnummer beim Versicherer, auch als Schadensnummer manchmal benannt</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsIdentifikation" type="string1..17">
+    <xsd:annotation>
+      <xsd:documentation>Identifikation einer Leistung oder Leistungsposition auf Basis einer aktuellen Leistungstabelle</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="LeistungsIdentifikationsBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung einer Identifikation einer Leistung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="MedienArt" type="string1..35">
+    <xsd:annotation>
+      <xsd:documentation>Medienart, wie zB: Bild, Video, Text,  auf Basis der Codeliste E11</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="MengeLeistung" type="decimal1..9">
+    <xsd:annotation>
+      <xsd:documentation>Anzahl einer medizinischen Leistung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NachrichtenArt" type="NachrichtenArt"/>
+  <xsd:element name="NachrichtenArtBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Art der Nachricht laut Codeliste D01</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NachrichtenDatum" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Erstellungsdatum der Nachricht</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NachrichtenNummer" type="string1..35">
+    <xsd:annotation>
+      <xsd:documentation>Nummer der Nachricht</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NebenBedingungen">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu einer oder mehreren Nebenbedingungen für eine Leistung</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="NebenBedingungsCode"/>
+        <xsd:element ref="NebenBedingungsBezeichnung"/>
+        <xsd:element ref="NebenBedingungsWert"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="NebenBedingungsBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Nebenbedingung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NebenBedingungsCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code einer Nebenbedingung für eine Leistung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NebenBedingungsWert" type="xsd:decimal">
+    <xsd:annotation>
+      <xsd:documentation>Wert einer Nebenbedingung ausgedrückt als Faktor</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="NettoBasisBetrag" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Endsumme Nettobasisbetrag der Leistungen, die zu einem Umsatzsteuerschlüssel/Umsatzsteuerprozentsatz gehören, auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="OPSchemaBezeichnung" type="string1..40">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung des OP-Schemas aus dem dieser Eingriff stammt, zB. TK2002</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PolizzenNummer" type="string1..26">
+    <xsd:annotation>
+      <xsd:documentation>Polizzennummer einer Person</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PositionsBetrag" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Positionsbetrag</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PositionsBetragSVAnteil" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Positionsbetrag SV-Anteil</xsd:documentation>
+      <xsd:documentation>Positionsbetrag  SVAnteil der Arztleistungen oder Hausleistungen,  auf Basis der Vereinbarung der Leistungstabelle des VVO für einen Leistungserbringer. Dieser Positionsbetrag ist der SV-Anteil, um den der entsprechende Positionsbetrag zu mindern ist.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PositionsNummer" type="string1..6">
+    <xsd:annotation>
+      <xsd:documentation>Positionsnummer einer Berechnungszeile</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PreisLeistung" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Einzelpreis der Leistung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="PublicCertificateKey" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>oeffentlicher Key fuer Kryptifizierungsverfahren.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="QualifikationDiagnose" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Art/Qualifikation der Diagnose auf Basis der Codeliste D76</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="RechnungsDatum" type="tpsDatumZeit">
+    <xsd:annotation>
+      <xsd:documentation>Erstellungsdatum der Rechnung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="RechnungsNummer" type="string1..35">
+    <xsd:annotation>
+      <xsd:documentation>eindeutige Nummer einer Rechnung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ReferenzAufenthaltsKey" type="string1..26">
+    <xsd:annotation>
+      <xsd:documentation>Die Aufnahmezahl der Begleitperson des Patienten.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ReferenzAufNachricht">
+    <xsd:annotation>
+      <xsd:documentation>Referenz-Informationen auf eine Nachricht, auf die hier Bezug genommen wird.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="NachrichtenArt"/>
+        <xsd:element ref="NachrichtenArtBezeichnung"/>
+        <xsd:element ref="NachrichtenNummer"/>
+        <xsd:element ref="NachrichtenDatum"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ReferenzAufRechnung">
+    <xsd:annotation>
+      <xsd:documentation>Referenzangaben auf eine Rechnung</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RechnungsNummer"/>
+        <xsd:element ref="RechnungsDatum"/>
+        <xsd:element ref="FreiText" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>hier: Kommentar oder Erklärung zu der referenzierten Rechnung</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ReferenzSequenzNummer" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>Referenz auf eine laufende Nummer eines Arzts beim Leistungserbringer oder auf den Leistungserbringer selbst (das Haus), um bei einer Berechnungsposition auf den leistungserbringenden Arzt oder das Haus in der Nachricht hinweisen zu können</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Rollen">
+    <xsd:annotation>
+      <xsd:documentation>Aufgrund der Rollen kann die Berechtigungsstufe erkannt werden.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Rolle" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:extension base="xsd:string">
+                <xsd:attributeGroup ref="agrCodeList"/>
+              </xsd:extension>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="RollenArt">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu einer Rolle/Funktion einer Person oder Organisation</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="RollenCode"/>
+        <xsd:element ref="RollenBezeichnung"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="RollenBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Rolle laut Codeliste E04</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="RollenCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code für die Funktion oder Rolle einer Organisation oder Person auf Basis der Codeliste E04</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SchemaIdentifikation" type="string1..12">
+    <xsd:annotation>
+      <xsd:documentation>Identifikation des XML Files (Nachricht) mit Versionsnummer</xsd:documentation>
+      <xsd:documentation>Die File Identifikation hat folgendes Format: 8 Stellen für den Kurznamen des XML Schemas des VVO und 4 Stellen für die Versionsnummer (XX.X). Zur Zeit sind zehn (10) Schemata vorhanden und zwar: AUFNAHME, BESTAETI, CODELIST, FEHLNACH, INFOANFO, KOSTUEBN, MEDIDOKU, RECHNUNG, VEREINBA, ZAHLAVIS. Daraus ergibt sich zB. für die Aufnahme der Eintrag: AUFNAHME05.0</xsd:documentation>
+      <xsd:documentation>Seit Anfang Dezember 2003 ist die Version 04.0 der VVO XML Schemata verfügbar und kann für den aktuellen Datenaustausch verwendet. Ab Oktober 2006 ist die Version 05.0 gültig (mit einer Übergangsfrist der Version 04.0 bis Februar 2007). Die wesentlichen Änderungen in der Version 05.0 sind: Möglichkeit der elektronischen Signatur der Nachrichten, Erweiterungen um einige Kannfelder und wenige Mussfelder, eine neue Nachricht für die Bestätigung von erhaltenen Nachrichten, Entfernung der alten EDIFACT-Hinweise und Kommentare und viele Verbesserungen aufgrund von Anwenderwünschen. Die detaillierten Änderungen sind aus dem Dokument: Änderungen-XML-Schemata-V05.0-zu-V04.0.doc zu ersehen (außerhalb dieser Dokumentation auf der CD-Rom EDIVKA Version 05.0).</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SequenzNummer" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>laufende Nummer für einen Arzt beim Leistungserbringer oder aber für das Haus selbst, um auf diesen/dieses  innerhalb der Nachricht referenzieren zu können</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SpitalsAnmerkungen">
+    <xsd:annotation>
+      <xsd:documentation>Spitalsanmerkungen zu Hausleistungen oder Arztleistungen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SpitalsAnmerkungsCode" minOccurs="0"/>
+        <xsd:element ref="SpitalsAnmerkungsBezeichnung" minOccurs="0"/>
+        <xsd:element ref="FreiText" minOccurs="0" maxOccurs="9"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SpitalsAnmerkungsBezeichnung" type="string1..512">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Spitalsanmerkung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SpitalsAnmerkungsCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code für eine Spitalsanmerkung auf Basis der Codeliste D92</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="StaatsBuergerschaft" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Staatsbuergerschaft einer Person auf Basis Codeliste D28 (ISO-Codeliste)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Status" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Allgemeine Statusbeschreibungen</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SummeArztLeistungenBrutto">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeLeistungenArztBrutto"/>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeArztLeistungenNetto">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeLeistungenArztNetto"/>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeArztLeistungenUmsatzsteuer">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeUmsatzsteuer"/>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeHausLeistungenBrutto">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeLeistungenHausBrutto"/>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeHausLeistungenNetto">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeLeistungenHausNetto"/>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeHausLeistungenUmsatzsteuer">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="SummeUmsatzsteuer">
+          <xsd:annotation>
+            <xsd:documentation>Summenbetrag Umsatzsteuer der Hausleistungen auf Basis der Vereinbarung Leistungskatalog VVO</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element ref="UmsatzsteuerSL" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SummeLeistungenArztBrutto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag der Arztleistungen Brutto auf Basis der Vereinbarung Leistungskatalog VVO</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SummeLeistungenArztNetto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag der Arztleistungen Netto auf Basis der Vereinbarung Leistungskatalog VVO</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SummeLeistungenHausBrutto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag der Hausleistungen Brutto auf Basis der Vereinbarung Leistungskatalog VVO</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SummeLeistungenHausNetto" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag der Hausleistungen Netto auf Basis der Vereinbarung Leistungskatalog VVO</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SummeUmsatzsteuer" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>Summenbetrag Umsatzsteuer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SVNummer" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Sozialversicherungsnummer, einer Person (idR des Patienten) zum Beginn des Aufenthalts in eine Gesundheitseinrichtung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="SVNummerHauptversicherter" type="string1..13">
+    <xsd:annotation>
+      <xsd:documentation>Sozialversicherungsnummer eines Hauptversicherten auf Basis Codeliste D08</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Titel" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Der derzeit gueltige Titel</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="TitelBezeichnung" type="string1..30">
+    <xsd:annotation>
+      <xsd:documentation>Titel/akademischer Grad der Person in freier textlicher Form</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UebergeordneteLeistungsIdentifikation" type="string1..17">
+    <xsd:annotation>
+      <xsd:documentation>Identifikation einer Leistung zu einer übergeordneten Gruppe auf Basis einer aktuellen Leistungstabelle (früher D86/D88)</xsd:documentation>
+      <xsd:documentation>die übergeordnete Leistungsidentifikation kann bei Leistungspositionen dazu verwendet werden, um auf die Zugehörigkeit von Leistungen auf eine übergeordnete Gruppe zu verweisen, damit ersichtlich wird,  welche Leistungspositionen zusammen gehören.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UIDNummer" type="string1..12">
+    <xsd:annotation>
+      <xsd:documentation>Umsatzsteuer Identifikationsnummer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UmsatzsteuerBerechnung">
+    <xsd:annotation>
+      <xsd:documentation>Berechnung der Umsatzsteuer und des Bruttobetrages auf Basis des dazugehörigen Umsatzsteuerschlüssels</xsd:documentation>
+      <xsd:documentation>diese Berechnungsgruppe kann sooft verwendet werden, wie unterschiedliche Umsatzsteuerschlüssel in der Nachricht vorkommen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="NettoBasisBetrag"/>
+        <xsd:element ref="UmsatzsteuerSL"/>
+        <xsd:element ref="UmsatzsteuerBetrag"/>
+        <xsd:element ref="BruttoBetragMitUmsatzsteuer"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UmsatzsteuerBerechnungen">
+    <xsd:annotation>
+      <xsd:documentation>Berechnungen zur Ermittlung von Umsatzsteuerbeträgen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="UmsatzsteuerBerechnung" minOccurs="0" maxOccurs="9"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UmsatzsteuerBetrag" type="decimal1..11">
+    <xsd:annotation>
+      <xsd:documentation>errechneter Umsatzsteuerbetrag (Basisbetrag x Umsatzsteuerprozentsatz)</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UmsatzsteuerSL" type="string1..4">
+    <xsd:annotation>
+      <xsd:documentation>Umsatzsteuerschlüssel</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Unterbringung">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zur Unterbringung eines Patienten, wie UnterbringungsKlasseCode (Gebührenklasse) und  UnterbringungsKlasseBezeichnung (Gebührenklasse-Bezeichnung)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="UnterbringungsKlasseCode"/>
+        <xsd:element ref="UnterbringungsKlasseBezeichnung"/>
+        <xsd:element ref="FreiText" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="UnterbringungsKlasseBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Gebuehrenklasse der Unterbringung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="UnterbringungsKlasseCode" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Code der Unterbringung auf Basis der Codeliste D22 Gebührenklasse</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="VereinbarungsNummer" type="string1..17">
+    <xsd:annotation>
+      <xsd:documentation>Identifikationsnummer der abgeschlossenen Vereinbarung</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="VerrechnungsArt">
+    <xsd:annotation>
+      <xsd:documentation>Informationen zu der Art der Verrechnung von Leistungen (zB. verrechenbar, informativ, SV-Abzugsleistung)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="VerrechnungsArtCode"/>
+        <xsd:element ref="VerrechnungsArtBezeichnung" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="VerrechnungsArtBezeichnung" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Bezeichnung der Verrechnungsart auf Basis der Codeliste E16</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="VerrechnungsArtCode" type="string1..10">
+    <xsd:annotation>
+      <xsd:documentation>Code für die Verrechnungsart einer Leistungsposition, wie zB.  verrechenbar, nicht verrechenbar dient nur zur Information, auf Basis der Codeliste E16</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="VorName">
+    <xsd:annotation>
+      <xsd:documentation>Der derzeit gueltige Vorname</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:minLength value="1"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+  <xsd:element name="Waehrung" type="string1..3">
+    <xsd:annotation>
+      <xsd:documentation>Währung eines Betrages laut ISO-Code, entspricht Codeliste E06</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ZessionsIndikator" type="string1..2">
+    <xsd:annotation>
+      <xsd:documentation>Indikator, der aussagt, ob eine Zessionserklärung des Patienten beim Leistungserbringer/Rechnungsaussteller vorliegt, wenn ja dann Code  1, sonst Code 0</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ZimmerNummer" type="string1..70">
+    <xsd:annotation>
+      <xsd:documentation>Nummer des Zimmers während der Unterbringung eines Patienten in einem bestimmten Zeitraum</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ZustellInfo" type="xsd:string">
+    <xsd:annotation>
+      <xsd:documentation>Aus Gruenden der Abwaerts-Kompatibilitaet erforderlich und enthaelt zusaetzliche Adressangaben (z.B. ME-Nummer). Ist im eVGA eine Zustellinfo angegeben, ist diese in der Allonge mitzuschicken.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:simpleType name="AufenthaltsArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="3"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="decimal1..11">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:totalDigits value="11"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="decimal1..9">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:totalDigits value="9"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NachrichtenArt">
+    <xsd:annotation>
+      <xsd:documentation>Art der Nachricht auf Basis Codeliste D01</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="3"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..10">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="10"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..12">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="12"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..13">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="13"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..15">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="15"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..17">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="17"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..2">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="2"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..256">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="256"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..26">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="26"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..3">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="3"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..30">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="30"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..35">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="35"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..4">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="4"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..40">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="40"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..512">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="512"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..6">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="6"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..7">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="7"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..70">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="70"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="string1..8">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="8"/>
+      <xsd:whiteSpace value="preserve"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="tpcAdresse">
+    <xsd:all>
+      <xsd:element ref="AdresseKey" minOccurs="0"/>
+      <xsd:element name="AdresseArt" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Art der Adresse laut Codeliste E01 (ÖNorm), wie z.B. Wohnadresse, Verständigungsadresse</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AdresseStruktur" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Struktur für Strasse und Hausnummer laut Codeliste E03 (ÖNorm)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PostLeitzahl" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Postleitzahl</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Ort" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Ort</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Strasse" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Strasse entweder mit Hausnummer oder ohne ( dann steht die Hausnummer in einer eigenen Komponente).Die Art der Darstellung von Strasse und Hausnummer wird über die Codeliste E03 in der Komponente Adressestruktur bekannt gegeben</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="HausNummer" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Hausnummer der Strasse, wenn diese nicht in der Strasse enthalten ist (in Abhängigkeit vom Code in der Komponente Adressestruktur)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Staat" type="tpsNationalityTyp" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Staat der Adresse laut Codeliste D28 (ISO-Codeliste, ÖNorm)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="GesamteAdresse" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>die gesamte Adresse wird  in der Form der unstrukturierten Adresse dargestellt und ist im Zusammenhang mit der Komponente Adressestruktur, Code 5 aus der Codeliste E03 (ÖNorm), angegeben</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="tpcAufenthalt">
+    <xsd:all>
+      <xsd:element ref="AufenthaltsKey"/>
+      <xsd:element ref="BetriebsStelleKey" minOccurs="0"/>
+      <xsd:element ref="BetriebsStelleText" minOccurs="0"/>
+      <xsd:element name="Patient" type="tpcPerson" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Identifikationen und Informationen zu einem Patienten</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="Beziehungen" minOccurs="0"/>
+      <xsd:element ref="FamilienName" minOccurs="0"/>
+      <xsd:element ref="VorName" minOccurs="0"/>
+      <xsd:element ref="Geschlecht" minOccurs="0"/>
+      <xsd:element ref="GeburtsDatum" minOccurs="0"/>
+      <xsd:element ref="SVNummer" minOccurs="0"/>
+      <xsd:element name="AufenthaltsArt" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Informationen zu der Art des Aufenthalts (Art der Behandlung in einer medizinischen Organisation, wie stationär, Tagesklinik, ambulant) einer Person</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attributeGroup ref="agrCodeList"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Status" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Allgemeine Statusbeschreibungen</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="aufgenommen"/>
+            <xsd:enumeration value="entlassen"/>
+            <xsd:enumeration value="storniert"/>
+            <xsd:enumeration value="voradministriert"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="AufnahmeZeit" type="tpsDatumZeitEmpty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Datum und Uhrzeit des Beginns des Aufenthalts</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AufnahmeArt" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Informationen zu der Art der Aufnahme (zB. Einweisung, Rettung, selbst) in einer medizinischen Organisation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attributeGroup ref="agrCodeList"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="EntlassungsZeit" type="tpsDatumZeitEmpty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>wk.makro: RT_ENTLASSUNGS_ZEIT</xsd:documentation>
+          <xsd:documentation>Datum und Uhrzeit des Endes des Aufenthalts</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="EntlassungsArt" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Informationen zu der Art der Entlassunge (zB. Entlassung aus dem Krankenhaus, Verlegung, Urlaub, Sterbefall ) aus einer medizinischen Organisation</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attributeGroup ref="agrCodeList"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="AufenthaltsPfad" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Wenn grosse Organisationen mit File-gestuetzten Systemen arbeiten ist es sinnvoll den Pfad zu den Aufenthaltsdaten zu teilen. Wenn dies geschieht, kann es hier angegeben werden. Trennung der Pfade durch \.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="tpcDokument">
+    <xsd:all>
+      <xsd:element ref="DokumentenKey"/>
+      <xsd:element ref="AufenthaltsKey"/>
+      <xsd:element ref="BetriebsStelleKey"/>
+      <xsd:element ref="DVRNummer" minOccurs="0"/>
+      <xsd:element name="DokumentenBesitzer" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Wird das Original-Dokument nicht beim Ersteller aufbewahrt, so ist hier die Stelle der Aufbewahrung anzugeben.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AenderungsZeit" type="tpsDatumZeit" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Falls nach der Erstellung des Dokumentes Aenderungen durchgefuehrt wurden, ist hier die Zeit der letzten Aenderung anzugeben. Nach einer Versendung eines Dokumentes sind keine Aenderungen mehr erlaubt.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="DokumentenUeberschrift" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Überschrift des Dokumentes. Sollte so gewählt sein, dass das Original beim Ersteller gefunden werden kann.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="DokumentenZeit"/>
+      <xsd:element name="DokumentenStatus" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Codeliste: In welchem organisatorischen Status befindet sich dieses Dokument, zB. ist es ein Vorbefund, wurde es bereits vidiert etc.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="DokumentenStatusText" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Text zu Dokumentenstatus</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="Qualifier" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Codeliste: Die Art des Dokumentes (z.B. Laborbefund, Arztbrief, etc.)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="QualifierText" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Text zu Qualifier</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AnfordererKey" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Falls das Dokument das Ergebnis einer Anforderung von außen präsentiert, ist hier der BetriebsStellenKey des Anforderers anzugeben.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="AnfordererText" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Gesamter Name des Anforderers.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="DokumentenPfad" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Technischer Parameter: Ist anzugeben falls Pfade und zugehörige Keys unterschiedlich aufgebaut sind.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="SperrKey" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Ist reserviert für Zugriffssperren.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="tpcPerson">
+    <xsd:all>
+      <xsd:element ref="FamilienName"/>
+      <xsd:element ref="VorName"/>
+      <xsd:element ref="Titel" minOccurs="0"/>
+      <xsd:element ref="GeburtsDatum" minOccurs="0"/>
+      <xsd:element ref="Geschlecht" minOccurs="0"/>
+      <xsd:element ref="eMail" minOccurs="0"/>
+      <xsd:element ref="Rollen" minOccurs="0"/>
+      <xsd:element ref="PublicCertificateKey" minOccurs="0"/>
+      <xsd:element ref="Kommunikation" minOccurs="0"/>
+      <xsd:element ref="Identifikationen" minOccurs="0"/>
+      <xsd:element ref="GeburtsName" minOccurs="0"/>
+      <xsd:element name="SterbeDatum" type="tpsDatumZeit" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Datum und evtl. Zeitpunkt des festgestellten Todes einer Person oder eines Subjekts</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="StaatsBuergerschaft" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Staatsbuergerschaft einer Person auf Basis Codeliste D28 (ISO-Codeliste, ÖNorm)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="FamilienStand" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Familienstand einer Person</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="Adresse" minOccurs="0"/>
+      <xsd:element name="PfadDerAufenthalte" type="xsd:string" minOccurs="0"/>
+      <xsd:element ref="Beziehungen" minOccurs="0"/>
+      <xsd:element name="AusuebenderBeruf" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Information zu dem ausgeübten Beruf einer Person</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+              <xsd:attributeGroup ref="agrCodeList"/>
+            </xsd:extension>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="tpcStelle">
+    <xsd:all>
+      <xsd:element ref="BetriebsStelleKey" minOccurs="0"/>
+      <xsd:element name="GesamterName" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Name unter dem die gegenstaendliche Stelle bekannt ist (z.B. &quot;Ordination Dr. Meier&quot;)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="FamilienName" minOccurs="0"/>
+      <xsd:element ref="VorName" minOccurs="0"/>
+      <xsd:element ref="Titel" minOccurs="0"/>
+      <xsd:element ref="eMail" minOccurs="0"/>
+      <xsd:element ref="ZustellInfo" minOccurs="0"/>
+      <xsd:element ref="PublicCertificateKey" minOccurs="0"/>
+      <xsd:element ref="Rollen" minOccurs="0"/>
+      <xsd:element ref="Adresse" minOccurs="0"/>
+      <xsd:element ref="Kommunikation" minOccurs="0"/>
+      <xsd:element name="StellenZusatzInformation" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Abbildung aller Felder, die im eVGA geführt werden.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:all>
+            <xsd:element name="Leiter" type="tpcPerson" minOccurs="0"/>
+            <xsd:element name="TechnischeStellenParameter" minOccurs="0">
+              <xsd:complexType>
+                <xsd:all>
+                  <xsd:element name="BefundTransportProvider" type="tpsBefundTransportProvider" minOccurs="0"/>
+                  <xsd:element name="TechnischeAnschlussArt" type="tpsTechnischeAnschlussArt" minOccurs="0"/>
+                  <xsd:element name="AnschlussZeiten" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="AnschlussZeit" type="xsd:string" maxOccurs="unbounded">
+                          <xsd:annotation>
+                            <xsd:documentation>
+Beschreibt wie oft diese Stelle am Netz ist. Daraus laesst sich auf voraussichtliche Antwortzeiten schliessen.
+Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich
+TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten
+TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden
+TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden
+                            </xsd:documentation>
+                            <xsd:documentation>Dauernd: Dauernd am Netz, ohne Unterbrechung - Technische Empfangsbestaetigungen kommen unmittelbar, als Antwortszeiten sind nur Netzuebertragungen und Maschinenlaufzeiten moeglich</xsd:documentation>
+                            <xsd:documentation>TaeglichMehrmalsBetriebsZeiten: Der Anschluss zum Netz wird waehrend der Oeffnungszeiten mehrmals hergestellt. Antwortszeiten ergeben sich aus den periodischen Anschaltzeitpunkten waehrend der Oeffnungszeiten</xsd:documentation>
+                            <xsd:documentation>TaeglichEinmal: Der Anschluss wird praktisch nur einmal pro Tag hergestellt, Antwortszeiten koennen dabei sogar auf zwei Tage ausgedehnt werden, weil ja nicht sicher ist, ob waehrend der Anschaltzeit auch alle erforderlichen Antworten erzeugt werden</xsd:documentation>
+                            <xsd:documentation>TaeglichManchmal: Der Anschluss wird fallweise hergestellt, eine definierte Antwortszeit kann praktisch nicht erwartet werden</xsd:documentation>
+                          </xsd:annotation>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="AnschlussUnterbrechungsGruende" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="AnschlussUnterbrechungsGrund" maxOccurs="unbounded">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:enumeration value="Betriebsferien">
+                                <xsd:annotation>
+                                  <xsd:documentation>Organisatorsich bedingter Betriebsstillstand, der aus den Öffnungszeiten erkennbar ist - in der Regel Betriebsferien, Übersiedlungen, ..</xsd:documentation>
+                                </xsd:annotation>
+                              </xsd:enumeration>
+                              <xsd:enumeration value="DerzeitKeinTeilnehmer">
+                                <xsd:annotation>
+                                  <xsd:documentation>Derzeit ist der angesprochene Partner kein Teilnehmer am Befundversand</xsd:documentation>
+                                </xsd:annotation>
+                              </xsd:enumeration>
+                              <xsd:enumeration value="OrganisatorischeBetriebsUnterbrechung">
+                                <xsd:annotation>
+                                  <xsd:documentation>Organisatorisch bedingte BetriebsUnterbrechung, die nach Änderung organisatorischer Fakten wieder weg sein wird.</xsd:documentation>
+                                </xsd:annotation>
+                              </xsd:enumeration>
+                              <xsd:enumeration value="TechnischeBetriebsUnterbrechung">
+                                <xsd:annotation>
+                                  <xsd:documentation>Technisch bedingte BetriebsUnterbrechung, die nach Behebung wieder weg sein wird. Die Stillstandszeit ist nicht exakt angebbar. Der Partner verarbeitet konventionell transportierte Nachrichten - alternative Transportwege sind daher sinnvoll</xsd:documentation>
+                                </xsd:annotation>
+                              </xsd:enumeration>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="TechnischeInterpretationsMoeglichkeiten" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="TechnischeInterpretationsMoeglichkeit" type="tpsTechnischeInterpretationsMoeglichkeit" maxOccurs="unbounded"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="LokaleEDVSysteme" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="LokalesEDVSystem" type="tpsLokalesEDVSystem" maxOccurs="unbounded"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="Hinweise" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="Hinweis" type="xsd:string" maxOccurs="unbounded"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="ProxyEMail" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="MAntwortVerhalten" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="AntwortVerhalten" type="tpsAntwortVerhalten" maxOccurs="unbounded"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="Bemerkung" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="rootVendorId" type="xsd:string" minOccurs="0"/>
+                </xsd:all>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="OrganisatorischeStellenParameter" minOccurs="0">
+              <xsd:complexType>
+                <xsd:all>
+                  <xsd:element name="OeffnungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                  <xsd:element name="TerminVereinbarungsZeit" type="tpcZeitIntervalle" minOccurs="0"/>
+                  <xsd:element name="Urlaube" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="Urlaub" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:all>
+                              <xsd:element name="UrlaubVon" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="UrlaubBis" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="Vertretungen" minOccurs="0">
+                                <xsd:complexType>
+                                  <xsd:sequence>
+                                    <xsd:element name="Vertretung" maxOccurs="unbounded">
+                                      <xsd:complexType>
+                                        <xsd:all>
+                                          <xsd:element ref="BetriebsStelleKey" minOccurs="0"/>
+                                          <xsd:element name="GesamterName" type="xsd:string" minOccurs="0"/>
+                                        </xsd:all>
+                                      </xsd:complexType>
+                                    </xsd:element>
+                                  </xsd:sequence>
+                                </xsd:complexType>
+                              </xsd:element>
+                            </xsd:all>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="Erreichbarkeiten" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="AnfahrtsWeg" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:all>
+                              <xsd:element name="VerkehrsMittel" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="Station" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="GehZeit" type="xsd:string" minOccurs="0"/>
+                            </xsd:all>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="Beschreibung" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="Versicherungen" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="Versicherung" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:all>
+                              <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="Art" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                            </xsd:all>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="Organisation" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="SubOrganisation" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="FachBereiche" minOccurs="0">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="FachBereich" maxOccurs="unbounded">
+                          <xsd:complexType>
+                            <xsd:all>
+                              <xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+                              <xsd:element name="Text" type="xsd:string" minOccurs="0"/>
+                            </xsd:all>
+                          </xsd:complexType>
+                        </xsd:element>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:all>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:all>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element ref="Identifikationen" minOccurs="0"/>
+      <xsd:element ref="Geschlecht" minOccurs="0"/>
+      <xsd:element ref="GeburtsName" minOccurs="0"/>
+      <xsd:element name="HCPKategorie" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: healthCategory, Teil des BetriebsStelleKey</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="HCPSubKategorie" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: healthCategoryOu, Teil des BetriebsStelleKey</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="HCPUserIDInSubKategorie" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: orgUid, Teil des BetriebsStelleKey</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="StoreTimeStamp" type="tpsDatumZeit" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: dateStored</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ModifyTimeStamp" type="tpsDatumZeit" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: dateModified</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ExpirationTimeStamp" type="tpsDatumZeit" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>eVGA-Feld: dateExpired</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="Status" minOccurs="0"/>
+      <xsd:element ref="Beziehungen" minOccurs="0"/>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="tpcZeitIntervalle">
+    <xsd:all>
+      <xsd:element name="Profil" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>
+Format: ersten 8 Zeichen reserviert fuer Art des Intervalls (Standardwert = &apos;Standard&apos;)
+Format: gefolgt von 168 (= 7 * 24) hexerdezimalen Zeichen
+Jedes Digit repraesentiert eine Stunde der Woche, beginnend mit Montag 00:00h
+Ein einzelnes Digit enthaelt Informationen ueber die &apos;aktiv&apos;-Zeiten auf 1/4 Stunden genau.
+0 (0000): die volle Stunde inaktiv, f (1111): die volle Stunde aktiv
+3 (0011): aktiv von 0&apos; bis 30&apos; inaktiv von 30&apos; bis 60&apos;
+c (1100): inaktiv von 0&apos; bis 30&apos; aktiv von 30&apos; bis 60&apos;
+          </xsd:documentation>
+          <xsd:documentation>Format: gefolgt von 168 (= 7 * 24) hexerdezimalen Zeichen</xsd:documentation>
+          <xsd:documentation>Jedes Digit repraesentiert eine Stunde der Woche, beginnend mit Montag 00:00h</xsd:documentation>
+          <xsd:documentation>Ein einzelnes Digit enthaelt Informationen ueber die &apos;aktiv&apos;-Zeiten auf 1/4 Stunden genau.</xsd:documentation>
+          <xsd:documentation>0 (0000): die volle Stunde inaktiv, f (1111): die volle Stunde aktiv</xsd:documentation>
+          <xsd:documentation>3 (0011): aktiv von 0&apos; bis 30&apos; inaktiv von 30&apos; bis 60&apos;</xsd:documentation>
+          <xsd:documentation>c (1100): inaktiv von 0&apos; bis 30&apos; aktiv von 30&apos; bis 60&apos;</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\c\c\c\c\c\c\c\c[0123456789abcdef]{168,168}"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="Text" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>ZeitIntervall in lesbarer Form. z.B.: Mo 13:30 - 17:00, Di 08:00 - 12:00</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:simpleType name="tpsAntwortVerhalten">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ErwartetKeineOrgBestaetigung"/>
+      <xsd:enumeration value="ErwartetKeineTechnBestaetigung"/>
+      <xsd:enumeration value="ErwartetOrgBestaetigung"/>
+      <xsd:enumeration value="ErwartetTechnBestaetigung"/>
+      <xsd:enumeration value="SendetKeineOrgBestaetigung"/>
+      <xsd:enumeration value="SendetKeineTechnBestaetigung"/>
+      <xsd:enumeration value="SendetOrgBestaetigung"/>
+      <xsd:enumeration value="SendetTechnBestaetigung"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsBefundTransportProvider">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="AekVbgGNV"/>
+      <xsd:enumeration value="DataKomDame"/>
+      <xsd:enumeration value="MedComMedWare"/>
+      <xsd:enumeration value="MedicalNetConnect2"/>
+      <xsd:enumeration value="MedicalNetSMIME"/>
+      <xsd:enumeration value="MedicalNetWindows"/>
+      <xsd:enumeration value="WienKomMediKom"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsDatumZeit">
+    <xsd:union memberTypes="xsd:dateTime xsd:date"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsDatumZeitEmpty">
+    <xsd:union memberTypes="tpsDatumZeit tpsEmpty"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsEmpty">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value=""/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsLokalesEDVSystem">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ALAB"/>
+      <xsd:enumeration value="APOS"/>
+      <xsd:enumeration value="ARIS"/>
+      <xsd:enumeration value="ASKLEPIOS"/>
+      <xsd:enumeration value="Actio"/>
+      <xsd:enumeration value="Alphadoc_Windows"/>
+      <xsd:enumeration value="CAS-med"/>
+      <xsd:enumeration value="CEOMED-DENTAL"/>
+      <xsd:enumeration value="COMED"/>
+      <xsd:enumeration value="CSPmed"/>
+      <xsd:enumeration value="CSPmed_Opthalmologie"/>
+      <xsd:enumeration value="Ceo-MED"/>
+      <xsd:enumeration value="CoPAMed"/>
+      <xsd:enumeration value="DAFA"/>
+      <xsd:enumeration value="DENTAL2000"/>
+      <xsd:enumeration value="DOC"/>
+      <xsd:enumeration value="DataDent"/>
+      <xsd:enumeration value="Dentavision"/>
+      <xsd:enumeration value="GEM-DENT3.0"/>
+      <xsd:enumeration value="GIS3.0"/>
+      <xsd:enumeration value="HERBAMED"/>
+      <xsd:enumeration value="Hypermed"/>
+      <xsd:enumeration value="Hypermed4.0"/>
+      <xsd:enumeration value="IB-MED"/>
+      <xsd:enumeration value="IFA"/>
+      <xsd:enumeration value="LOGOMED"/>
+      <xsd:enumeration value="MED2000"/>
+      <xsd:enumeration value="MEDICOR"/>
+      <xsd:enumeration value="META/Dent"/>
+      <xsd:enumeration value="MIC-PROMED"/>
+      <xsd:enumeration value="MeDATA_2000"/>
+      <xsd:enumeration value="MedStar"/>
+      <xsd:enumeration value="Medent"/>
+      <xsd:enumeration value="Medicus@Praxis"/>
+      <xsd:enumeration value="Medinfo"/>
+      <xsd:enumeration value="Medworx"/>
+      <xsd:enumeration value="Molar_for_Windows"/>
+      <xsd:enumeration value="Multimed5.25"/>
+      <xsd:enumeration value="Optamed"/>
+      <xsd:enumeration value="PRAKTIKUS"/>
+      <xsd:enumeration value="PYRAMED"/>
+      <xsd:enumeration value="Pcpo"/>
+      <xsd:enumeration value="PowerDent"/>
+      <xsd:enumeration value="Praxis2000"/>
+      <xsd:enumeration value="PraxisEDV"/>
+      <xsd:enumeration value="Praxisverwaltung"/>
+      <xsd:enumeration value="Profi-Med"/>
+      <xsd:enumeration value="QuickMed"/>
+      <xsd:enumeration value="RADSYS"/>
+      <xsd:enumeration value="RODENT"/>
+      <xsd:enumeration value="S-MED"/>
+      <xsd:enumeration value="SMS-ACTIO"/>
+      <xsd:enumeration value="SUPERMED2001"/>
+      <xsd:enumeration value="SoftworkDentalsysteme"/>
+      <xsd:enumeration value="TOPMED"/>
+      <xsd:enumeration value="Touchdent"/>
+      <xsd:enumeration value="Unimed"/>
+      <xsd:enumeration value="WEBMED"/>
+      <xsd:enumeration value="WienKomMediKom"/>
+      <xsd:enumeration value="WinDent"/>
+      <xsd:enumeration value="Winmed"/>
+      <xsd:enumeration value="XCOM"/>
+      <xsd:enumeration value="XR"/>
+      <xsd:enumeration value="asy2"/>
+      <xsd:enumeration value="asyNoveau"/>
+      <xsd:enumeration value="eos"/>
+      <xsd:enumeration value="schillerMED"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsNationalityTyp">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsTechnischeAnschlussArt">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="1024K"/>
+      <xsd:enumeration value="128K"/>
+      <xsd:enumeration value="2048K"/>
+      <xsd:enumeration value="256K"/>
+      <xsd:enumeration value="512K"/>
+      <xsd:enumeration value="56K"/>
+      <xsd:enumeration value="64K"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tpsTechnischeInterpretationsMoeglichkeit">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="*.doc"/>
+      <xsd:enumeration value="*.htm"/>
+      <xsd:enumeration value="*.html"/>
+      <xsd:enumeration value="*.pdf"/>
+      <xsd:enumeration value="*.rtf"/>
+      <xsd:enumeration value="*.txt"/>
+      <xsd:enumeration value="AllExisting"/>
+      <xsd:enumeration value="AllToNothing"/>
+      <xsd:enumeration value="LaborEdifact"/>
+      <xsd:enumeration value="NothingToDo"/>
+      <xsd:enumeration value="SVAbrechnung"/>
+      <xsd:enumeration value="SimpleEDIFACT"/>
+      <xsd:enumeration value="SimpleText"/>
+      <xsd:enumeration value="StdK2203EDIFACT"/>
+      <xsd:enumeration value="StdK2203XML"/>
+      <xsd:enumeration value="StdK2204EDIFACT"/>
+      <xsd:enumeration value="StdK2204XML"/>
+      <xsd:enumeration value="TextEdifact"/>
+      <xsd:enumeration value="WienKomMediKom"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:attributeGroup name="agrCodeList">
+    <xsd:attribute name="Bereich" type="xsd:string" use="optional"/>
+    <xsd:attribute name="Verzeichnis" type="xsd:string" use="optional"/>
+    <xsd:attribute name="Code" type="xsd:string" use="optional"/>
+  </xsd:attributeGroup>
+
+</xsd:schema>

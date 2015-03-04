@@ -1,0 +1,2 @@
+The sorting index is kept within patient_artikel_joint (prescription) in the field Anzahl!
+I did not find any other usage within this field so I use it to store the index.

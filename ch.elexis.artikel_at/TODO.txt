@@ -1,0 +1,7 @@
+Offene Punkte:
+- Geschwindigkeit Selector -> Caching?
+- Importer an inkrementelle Updates anpassen
+- Adaption Context Menu
+- Browser Caches
+- Generate Activator to preset the Caches in VidalLabelProvider
+- Create script if Medikamente tables do not yet exist

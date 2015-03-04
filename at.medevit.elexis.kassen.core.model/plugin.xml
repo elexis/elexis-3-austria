@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.core.model.PPointsAreaFactory"
+            name="at.medevit.elexis.kassen.core.PersistentPointsAreaFactory">
+      </Factory>
+   </extension>
+
+</plugin>

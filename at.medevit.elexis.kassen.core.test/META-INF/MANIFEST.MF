@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: at.medevit.elexis.kassen.core.test;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: medevit.at
+Fragment-Host: at.medevit.elexis.kassen.core;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit,
+ at.medevit.elexis.kassen.test.shared

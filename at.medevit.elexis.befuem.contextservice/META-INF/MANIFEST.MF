@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Context
+Bundle-SymbolicName: at.medevit.elexis.befuem.contextservice;singleton:=true
+Bundle-Version: 1.0.1.qualifier
+Import-Package: at.medevit.elexis.befuem.netservice,
+ at.medevit.elexis.formattedoutput,
+ ch.elexis.data,
+ org.slf4j;version="1.7.2"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Service-Component: OSGI-INF/contextservice.xml, OSGI-INF/formattedoutputserviceconsumer.xml
+Require-Bundle: ch.rgw.utility,
+ org.eclipse.core.runtime,
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.elexis.core.data;bundle-version="3.0.0",
+ ch.elexis.core.ui;bundle-version="3.0.0",
+ org.smooks;bundle-version="1.4.0"
+Export-Package: at.medevit.elexis.befuem.contextservice,
+ at.medevit.elexis.befuem.contextservice.finding,
+ at.medevit.elexis.befuem.contextservice.formattedoutputconsumer,
+ at.medevit.elexis.befuem.contextservice.networkparticipant
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .

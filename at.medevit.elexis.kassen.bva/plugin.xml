@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Leistung
+            CodeDetailDisplay="at.medevit.elexis.kassen.bva.BvaDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.kassen.bva.BvaCodeSelectorFactory"
+            ElementFactory="at.medevit.elexis.kassen.bva.BvaPersistentObjectFactory"
+            ImporterClass="at.medevit.elexis.kassen.bva.importer.BvaLeistungsImporter"
+            name="BVA">
+      </Leistung>
+   </extension>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.bva.BvaPersistentObjectFactory"
+            name="BvaPersistentObjectFactory">
+      </Factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.bva.ui.BvaPreferencePage"
+            id="at.medevit.elexis.kassen.bva.GeneralPreferences"
+            name="BVA">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.bva.ui.BvaPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.kassen.bva.Startup">
+      </startup>
+   </extension>
+
+</plugin>

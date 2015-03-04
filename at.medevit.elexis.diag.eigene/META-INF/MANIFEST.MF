@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eigene Diagnosen
+Bundle-SymbolicName: at.medevit.elexis.diag.eigene;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: at.medevit.elexis.diag.eigene.Activator
+Bundle-Vendor: medevit.at
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ ch.rgw.utility,
+ org.eclipse.ui.forms,
+ ch.elexis.core;bundle-version="3.0.0",
+ ch.elexis.core.data;bundle-version="3.0.0",
+ ch.elexis.core.ui;bundle-version="3.0.0",
+ ch.elexis.core.ui.icons
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pointareas validfrom="01.01.10">
+	<pointarea>
+		<area value="pointrange(1-10000, QUARTER)"/>
+		<multiplier value="1,2395"/>
+	</pointarea>
+	<pointarea>
+		<area value="pointrange(10001-45000, QUARTER)"/>
+		<multiplier value="0,9833"/>
+	</pointarea>
+	<pointarea>
+		<area value="pointrange(45001-60000, QUARTER)"/>
+		<multiplier value="0,6285"/>
+	</pointarea>
+	<pointarea>
+		<area value="pointrange(60001-70000, QUARTER)"/>
+		<multiplier value="0,4989"/>
+	</pointarea>
+	<pointarea>
+		<area value="pointrange(70001-10000000, QUARTER)"/>
+		<multiplier value="0,1306"/>
+	</pointarea>
+</pointareas>

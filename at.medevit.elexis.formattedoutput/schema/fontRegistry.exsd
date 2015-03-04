@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="at.medevit.elexis.formattedoutput" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="at.medevit.elexis.formattedoutput" id="fontRegistry" name="fontRegistry"/>
+      </appInfo>
+      <documentation>
+         This extension point registers fonts with the Apache Formatted Output rendering service.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="fontTriplet" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="PdfRendererFontFile">
+      <complexType>
+         <attribute name="embed-url" type="string" use="required">
+            <annotation>
+               <documentation>
+                  URI of the font file.
+
+E.g. platform:/plugin/at.medevit.elexis.formattedoutput/fonts/TheSans_Plain.ttf
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="metrics-url" type="string">
+            <annotation>
+               <documentation>
+                  URI of the font metrics.
+
+E.g. platform:/plugin/at.medevit.elexis.formattedoutput/fonts/TheSans_Plain.xml
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="kerning" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="fontTriplet">
+      <complexType>
+         <sequence>
+            <element ref="PdfRendererFontFile"/>
+            <element ref="PsRendererFontFile"/>
+         </sequence>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="style" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="weight" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="PsRendererFontFile">
+      <annotation>
+         <documentation>
+            The type 1 font file for font-triplet for usage by the FOP Postscript Renderer as due to http://xmlgraphics.apache.org/fop/1.0/fonts.html#register the PostScript renderer does not yet support TrueType fonts, but can embed Type 1 fonts.
+
+How to correctly integrate:
+
+1. Create a pfb file from a TrueType Font - ./ttf2pt1 -a -b
+2. Set the respective afp file for embed-url
+3. The correspoding afm file is required, but MUST NOT be integrated within the metrics-url parameter
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="embed-url" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="metrics-url" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="kerning" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.0.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         Usage example for registration of a True Type Font:
+
+&lt;pre&gt;
+&lt;fontFile embed-url=&quot;platform:/plugin/at.medevit.elexis.at.rezepte/rsc/fonts/TheSans_Plain.ttf&quot;
+ kerning=&quot;true&quot; metrics-url=&quot;platform:/plugin/at.medevit.elexis.at.rezepte/rsc/fonts/TheSans_Plain.xml&quot;&gt;
+ &lt;fontTriplet
+   name=&quot;TheSansPlain&quot;
+   style=&quot;normal&quot;
+   weight=&quot;400&quot;&gt;
+ &lt;/fontTriplet&gt;
+&lt;/fontFile&gt;
+&lt;/pre&gt;
+
+Usage example for registration of a Post Script Type 1 font, we need no special XML here:
+
+&lt;pre&gt;
+&lt;fontFile embed-url=&quot;platform:/plugin/at.medevit.elexis.at.rezepte/rsc/fonts/TSan5___.pfb&quot;
+ kerning=&quot;false&quot;&gt;
+ &lt;fontTriplet
+   name=&quot;TheSans-Plain&quot;
+   style=&quot;normal&quot;
+   weight=&quot;normal&quot;&gt;
+ &lt;/fontTriplet&gt;
+&lt;/fontFile&gt;
+&lt;/pre&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         This extension point registers fonts with Formatted Output, see http://xmlgraphics.apache.org/fop/1.0/fonts.html#advanced for information.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

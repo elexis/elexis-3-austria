@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/"
+            class="at.medevit.elexis.kassen.core.ui.GeneralPreferencePage"
+            id="at.medevit.elexis.kassen.core.Krankenkassen"
+            name="Krankenkassen">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.core.ui.GeneralPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="ch.elexis.core.data.RechnungsManager">
+      <Rechnung
+            name="Wahlarzt Honorarnote Standard"
+            outputter="at.medevit.elexis.kassen.core.outputter.WahlarztRnOutputter">
+      </Rechnung>
+   </extension>
+
+</plugin>

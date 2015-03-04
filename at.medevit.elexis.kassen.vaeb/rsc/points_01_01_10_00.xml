@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pointareas validfrom="01.01.10">
+	<!-- A. Allgemeine Leistungen und Sonderleistungen -->
+	<pointarea>
+		<area value="positioningroup(1.1-1.10)"/>
+		<multiplier value="0,7372"/>
+	</pointarea>
+	<pointarea>
+	    <area value="positioningroup(1.1-1.10) and mandantspecialityis(ALLGEMEIN)"/>
+		<multiplier value="0,7615"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.1-1.10) and mandantspecialityis(INNERE)"/>
+		<multiplier value="1,0085"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.1-1.10) and mandantspecialityis(KINDER_JUGEND)"/>
+		<multiplier value="1,0821"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.1-1.10) and(mandantspecialityis(ANAESTHOLOGIE_INTENSIV) or mandantspecialityis(LUNGEN) or mandantspecialityis(NEURO_PHSYCHIATRIE))"/>
+		<multiplier value="0,8667"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.11)"/>
+		<multiplier value="0,1046"/>
+	</pointarea>
+
+	<!-- B. Operations Tarif -->
+	<pointarea>
+		<area value="positioningroup(2)"/>
+		<multiplier value="0,7372"/>
+	</pointarea>
+		
+	<!-- C. Physiklaische Behandlungen -->
+	<pointarea>
+		<area value="positioningroup(3)"/>
+		<multiplier value="0,1046"/>
+	</pointarea>
+
+	<!-- D. Labor Tarif -->
+	<pointarea>
+		<area value="positioningroup(4)"/>
+		<multiplier value="1,8165"/>
+	</pointarea>
+
+</pointareas>

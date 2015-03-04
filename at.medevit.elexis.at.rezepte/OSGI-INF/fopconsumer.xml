@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="at.medevit.elexis.at.rezepte">
+   <implementation class="at.medevit.elexis.at.rezepte.formattedoutputconsumer.FOPConsumer"/>
+   <reference bind="setFormattedOutputServiceFactory" cardinality="1..1" interface="at.medevit.elexis.formattedoutput.IFormattedOutputFactory" name="IFormattedOutputFactory" policy="static" unbind="unsetFormattedOutputServiceFactory"/>
+</scr:component>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.at.XID.SVNR">
+      </startup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="at.medevit.elexis.at.properties.propertyPage.KassenDaten"
+            icon="rsc/icons/at.png"
+            id="at.medevit.elexis.at.properties.propertyPage.KassenDaten"
+            name="Kassendaten">
+         <enabledWhen>
+            <instanceof
+                  value="ch.elexis.data.Patient">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
+
+</plugin>

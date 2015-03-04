@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.vgkk.VgkkPersistentObjectFactory"
+            name="VgkkPersistentObjectFactory">
+      </Factory>
+   </extension>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Leistung
+            CodeDetailDisplay="at.medevit.elexis.kassen.vgkk.VgkkDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.kassen.vgkk.VgkkCodeSelectorFactory"
+            ElementFactory="at.medevit.elexis.kassen.vgkk.VgkkPersistentObjectFactory"
+            ImporterClass="at.medevit.elexis.kassen.vgkk.importer.VgkkLeistungsImporter"
+            name="VGKK">
+      </Leistung>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.vgkk.ui.VgkkPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.vgkk.ui.VgkkPreferencePage"
+            id="at.medevit.elexis.kassen.vgkk.GeneralPreferences"
+            name="VGKK">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.kassen.vgkk.Startup">
+      </startup>
+   </extension>
+
+</plugin>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.sva.SvaPersistentObjectFactory"
+            name="SvaPersistentObjectFactory">
+      </Factory>
+   </extension>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Leistung
+            CodeDetailDisplay="at.medevit.elexis.kassen.sva.SvaDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.kassen.sva.SvaCodeSelectorFactory"
+            ElementFactory="at.medevit.elexis.kassen.sva.SvaPersistentObjectFactory"
+            ImporterClass="at.medevit.elexis.kassen.sva.importer.SvaLeistungsImporter"
+            name="SVA">
+      </Leistung>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.sva.ui.SvaPreferencePage"
+            id="at.medevit.elexis.kassen.sva.GeneralPreferences"
+            name="SVA">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.sva.ui.SvaPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.kassen.sva.Startup">
+      </startup>
+   </extension>
+
+</plugin>

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Netservice
+Bundle-SymbolicName: at.medevit.elexis.befuem.netservice
+Bundle-Version: 1.0.1.qualifier
+Bundle-Activator: at.medevit.elexis.befuem.netservice.Activator
+Import-Package: org.eclipse.swt
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/netservice.xml
+Require-Bundle: org.eclipse.equinox.ds;bundle-version="1.2.1",
+ org.eclipse.equinox.util;bundle-version="1.0.200",
+ org.eclipse.osgi;bundle-version="3.6.1"
+Export-Package: at.medevit.elexis.befuem.netservice

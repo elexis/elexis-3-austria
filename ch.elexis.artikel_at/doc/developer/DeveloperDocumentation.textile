@@ -1,0 +1,8 @@
+h1. Entwickler Dokumentation für Elexis Importer Vidal Österreich
+
+UML Grafiken erstellt mit "UMLET":http://www.umlet.com
+
+
+h3. Klassendiagramm
+
+!overview.jpg!

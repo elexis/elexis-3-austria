@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Leistung
+            CodeDetailDisplay="at.medevit.elexis.kassen.svb.SvbDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.kassen.svb.SvbCodeSelectorFactory"
+            ElementFactory="at.medevit.elexis.kassen.svb.SvbPersistentObjectFactory"
+            name="SVB">
+      </Leistung>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.svb.ui.SvbPreferencePage"
+            id="at.medevit.elexis.kassen.svb.GeneralPreferences"
+            name="SVB">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.svb.ui.SvbPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.kassen.svb.Startup">
+      </startup>
+   </extension>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.svb.SvbPersistentObjectFactory"
+            name="SVB">
+      </Factory>
+   </extension>
+
+</plugin>

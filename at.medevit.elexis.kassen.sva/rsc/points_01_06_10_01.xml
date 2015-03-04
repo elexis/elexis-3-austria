@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pointareas validfrom="01.06.10">
+
+	<!-- A. Allgemeine Leistungen und Sonderleistungen -->
+	<pointarea>
+		<area value="positioningroup(1.1-1.7)"/>
+		<multiplier value="0,6813"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.10)"/>
+		<multiplier value="0,6813"/>
+	</pointarea>
+	
+	<pointarea>
+		<area value="positioningroup(1.8)"/>
+		<multiplier value="0,5321"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.9)"/>
+		<multiplier value="0,6499"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(1.11)"/>
+		<multiplier value="0,5115"/>
+	</pointarea>	
+	<pointarea>
+		<area value="positioningroup(1.12)"/>
+		<multiplier value="0,5218"/>
+	</pointarea>	
+	<pointarea>
+		<area value="positioningroup(1.13)"/>
+		<multiplier value="0,4690"/>
+	</pointarea>	
+	
+	<!-- B. Operations Tarif -->
+	<pointarea>
+		<area value="positioningroup(2)"/>
+		<multiplier value="0,6813"/>
+	</pointarea>
+	
+	<!-- C. Physiklaische Behandlungen -->
+	<pointarea>
+		<area value="positioningroup(3)"/>
+		<multiplier value="0,5115"/>
+	</pointarea>
+	
+	<!-- D. Labor Tarif -->
+	<pointarea>
+		<area value="positioningroup(4) and mandantspecialityis(LAB_DIAGNOSTIK)"/>
+		<multiplier value="0,1729"/>
+	</pointarea>
+	<pointarea>
+		<area value="positioningroup(4)"/>
+		<multiplier value="0,2507"/>
+	</pointarea>
+		<pointarea>
+		<area value="positioningroup(6)"/>
+		<multiplier value="0,5218"/>
+	</pointarea>	
+</pointareas>

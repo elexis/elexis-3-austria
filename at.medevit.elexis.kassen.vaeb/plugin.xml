@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.kassen.vaeb.VaebPersistentObjectFactory"
+            name="VaebPersistentObjectFactory">
+      </Factory>
+   </extension>
+   <extension
+         point="ch.elexis.core.ui.Verrechnungscode">
+      <Leistung
+            CodeDetailDisplay="at.medevit.elexis.kassen.vaeb.VaebDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.kassen.vaeb.VaebCodeSelectorFactory"
+            ElementFactory="at.medevit.elexis.kassen.vaeb.VaebPersistentObjectFactory"
+            ImporterClass="at.medevit.elexis.kassen.vaeb.importer.VaebLeistungsImporter"
+            name="VAEB">
+      </Leistung>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="at.medevit.elexis.kassen.vaeb.ui.VaebPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="/ch.elexis.Leistungscodes/at.medevit.elexis.kassen.core.Krankenkassen"
+            class="at.medevit.elexis.kassen.vaeb.ui.VaebPreferencePage"
+            id="at.medevit.elexis.kassen.vaeb.GeneralPreferences"
+            name="VAEB">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="at.medevit.elexis.kassen.vaeb.Startup">
+      </startup>
+   </extension>
+
+</plugin>

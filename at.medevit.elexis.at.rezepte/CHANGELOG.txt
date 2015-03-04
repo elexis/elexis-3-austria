@@ -1,0 +1,33 @@
+1.0.0 - Q1 2011
+	- Initial implementation
+1.0.1 - Q1-2011
+	- Unknown
+1.0.2 - 10.05.2011
+	- Added TheSans-Expert
+	- HerzpraxisCharReplacer included for arbitraray fractions
+	- Fixed bug on print of Einnahmeliste when recipe requested
+	- FixMediSignaturEditingSupport limited to 10 chars
+	- FixMediEinnahmeVorschriftEditingSupport limited to 80 chars
+1.0.3 - 10.05.2011
+	- Fix for PS Output malparsing of user configuration
+	- Added missing font metrics files (need to be enclosed, but not referenced in EP)
+1.0.4 - 07.06.2011
+	- Multiple refactorings (commands)
+	- Rezept now prints correct on >1 pages
+	- No more internal preview, direct printing of Rezept
+	- No more internal preview, direct PDF export of Einnahmeliste
+	- Introduced dependency on at.medevit.elexis.at -> XID SVNR
+1.0.5 - 08.06.2011
+	- XSLT Adaptions
+	- Changes of Abgabedialog
+1.0.6 - 10.6.2011
+	- FreeSans default
+	- Minor refactoring
+1.0.7 - 15.6.2011
+	- Remove TheSans fonts resp. extension point
+1.0.8 - 27.9.2011
+	- Option Rezept mit/ohne Datum drucken
+	- Cleaning of herzpraxis char replacement stuff
+1.0.9 - 6.12.2011
+	- Ordering of Prescriptions by Drag and Drop
+	- respecting the order of elements in printout

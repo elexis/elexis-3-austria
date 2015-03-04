@@ -1,0 +1,10 @@
+1.0.1 - 9. Juni 2011 - M. Descher
+	- Added FreeMono freefont type from http://savannah.gnu.org/projects/freefont/
+1.0.2 - 9. Juni 2011 - M. Descher
+	- Full implementation of freefont types
+1.0.3 - 9. Juni 2011 - M. Descher
+	- Fix for wrong location of freefont
+1.0.4 - 15. Juni 2011 
+	- PS Renderer does only take Type 1 Fonts, added respective FreeSans Type 1 fonts by 
+	  converting ttf to pfb using http://ttf2pt1.sourceforge.net/download.html
+	- Corresponding change of extension point, now the font-triplet is the starting point

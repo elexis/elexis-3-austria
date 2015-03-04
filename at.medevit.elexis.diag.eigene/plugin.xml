@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="ch.elexis.core.data.PersistentReference">
+      <Factory
+            Class="at.medevit.elexis.diag.eigene.EigenePersistentObjectFactory">
+      </Factory>
+   </extension>
+   <extension
+         point="ch.elexis.core.ui.Diagnosecode">
+      <Diagnosesystem
+            CodeDetailDisplay="at.medevit.elexis.diag.eigene.EigeneDetailDisplay"
+            CodeSelectorFactory="at.medevit.elexis.diag.eigene.EigeneCodeSelectorFactory:1"
+            ElementFactory="at.medevit.elexis.diag.eigene.EigenePersistentObjectFactory:1"
+            name="Eigene">
+      </Diagnosesystem>
+   </extension>
+
+</plugin>

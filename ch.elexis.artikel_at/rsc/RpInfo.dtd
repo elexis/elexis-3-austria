@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ###################################################################### -->
+<!-- ### XML DTD der Arzneimittelinformation VIDAL GmbH zur Definition  ### -->
+<!-- ### einer Datenaustauschdatei fuer RpInfo-Daten                    ### -->
+<!-- ###                                                                ### -->
+<!-- ### Erstellt von Ruprecht Leitner fuer die                         ### -->
+<!-- ### Arzneimittelinformation VIDAL GmbH.                            ### -->
+<!-- ###                                                                ### -->
+<!-- ### Copyright (C) 2002-2005, Ruprecht Leitner und Arzneimittel-    ### -->
+<!-- ### VIDAL GmbH. Alle Rechte vorbehalten.                           ### -->
+<!-- ###                                                                ### -->
+<!-- ### Version 1.5, 30.06.2005, Update Kassenzeichen F6J, DS, L3, L6, ### -->
+<!-- ###              L9, L12, Erweiterung Remb Wertebereich            ### -->
+<!-- ### Version 1.4, 01.03.2005, Integration der erweiterten PG-Info,  ### -->
+<!-- ###              SV-Box Info, Regeltexten und Hinweistexten,       ### -->
+<!-- ###              Update Kassenzeichen für RE1, RE2                 ### -->
+<!-- ### Version 1.3, 01.09.2003, Integration der numerischen Z.Nr.,    ### -->
+<!-- ###              Aenderungen bei Rezept- und Kassenzeichen         ### -->
+<!-- ### Version 1.2, 21.02.2002, Release                               ### -->
+<!-- ### Version 1.1, 20.02.2002, Beta-2                                ### -->
+<!-- ### Version 1.0, 19.02.2002, Beta-1                                ### -->
+<!-- ###################################################################### -->
+
+
+<!-- ###################################################################### -->
+<!-- ### ENTITY DEKLARATIONEN                                           ### -->
+<!-- ###################################################################### -->
+
+<!-- **********************************************************************
+  RpDataTypes gibt den Typ des aktuellen Datensatzes an:
+  - D = Delete (Datensatz ist zum Loeschen markiert)
+  - I = Insert (Datensatz ist zum Anfuegen markiert (neuer Datensatz))
+  - U = Update (Datensatz ist zum Aktualisieren markiert)
+  ************************************************************************* -->
+<!ENTITY % EntryTypes "(D | I | U)">
+
+<!-- *** binaerer (bool'scher) Datentyp: 0 = falsch; 1 = wahr           *** -->
+<!ENTITY % RpBool "(0 | 1)">
+
+<!-- *** Laendercodes: AT = Oesterreich; CH = Schweiz; DE = Deutschland *** -->
+<!ENTITY % RpCountries "(AT | CH | DE)">
+
+<!-- **********************************************************************
+  RpDataTypes gibt den Typ der Daten an:
+  - F = FullSet (Basisdatenbestand)
+  - S = Sample (Beispieldatenbestand)
+  - U = Update (Aktualisierungsdatenbestand)
+  ************************************************************************* -->
+<!ENTITY % RpDataTypes "(F | S | U)">
+
+<!-- **********************************************************************
+  RpRembValue gibt die freie Verschreibbarkeit an:
+  - 0 = Arzneimittel ist nicht auf Rechnung der Krankenversicherungstraeger
+        zugelassen.
+  - 1 = Als frei verschreibbar gilt nur eine Packungsgroesse.
+  - 2 = Als frei verschreibbar gilt das Doppelte der angegebenen Menge. Die
+        angegebene Menge entspricht dem Inhalt einer Originalpackung.
+  - 3 = Als frei verschreibbar gilt das Dreifache der angegebenen Menge.
+        Die angegebene Menge entspricht dem Inhalt einer Originalpackung.
+  - 4 = usw.
+  v1.5 Erweiterung des Wertebereichs auf 0 bis 9 
+  ************************************************************************* -->
+<!ENTITY % RpRembValue "(0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)">
+
+<!-- **********************************************************************
+  BoxStatus gibt die jeweilige SV-Box an, in der sich die Packungsgroesse
+  befindet:
+  - G = Green Box (Gruene Box)
+  - Y = Yellow Box (Gelbe Box)
+  - R = Red Box (Rote Box)
+  - N = No Box (in keiner Box)
+  ************************************************************************* -->
+<!ENTITY % BoxStatus "(G | Y | R | N)">
+
+<!-- **********************************************************************
+  RpStatus gibt den Status der Verfuegbarkeit an:
+  - H = zugelassen, im Handel und lieferbar
+  - L = zugelassen, im Handel, nicht lieferbar
+  - Z = zugelassen, nicht im Handel
+  ************************************************************************* -->
+<!ENTITY % RpStatus "(H | L | Z)">
+
+<!-- **********************************************************************
+  RpUnits gibt die standardisierte (gekuerzte) Einheit an:
+  - 0 = keine Angabe
+  - 1 = Milligramm
+  - 2 = Gramm
+  - 3 = Internationale Einheiten
+  - 4 = Kilogramm
+  - 5 = Liter
+  - 6 = Meter
+  - 7 = Stueck
+  - 8 = Milliliter
+  ************************************************************************* -->
+<!ENTITY % RpUnits "(0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)">
+
+
+<!-- ###################################################################### -->
+<!-- ### ROOT ELEMENT                                                   ### -->
+<!-- ###################################################################### -->
+<!ELEMENT VRpInfo (RpHeader, RpData, RpCompRefs)>
+
+
+<!-- ###################################################################### -->
+<!-- ### DOCUMENT HEADER PART                                           ### -->
+<!-- ###################################################################### -->
+<!ELEMENT RpHeader (Filename, Generator, PubTitle, PubDate, PubAuthor, 
+  PubCopyright)>
+
+<!-- *** Dateiname der Datenaustauschdatei                              *** -->
+<!ELEMENT Filename (#PCDATA)>
+
+<!-- *** Name der erzeugenden Schnittstelle                             *** -->
+<!ELEMENT Generator (#PCDATA)>
+
+<!-- **********************************************************************
+  Titel der Datendatei; das Attribut Country gibt das Land an, fuer das die
+  Informationen gueltig sind.                                           *** -->
+<!ELEMENT PubTitle (#PCDATA)>
+<!ATTLIST PubTitle
+  Country %RpCountries; #REQUIRED
+>
+
+<!-- *** Erzeugungdatum und Uhrzeit (Timestamp) der Datenaustauschdatei *** -->
+<!ELEMENT PubDate (#PCDATA)>
+
+<!-- *** Autoreninformation zur Datenaustauschdatei                     *** -->
+<!ELEMENT PubAuthor (#PCDATA)>
+
+<!-- *** Copyrightnotizen zur Datenaustauschdatei                       *** -->
+<!ELEMENT PubCopyright (#PCDATA)>
+
+
+<!-- ###################################################################### -->
+<!-- ### DOCUMENT DATA PART                                             ### -->
+<!-- ###################################################################### -->
+
+<!-- **********************************************************************
+  Wrapper fuer die einzelnen Eintraege; das Attribut DataCRC gibt einen 
+  CRC-32 Wert ueber alle Datensaetze, das Attribut DataType den Typ der
+  Daten an.
+  ************************************************************************* -->
+<!ELEMENT RpData (RpEntry)+>
+<!ATTLIST RpData
+  DataType %RpDataTypes; #REQUIRED
+>
+
+<!-- **********************************************************************
+  Wrapper fuer einen Datensatz; das Attribut EntryCRC gibt einen CRC-32
+  Wert ueber alle Felder des aktuellen Datensatzes, das Attribut EntryType
+  den Typ des Eintrags (siehe Entity EntryTypes), das Attribut EntryDate
+  das Datum (in der Notation JJJJMMTT) der Gueltigkeit fuer den aktuellen
+  Datensatz sowie das Attribute Status fuer den Status der Verfuegbarkeit
+  des aktuellen Arzneimittel-Datensatzes (siehe Entity RpStatus) an.
+  ************************************************************************* -->
+<!ELEMENT RpEntry (PhZNr, ZNr, SName, OName, DoLC, RSigns, Storage?, SSigns, 
+  Quantity, Unit, EnhUnitDesc?, KVP, AVP, ZInh)>
+<!ATTLIST RpEntry
+  EntryCRC  CDATA        #REQUIRED
+  EntryType %EntryTypes; #REQUIRED
+  EntryDate CDATA        #REQUIRED
+  Status    %RpStatus;   #REQUIRED
+>
+
+<!-- *** Pharmazentralnummer, eindeutige ID                             *** -->
+<!ELEMENT PhZNr (#PCDATA)>
+
+<!-- *** Zulassungsnummer, ab v1.3 mit numerischer Form als Attribut    *** -->
+<!ELEMENT ZNr (#PCDATA)>
+<!ATTLIST ZNr
+  ZNrNum CDATA #REQUIRED
+>
+
+<!-- *** gekuerzter Produktname auf maximal 28 Zeichen Laenge           *** -->
+<!ELEMENT SName (#PCDATA)>
+
+<!-- *** offizieller Produktname der Arzneispezialitaet                 *** -->
+<!ELEMENT OName (#PCDATA)>
+
+<!-- *** Datum der letzten Aenderung (in der Notation JJJJMMTT)         *** -->
+<!ELEMENT DoLC (#PCDATA)>
+
+<!-- **********************************************************************
+  Rezeptzeichen; die Attribute geben den dichotomen Status des jeweiligen
+  Rezeptzeichens an. Die Bedeutung der einzelnen Zeichen ist in der jeweils
+  gueltigen Ausgabe des VIDAL Arzneimittelkompendiums im Abschnitt
+  Zeichenerklaerung nachzuschlagen.
+  v1.3: P1, P5 hinzugefuegt; B, GF in die Kassenzeichen verschoben
+  ************************************************************************* -->
+<!ELEMENT RSigns EMPTY>
+<!ATTLIST RSigns
+  P1  %RpBool; #REQUIRED
+  P5  %RpBool; #REQUIRED
+  R1  %RpBool; #REQUIRED
+  R2  %RpBool; #REQUIRED
+  SG  %RpBool; #REQUIRED
+  S1  %RpBool; #REQUIRED
+  S5  %RpBool; #REQUIRED
+  W1  %RpBool; #REQUIRED
+  W2  %RpBool; #REQUIRED
+  W6  %RpBool; #REQUIRED
+  W7  %RpBool; #REQUIRED
+  W8  %RpBool; #REQUIRED
+  W9  %RpBool; #REQUIRED
+  W10 %RpBool; #REQUIRED
+  W11 %RpBool; #REQUIRED
+  W12 %RpBool; #REQUIRED
+  W13 %RpBool; #REQUIRED
+  W14 %RpBool; #REQUIRED
+  W15 %RpBool; #REQUIRED
+  W16 %RpBool; #REQUIRED
+>
+
+<!-- *** besondere Lagerungshinweise                                    *** -->
+<!ELEMENT Storage (#PCDATA)>
+
+<!-- **********************************************************************
+  Kassenzeichen: das Attribut Remb gibt den Status der freien
+  Verschreibbarkeit an; die anderen Attribute geben den dichotomen Status
+  des jeweiligen Kassen- bzw. packungsgroessenbezogenen Zeichens an. Die
+  Bedeutung der einzelnen Zeichen ist in der jeweils gueltigen Ausgabe des
+  VIDAL Arzneimittelkompendiums im Abschnitt Zeichenerklaerung
+  nachzuschlagen. Im Fall einer existierenden Indikation (IND-Attribut) ist
+  der entsprechende Indikationstext im Element INDText angefuehrt.
+  v1.3: B und GF aus den Rezeptzeichen hierher verschoben
+  v1.4: RE1 und RE2, Box, Reegeltext und Hinweistext hinzugefuegt
+  v1.5: F6J, DS, L3, L6, L9, und L12 hinzugefuegt
+  ************************************************************************* -->
+<!ELEMENT SSigns (#PCDATA)>
+<!ATTLIST SSigns
+  Remb %RpRembValue; #REQUIRED
+  Box  %BoxStatus; #REQUIRED
+  AU   %RpBool; #REQUIRED
+  B    %RpBool; #REQUIRED
+  CH14 %RpBool; #REQUIRED
+  D    %RpBool; #REQUIRED
+  DS   %RpBool; #REQUIRED
+  F    %RpBool; #REQUIRED
+  F6J  %RpBool; #REQUIRED
+  GF   %RpBool; #REQUIRED
+  IND  %RpBool; #REQUIRED
+  K    %RpBool; #REQUIRED
+  KF14 %RpBool; #REQUIRED
+  KF2  %RpBool; #REQUIRED
+  L3   %RpBool; #REQUIRED
+  L6   %RpBool; #REQUIRED
+  L9   %RpBool; #REQUIRED
+  L12  %RpBool; #REQUIRED
+  NE   %RpBool; #REQUIRED
+  PS   %RpBool; #REQUIRED
+  R    %RpBool; #REQUIRED
+  RE1  %RpBool; #REQUIRED
+  RE2  %RpBool; #REQUIRED
+  U    %RpBool; #REQUIRED
+>
+
+<!-- *** (optionaler) Text zur Indikation                               *** -->
+<!ELEMENT INDText (#PCDATA)>
+
+<!-- *** (optionaler) SV-Regeltext (ab v1.4)                            *** -->
+<!ELEMENT RuleText (#PCDATA)>
+
+<!-- *** (optionaler) SV-Hinweistext (ab v1.4)                          *** -->
+<!ELEMENT RemarkText (#PCDATA)>
+
+<!-- *** Menge (Dezimalzahl)                                            *** -->
+<!ELEMENT Quantity (#PCDATA)>
+
+<!-- **********************************************************************
+  Einheit laut Fachinformation; das Attribut SUnit gibt die standardisierte
+  (und gekuerzte) Einheit an (moegliche Werte siehe Entity RpUnits).
+  ************************************************************************* -->
+<!ELEMENT Unit (#PCDATA)>
+<!ATTLIST Unit
+  SUnit %RpUnits; #REQUIRED
+>
+
+<!-- *** erweiterte Einheitenbeschreibung (ab v1.4)                     *** -->
+<!ELEMENT EnhUnitDesc (#PCDATA)>
+
+<!-- *** Kassenverkaufspreis (KVP) in Euro (Dezimalzahl)                *** -->
+<!ELEMENT KVP (#PCDATA)>
+
+<!-- *** Apothekenverkaufspreis (AVP) in Euro (Dezimalzahl)             *** -->
+<!ELEMENT AVP (#PCDATA)>
+
+<!-- *** Zulassungsinhaber-Code                                         *** -->
+<!ELEMENT ZInh (#PCDATA)>
+
+
+<!-- ###################################################################### -->
+<!-- ### DOCUMENT REFERENCE PART                                        ### -->
+<!-- ###################################################################### -->
+<!ELEMENT RpCompRefs (CompRef)+>
+
+<!-- **********************************************************************
+  Struktur fuer einen Eintrag in der Referenzliste pharmazeutischer
+  Unternehmen (Zulassungsinhaber). Das Element selbst gibt den Namen des
+  pharmazeutischen Unternehmens an; das Attribut CompID diejenige Nummer,
+  unter der das pharmazeutische Unternehmen im Datenblock referenziert ist.
+  ************************************************************************* -->
+<!ELEMENT CompRef (#PCDATA)>
+<!ATTLIST CompRef
+  CompID CDATA #REQUIRED
+>
+
+
+<!-- ###################################################################### -->
+<!-- ### ENDE DER DTD                                                   ### -->
+<!-- ###################################################################### -->

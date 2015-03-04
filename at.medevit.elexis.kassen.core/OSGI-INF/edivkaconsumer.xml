@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="at.medevit.elexis.kassen.core.outputter.edivkaconsumer">
+   <implementation class="at.medevit.elexis.kassen.core.outputter.EdivkaConsumer"/>
+   <reference bind="setEdivkaService" cardinality="1..1" interface="at.medevit.elexis.kassen.edivka.IEdivkaService" name="IEdivkaService" policy="static" unbind="unsetEdivkaService"/>
+</scr:component>

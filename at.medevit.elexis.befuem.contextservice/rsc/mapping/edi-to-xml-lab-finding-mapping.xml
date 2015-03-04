@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*******************************************************************************
+ * Copyright (c) 2015 MEDEVIT and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     MEDEVIT <office@medevit.at> - initial API and implementation
+ *******************************************************************************/
+ -->
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.4.xsd">
+
+	<medi:description name="MEDEVIT EDI Lab Finding" version="1.0" />
+
+    <medi:delimiters segment="'" field="+" component=":" sub-component="~" escape="?"/>
+
+	<medi:segments xmltag="document">
+
+		<!-- ignore starting segments  -->
+		<medi:segment segcode="UNA:" xmltag="ignore" minOccurs="0" ignoreUnmappedFields="true">
+        </medi:segment>
+        
+		<medi:segment segcode="UNB" xmltag="docinfo" minOccurs="0" ignoreUnmappedFields="true">
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="sender" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />
+	        	<medi:field xmltag="ignore" />	  
+	        	<medi:field xmltag="ignore" />      	
+        </medi:segment>
+        
+        <!-- finding group -->
+        <medi:segmentGroup xmltag="finding" minOccurs="0" maxOccurs="-1">
+			<medi:segment segcode="UNH" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+	        </medi:segment>
+	        
+	        <!-- finding identification -->
+	        <medi:segment segcode="BGM" xmltag="findingid" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+	        	<medi:field xmltag="field" />
+	        </medi:segment>
+			
+			<!-- optional finding text -->
+			<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="description" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="textfield" truncatable="true">
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+					<medi:component dataType="String" xmltag="text"/>
+				</medi:field>
+			</medi:segment>
+			
+			<!-- patient information for patient -->
+			<medi:segment segcode="NAD" xmltag="patient" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="description" />
+				<medi:field xmltag="birthdate" />
+				<medi:field xmltag="visitaddress" />
+				<medi:field xmltag="id" truncatable="true">
+				 	<medi:component dataType="String" xmltag="lastname"/>
+				 	<medi:component dataType="String" xmltag="firstname"/>
+				 	<medi:component dataType="String" xmltag="title"/>
+				 	<medi:component dataType="String" xmltag="birthname"/>
+				</medi:field>
+				<medi:field xmltag="street" truncatable="true">
+					<medi:component dataType="String" xmltag="street1"/>
+				 	<medi:component dataType="String" xmltag="street2"/>
+				</medi:field>
+				<medi:field xmltag="city" />
+				<medi:field xmltag="gender" />
+				<medi:field xmltag="zip" />
+			</medi:segment>
+			
+			<!-- optional communication information for patient -->
+			<medi:segment segcode="COM" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="ignore" truncatable="true">
+				 	<medi:component xmltag="ignore"/>
+				 	<medi:component xmltag="ignore"/>
+				</medi:field>
+			</medi:segment>
+			
+		    <medi:segment segcode="RFF" xmltag="reference" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		    	<medi:field xmltag="refcode" truncatable="true">
+		        	<medi:component xmltag="code"/>
+		        	<medi:component xmltag="value"/>
+		    	</medi:field>
+		    </medi:segment>
+			
+			<!-- optional insurance information -->
+			<medi:segment segcode="NAD" xmltag="insuracnce" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="description" />
+				<medi:field xmltag="code" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="id" truncatable="true">
+				 	<medi:component dataType="String" xmltag="lastname"/>
+				 	<medi:component dataType="String" xmltag="firstname"/>
+				 	<medi:component dataType="String" xmltag="title"/>
+				</medi:field>
+				<medi:field xmltag="street" truncatable="true">
+					<medi:component dataType="String" xmltag="street1"/>
+				 	<medi:component dataType="String" xmltag="street2"/>
+				</medi:field>
+				<medi:field xmltag="city" />
+				<medi:field xmltag="ignore" />
+				<medi:field xmltag="zip" />
+			</medi:segment>
+			
+			<!-- optional communication information for insurance -->
+			<medi:segment segcode="COM" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+				<medi:field xmltag="ignore" truncatable="true">
+				 	<medi:component xmltag="ignore"/>
+				 	<medi:component xmltag="ignore"/>
+				</medi:field>
+			</medi:segment>
+			
+			<!-- test group -->
+			<medi:segmentGroup xmltag="test" minOccurs="0" maxOccurs="-1">
+				<medi:segment segcode="GIS" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+	        		<medi:field xmltag="chargingcode" />
+	        	</medi:segment>
+	        	
+	        	<!-- DESCRIPTION segments RFF+BFR:0305150900///'DTM+119:030515:101'DTM+MDT:030515:101' -->
+	        	<medi:segmentGroup xmltag="testdescription" minOccurs="0" maxOccurs="-1">
+		        	
+		        	<medi:segment segcode="RFF" xmltag="reference" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="refcode" truncatable="true">
+		        			<medi:component xmltag="code"/>
+		        			<medi:component xmltag="value"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<medi:segment segcode="DTM" xmltag="date" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="datevalue" truncatable="true">
+		        			<medi:component xmltag="code"/>
+		        			<medi:component xmltag="value"/>
+		        			<medi:component xmltag="format"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+						<medi:field xmltag="description" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="textfield" truncatable="true">
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+						</medi:field>
+					</medi:segment>
+					
+					<medi:segment segcode="CIN" xmltag="materialid" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="id" />
+		        	</medi:segment>
+		        	
+		            <medi:segment segcode="DTM" xmltag="date" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="datevalue" truncatable="true">
+		        			<medi:component xmltag="code"/>
+		        			<medi:component xmltag="value"/>
+		        			<medi:component xmltag="format"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+	        	</medi:segmentGroup>
+	        	
+	        	<!-- TEST segments -->
+	        	<medi:segmentGroup xmltag="testvalue" minOccurs="0" maxOccurs="-1">
+		        	<medi:segment segcode="IVS" xmltag="description" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="code" />
+		        		<medi:field xmltag="text" truncatable="true">
+		        			<medi:component dataType="String" xmltag="shorttext"/>
+		        			<medi:component xmltag="ignore"/>
+		        			<medi:component xmltag="ignore"/>
+					 		<medi:component dataType="String" xmltag="text"/>
+					 		<medi:component dataType="String" xmltag="text"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<!-- value information -->
+		        	<medi:segment segcode="RSL" xmltag="value" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="id1" />
+		        		<medi:field xmltag="id2" />
+		        		<!-- depending on id this is the actual measure or the reference minimal -->
+		        		<medi:field xmltag="measure" truncatable="true">
+		        			<medi:component xmltag="data"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component xmltag="pathologiccode"/>
+		        		</medi:field>
+		        		<medi:field xmltag="referencemax" truncatable="true">
+		        			<medi:component xmltag="data"/>
+		        		</medi:field>
+		        		<medi:field xmltag="entity" truncatable="true">
+		        			<medi:component xmltag="unit"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component dataType="String" xmltag="unittext"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<medi:segment segcode="RFF" xmltag="reference" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="refcode" truncatable="true">
+		        			<medi:component xmltag="code"/>
+		        			<medi:component xmltag="value"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+						<medi:field xmltag="description" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="textfield" truncatable="true">
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+						</medi:field>
+					</medi:segment>
+					
+					<!-- reference value information -->
+					<medi:segment segcode="RSL" xmltag="value" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="id1" />
+		        		<medi:field xmltag="id2" />
+		        		<!-- depending on id this is the actual measure or the reference minimal -->
+		        		<medi:field xmltag="measure" truncatable="true">
+		        			<medi:component xmltag="data"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component xmltag="pathologiccode"/>
+		        		</medi:field>
+		        		<medi:field xmltag="referencemax" truncatable="true">
+		        			<medi:component xmltag="data"/>
+		        		</medi:field>
+		        		<medi:field xmltag="entity" truncatable="true">
+		        			<medi:component xmltag="unit"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component xmltag="ignore"/>
+					 		<medi:component dataType="String" xmltag="unittext"/>
+		        		</medi:field>
+		        	</medi:segment>
+		        	
+		        	<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+						<medi:field xmltag="description" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="textfield" truncatable="true">
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+						</medi:field>
+					</medi:segment>
+					
+					<!-- optional charging information -->
+					<medi:segment segcode="RSL" xmltag="ignore" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+		        		<medi:field xmltag="id1" />
+		        		<medi:field xmltag="id2" />
+		        		<medi:field xmltag="ignore" />
+		        		<medi:field xmltag="ignore" />
+		        	</medi:segment>
+					
+					<medi:segment segcode="FTX" xmltag="textsegment" minOccurs="0" maxOccurs="-1" ignoreUnmappedFields="true">
+						<medi:field xmltag="description" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="ignore" />
+						<medi:field xmltag="textfield" truncatable="true">
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+							<medi:component dataType="String" xmltag="text"/>
+						</medi:field>
+					</medi:segment>
+					
+	        	</medi:segmentGroup>
+			</medi:segmentGroup>
+			
+			<!-- ignore end segments  -->
+			<medi:segment minOccurs="0" segcode="AUT" xmltag="ignore" ignoreUnmappedFields="true">
+	        </medi:segment>
+	        
+			<medi:segment minOccurs="0" segcode="UNT" xmltag="ignore" ignoreUnmappedFields="true">
+	        </medi:segment>
+        </medi:segmentGroup>
+        
+        <medi:segment minOccurs="0" segcode="UNZ" xmltag="ignore" ignoreUnmappedFields="true">
+        </medi:segment>
+	</medi:segments>
+</medi:edimap>
