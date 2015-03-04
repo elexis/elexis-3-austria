@@ -1,5 +1,8 @@
-# elexis-3-austria
-Elexis Österreich Plugins
+# Elexis 3 Österreich Plug-ins
+
+P2 Repository  http://download.elexis.info/elexis.3.austria/snapshot/
+zur Verwendung mit Elexis 3.0 ( http://download.elexis.info/elexis.3.core/3.0.0/)
+
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED 
 TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
