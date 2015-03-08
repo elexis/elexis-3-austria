@@ -46,13 +46,13 @@ public class Utilities {
 			boolean validArticle = true;
 			boolean validRecipe = true;
 
-			String refPerID = prescription.get(Prescription.PATIENT_ID);
+			String refPerID = prescription.get(Prescription.FLD_PATIENT_ID);
 			if (refPerID == null || refPerID.equals(""))
 				validPerson = false;
-			String refArtID = prescription.get(Prescription.ARTICLE);
+			String refArtID = prescription.get(Prescription.FLD_ARTICLE);
 			if (refArtID == null || refArtID.equals(""))
 				validArticle = false;
-			String refRezID = prescription.get(Prescription.REZEPT_ID);
+			String refRezID = prescription.get(Prescription.FLD_REZEPT_ID);
 			if (refRezID == null || refRezID.equals(""))
 				validRecipe = false;
 
@@ -146,7 +146,7 @@ public class Utilities {
 							pen.println(prescription.getId() + ":[OK]:" + PhZNr + " No update necessary.");
 							continue;
 						}
-						prescription.set(Prescription.ARTICLE, newest.storeToString());
+						prescription.set(Prescription.FLD_ARTICLE, newest.storeToString());
 						noOfUpdates++;
 						pen.println(prescription.getId() + ":[OK]:" + PhZNr + " Update to " + newest.getName()
 								+ " from " + newest.get(Artikel.FLD_LASTUPDATE));

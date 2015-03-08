@@ -35,6 +35,7 @@ public class KassenLeistungOptifier implements IOptifier {
 
 	ArrayList<KassenLeistung> additional = null;
 	AbstractKassenExpression logik = null;
+	private Verrechnet newVerrechnet;
 	
 	/**
 	 * The additional positions are expected in the following format.
@@ -132,8 +133,14 @@ public class KassenLeistungOptifier implements IOptifier {
 		if (foundVerrechnet != null) {
 			foundVerrechnet.changeAnzahl(foundVerrechnet.getZahl() + 1);
 		} else {
-			old.add(new Verrechnet(code, kons, 1));
+			newVerrechnet = new Verrechnet(code, kons, 1);
+			old.add(newVerrechnet);
 		}
+	}
+
+	@Override
+	public Verrechnet getCreatedVerrechnet() {
+		return newVerrechnet;
 	}
 	
 

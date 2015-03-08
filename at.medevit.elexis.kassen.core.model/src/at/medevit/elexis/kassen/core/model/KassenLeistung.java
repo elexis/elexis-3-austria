@@ -19,12 +19,15 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+
+
 import at.medevit.elexis.kassen.core.model.KassenCodes.SpecialityCode;
 import ch.elexis.core.data.activator.CoreHub;
 import ch.elexis.core.data.interfaces.IOptifier;
 import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
 import ch.elexis.data.Query;
 import ch.elexis.data.VerrechenbarAdapter;
+
 
 /**
  * 

@@ -26,8 +26,8 @@ public class FixMediOrderingComparator extends ViewerComparator implements Compa
 	@Override
 	public int compare(Prescription o1, Prescription o2){
 		try {
-			int p1 = Integer.parseInt(o1.get(Prescription.COUNT));
-			int p2 = Integer.parseInt(o2.get(Prescription.COUNT));
+			int p1 = Integer.parseInt(o1.get(Prescription.FLD_COUNT));
+			int p2 = Integer.parseInt(o2.get(Prescription.FLD_COUNT));
 			return p1 - p2;
 		} catch (NumberFormatException e) {
 			return 0;

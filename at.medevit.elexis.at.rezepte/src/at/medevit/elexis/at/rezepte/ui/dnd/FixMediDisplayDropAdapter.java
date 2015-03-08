@@ -67,8 +67,8 @@ public class FixMediDisplayDropAdapter extends ViewerDropAdapter {
 			int orderSource = 0;
 			try {
 				if (dropTarget != null)
-					orderTarget = Integer.parseInt(dropTarget.get(Prescription.COUNT));
-				orderSource = Integer.parseInt(dropSource.get(Prescription.COUNT));
+					orderTarget = Integer.parseInt(dropTarget.get(Prescription.FLD_COUNT));
+				orderSource = Integer.parseInt(dropSource.get(Prescription.FLD_COUNT));
 			} catch (NumberFormatException e) {
 				updateElementLocations();
 			}
@@ -108,7 +108,7 @@ public class FixMediDisplayDropAdapter extends ViewerDropAdapter {
 //			printOrder(clp, dropLocation);
 			for (int i = 0; i < clp.size(); i++) {
 				Prescription prescription = clp.get(i);
-				prescription.set(Prescription.COUNT, i + "");
+				prescription.set(Prescription.FLD_COUNT, i + "");
 			}
 			viewer.refresh();
 //			printOrder(clp, dropLocation);
@@ -121,7 +121,7 @@ public class FixMediDisplayDropAdapter extends ViewerDropAdapter {
 				IPersistentObject dropped = CoreHub.poFactory.createFromString(obj);
 				if (dropped instanceof Artikel) {
 					Prescription pre = new Prescription((Artikel) dropped, pat, "", "");
-					pre.set(Prescription.DATE_FROM, new TimeTool().toString(TimeTool.DATE_GER));
+					pre.set(Prescription.FLD_DATE_FROM, new TimeTool().toString(TimeTool.DATE_GER));
 					viewer.refresh();
 					updateElementLocations();
 				}
@@ -159,7 +159,7 @@ public class FixMediDisplayDropAdapter extends ViewerDropAdapter {
 		for (int i = 0; i < ti.length; i++) {
 			TableItem tableItem = ti[i];
 			Prescription p = (Prescription) tableItem.getData();
-			p.set(Prescription.COUNT, findRowForElement(p) + "");
+			p.set(Prescription.FLD_COUNT, findRowForElement(p) + "");
 		}
 	}
 	
