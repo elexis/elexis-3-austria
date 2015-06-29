@@ -174,7 +174,7 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="at.medevit.elexis.at.rezepte.commands.RezeptDrucken"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="ch.elexis.ui.keybindingScheme"
             sequence="M1+R">
       </key>
       <key
