@@ -12,13 +12,14 @@ package at.medevit.elexis.diag.eigene.model;
 
 import java.util.List;
 
+import ch.elexis.core.model.ICodeElement;
 import ch.elexis.data.PersistentObject;
 import ch.elexis.data.Query;
 import ch.rgw.tools.JdbcLink;
 import ch.rgw.tools.JdbcLink.Stm;
 import ch.rgw.tools.VersionInfo;
 
-public class Diagnose extends PersistentObject  {
+public class Diagnose extends PersistentObject implements ICodeElement {
 	
 	public static final String VERSION = "1.0.0";
 	public static final String TABLENAME = "at_medevit_elexis_diag_eigene_diagnose";
@@ -141,5 +142,11 @@ public class Diagnose extends PersistentObject  {
 		qbe.add("ID", "!=", "VERSION");
 		qbe.add(FLD_CODE, "=", code);
 		return qbe.execute();
+	}
+
+	@Override
+	public List<Object> getActions(Object context){
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
