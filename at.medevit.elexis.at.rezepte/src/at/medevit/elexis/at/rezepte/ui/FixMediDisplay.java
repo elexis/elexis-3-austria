@@ -36,7 +36,7 @@ import at.medevit.elexis.at.rezepte.ui.editors.FixMediEinnahmevorschriftEditingS
 import at.medevit.elexis.at.rezepte.ui.editors.FixMediSignaturEditingSupport;
 import ch.elexis.core.data.events.ElexisEvent;
 import ch.elexis.core.data.events.ElexisEventDispatcher;
-import ch.elexis.core.data.events.ElexisEventListenerImpl;
+import ch.elexis.core.ui.events.ElexisUiEventListenerImpl;
 import ch.elexis.data.Patient;
 
 public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPageContributor {	
@@ -44,11 +44,11 @@ public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPage
 	public static final String BEMERKUNGEN_EINNAHMELISTE = "BemerkungenEinnahmeliste";
 	private Table tableFixMedi;
 
-	private ElexisEventListenerImpl eeli_pat;
+	private ElexisUiEventListenerImpl eeli_pat;
 	private TableViewer tableViewerFixMedi;
 	
 	public FixMediDisplay() {
-		eeli_pat = new ElexisEventListenerImpl(Patient.class) {
+		eeli_pat = new ElexisUiEventListenerImpl(Patient.class) {
 			public void runInUi(ElexisEvent ev) {
 				reload();
 			}
