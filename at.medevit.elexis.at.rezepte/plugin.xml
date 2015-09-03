@@ -13,14 +13,14 @@
          point="org.eclipse.ui.views">
       <view
             class="at.medevit.elexis.at.rezepte.RezeptTransporter"
-            icon="rsc/icons/note_edit.png"
+            icon="icon://IMG_EDIT"
             id="at.medevit.elexis.at.rezepte.RezeptTransporter"
             name="Vorschau"
             restorable="true">
       </view>
       <view
             class="at.medevit.elexis.at.rezepte.ui.FixMediDisplay"
-            icon="rsc/icons/pill_blue.png"
+            icon="icon://IMG_PILL"
             id="at.medevit.elexis.at.rezepte.ui.FixMediDisplay"
             name="Fixmedikation AT"
             restorable="true">
