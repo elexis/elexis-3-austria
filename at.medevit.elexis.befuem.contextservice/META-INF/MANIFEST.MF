@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Context
 Bundle-SymbolicName: at.medevit.elexis.befuem.contextservice;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Import-Package: at.medevit.elexis.befuem.netservice,
  at.medevit.elexis.formattedoutput,
  ch.elexis.data,

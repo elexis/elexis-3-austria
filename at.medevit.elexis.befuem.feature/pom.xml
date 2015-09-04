@@ -7,7 +7,7 @@
     <relativePath>../at.medevit.elexis.at.releng</relativePath>
   </parent>
   <artifactId>at.medevit.elexis.befuem.feature</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.4-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
   
 </project>

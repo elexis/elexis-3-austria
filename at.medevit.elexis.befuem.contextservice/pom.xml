@@ -7,7 +7,7 @@
     <relativePath>../at.medevit.elexis.at.releng</relativePath>
   </parent>
   <artifactId>at.medevit.elexis.befuem.contextservice</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   
 </project>

@@ -2,7 +2,7 @@
 <feature
       id="at.medevit.elexis.befuem.feature"
       label="Befundübermittlung Feature"
-      version="1.0.3.qualifier"
+      version="1.0.4.qualifier"
       provider-name="medevit.at">
 
    <description url="http://www.example.com/description">

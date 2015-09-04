@@ -31,7 +31,7 @@ public abstract class AbstractDomParser {
 		if(node == null)
 			return null;
 		else
-			return node.getNodeValue();
+			return node.getTextContent();
 	}
 	
 	protected Node getChildElementByTagName(Node node, String name) {
