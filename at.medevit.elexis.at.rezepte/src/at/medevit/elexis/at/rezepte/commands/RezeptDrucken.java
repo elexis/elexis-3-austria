@@ -27,6 +27,7 @@ import at.medevit.elexis.at.rezepte.model.RezeptAT;
 import at.medevit.elexis.at.rezepte.model.Verschreibung;
 import at.medevit.elexis.at.rezepte.ui.FixMediDisplay;
 import at.medevit.elexis.at.rezepte.ui.FixMediOrderingComparator;
+import at.medevit.elexis.at.rezepte.ui.RezeptATPreferencePage;
 import at.medevit.elexis.at.rezepte.ui.RezeptausdruckPreferencePage;
 import at.medevit.elexis.at.rezepte.ui.abgabedialog.AbgabeDialog;
 import ch.elexis.core.data.activator.CoreHub;
@@ -77,7 +78,7 @@ public class RezeptDrucken extends AbstractHandler {
 		// TODO: Where does this number originate if Wahlarzt?
 		// Should a combo be presented for this?
 		rezeptOutput.setPatientVersicherungsnummer(pat.getXid(SVNR.DOMAIN_AT_SVNR));
-		
+
 		Anschrift pA = pat.getAnschrift();
 		rezeptOutput.setPatientAnschrift(pA.getStrasse() + ", " + pA.getPlz() + " " + pA.getOrt());
 		
@@ -124,6 +125,13 @@ public class RezeptDrucken extends AbstractHandler {
 					" Bitte überprüfen Sie ggf. den Parameter \"Medikamente mit nicht gesetzter OP vom Druck ausnehmen\" unter Einstellungen/Rezeptausdruck.");
 			return;
 		}
+		
+		// arzt daten setzen
+		rezeptOutput.setArztMENummer(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_MENUMMER, "425294"));
+		rezeptOutput.setArztName(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_NAME, "Dr. Max Mustermann"));
+		rezeptOutput.setArztZeile3(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_ZEILE3, "FA f. Innere Med. und Kardiologie"));
+		rezeptOutput.setArztAnschrift(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_ANSCHRIFT, "6840 Götzis, Tel 05572 51332"));
+		
 		
 		// Print the recipe
 		PrintHelper.printRezeptToRezeptPrinterInPostscript(rezeptTemplate, rezeptOutput);

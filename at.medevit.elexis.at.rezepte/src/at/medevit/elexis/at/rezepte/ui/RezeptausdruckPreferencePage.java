@@ -17,7 +17,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import at.medevit.elexis.at.rezepte.PrintHelper;
 import ch.elexis.core.data.activator.CoreHub;
-import ch.elexis.core.ui.Hub;
 import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
 import ch.elexis.core.ui.preferences.inputs.ComboFieldEditor;
 

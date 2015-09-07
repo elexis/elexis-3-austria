@@ -54,10 +54,10 @@
 					<!-- Signatur -->
 					<fo:block-container absolute-position="fixed"
 						top="174mm" left="50mm" width="47mm" font-size="8pt" text-align="center">
-						<fo:block>425294</fo:block>
-						<fo:block>Dr. Max Muster</fo:block>
-						<fo:block>FA f. Innere Med. und Kardiologie</fo:block>
-						<fo:block>6840 Lustenau, Tel 05323 51183</fo:block>
+						<fo:block><xsl:value-of select="RezeptAT/ArztMENummer" /></fo:block>
+						<fo:block><xsl:value-of select="RezeptAT/ArztName" /></fo:block>
+						<fo:block><xsl:value-of select="RezeptAT/ArztZeile3" /></fo:block>
+						<fo:block><xsl:value-of select="RezeptAT/ArztAnschrift" /></fo:block>
 					</fo:block-container>
 				</fo:static-content>
 

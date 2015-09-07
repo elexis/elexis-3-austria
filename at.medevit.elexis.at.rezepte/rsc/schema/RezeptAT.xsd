@@ -12,16 +12,27 @@
 				<element name="PatientVersicherungsnummer" type="string"
 					maxOccurs="1" minOccurs="1">
 				</element>
-				<element name="PatientAnschrift" type="string" maxOccurs="1"
+				<element name="PatientAnschrift" type="string"
+					maxOccurs="1" minOccurs="1">
+				</element>
+				<element name="Datum" type="string" maxOccurs="1"
 					minOccurs="1">
 				</element>
-				<element name="Datum" type="string" maxOccurs="1" minOccurs="1">
+				<element name="ArztMENummer" type="string" minOccurs="0"
+					maxOccurs="1">
 				</element>
+				<element name="ArztName" type="string" minOccurs="1"
+					maxOccurs="1">
+				</element>
+				<element name="ArztZeile3" type="string" minOccurs="0"
+					maxOccurs="1">
+				</element>
+				<element name="ArztAnschrift" type="string" minOccurs="1" maxOccurs="1"></element>
 				<element name="Verschreibungen">
 					<complexType>
 						<sequence>
-							<element name="Verschreibung" type="tns:Verschreibung"
-								maxOccurs="unbounded" minOccurs="1">
+							<element name="Verschreibung"
+								type="tns:Verschreibung" maxOccurs="unbounded" minOccurs="1">
 							</element>
 						</sequence>
 					</complexType>

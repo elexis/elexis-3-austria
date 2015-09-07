@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="at.medevit.elexis.at.rezepte.ui.RezeptausdruckPreferencePage"
+            class="at.medevit.elexis.at.rezepte.ui.RezeptATPreferencePage"
             id="at.medevit.elexis.at.rezepte.ausdruck"
             name="Rezeptausdruck">
       </page>
@@ -33,7 +33,7 @@
             locationURI="toolbar:at.medevit.elexis.at.rezepte.ui.FixMediDisplay">
          <command
                commandId="at.medevit.elexis.at.rezepte.commands.Einnahmeliste"
-               icon="rsc/icons/note_ok.png"
+               icon="rsc/icons/notebook--arrow.png"
                label="Einnahmeliste drucken"
                style="push">
          </command>
@@ -43,13 +43,13 @@
          </separator>
          <command
                commandId="at.medevit.elexis.at.rezepte.commands.RezeptDrucken"
-               icon="rsc/icons/note_edit.png"
+               icon="rsc/icons/notebook--pencil.png"
                label="Rezept drucken"
                style="push">
          </command>
          <command
                commandId="at.medevit.elexis.at.rezepte.commands.RezeptDruckenOOffice"
-               icon="rsc/icons/note_information.png"
+               icon="rsc/icons/notebook-share.png"
                label="Rezept über OpenOffice drucken"
                style="push">
          </command>
@@ -69,13 +69,13 @@
             locationURI="popup:at.medevit.elexis.at.rezepte.ui.FixMediDisplay">
          <command
                commandId="at.medevit.elexis.at.rezepte.commands.AddPrescription"
-               icon="rsc/icons/note_add.png"
+               icon="rsc/icons/notebook--plus.png"
                label="Medikament verordnen"
                style="push">
          </command>
          <command
                commandId="at.medevit.elexis.at.rezepte.commands.StopPrescription"
-               icon="rsc/icons/note_delete.png"
+               icon="rsc/icons/notebook--exclamation.png"
                label="Medikament stoppen"
                style="push">
          </command>
