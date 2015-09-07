@@ -1,0 +1,6 @@
+On error:
+
+Required content model: marker* (table-row+|table-cell+) during fop build
+
+
+remove namespace declaration from package-info.jav

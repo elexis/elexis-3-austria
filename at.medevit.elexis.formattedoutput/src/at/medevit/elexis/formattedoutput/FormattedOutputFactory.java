@@ -101,6 +101,7 @@ public class FormattedOutputFactory implements IFormattedOutputFactory {
 				ConfigurationUtil.toConfiguration(new ConfigFile().getRootElement());
 			System.out.println("FOP Configuration: " + ConfigurationUtil.toString(cfg));
 			fop.setUserConfig(cfg);
+			fop.setStrictValidation(false);
 		} catch (FOPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
