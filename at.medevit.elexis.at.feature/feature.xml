@@ -2,7 +2,7 @@
 <feature
       id="at.medevit.elexis.at.feature"
       label="Elexis Österreich OpenSource Feature"
-      version="1.0.1.qualifier"
+      version="1.0.0.qualifier"
       provider-name="medevit.at">
 
    <description url="www.medevit.at/features/at.medevit.elexis.base.at">
