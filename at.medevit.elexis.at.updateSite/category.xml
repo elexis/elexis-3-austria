@@ -9,5 +9,8 @@
    <feature url="features/at.medevit.elexis.befuem.feature_1.0.4.qualifier.jar" id="at.medevit.elexis.befuem.feature" version="1.0.4.qualifier">
       <category name="elexis.austria"/>
    </feature>
+   <feature url="features/at.medevit.elexis.at.feature_1.0.1.qualifier.jar" id="at.medevit.elexis.at.feature" version="1.0.1.qualifier">
+      <category name="elexis.austria"/>
+   </feature>
    <category-def name="elexis.austria" label="Elexis Österreich"/>
 </site>
