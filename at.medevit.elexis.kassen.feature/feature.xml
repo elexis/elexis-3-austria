@@ -2,7 +2,7 @@
 <feature
       id="at.medevit.elexis.kassen.feature"
       label="Krankenkassen Österreich"
-      version="1.0.8.qualifier"
+      version="1.0.9.qualifier"
       provider-name="medevit.at">
 
    <description url="http://www.example.com/description">

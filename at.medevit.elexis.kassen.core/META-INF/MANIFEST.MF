@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kassen Core
 Bundle-SymbolicName: at.medevit.elexis.kassen.core;singleton:=true
-Bundle-Version: 1.0.5.qualifier
+Bundle-Version: 1.0.6.qualifier
 Bundle-Activator: at.medevit.elexis.kassen.core.Activator
 Bundle-Vendor: medevit.at
 Require-Bundle: org.eclipse.core.runtime,

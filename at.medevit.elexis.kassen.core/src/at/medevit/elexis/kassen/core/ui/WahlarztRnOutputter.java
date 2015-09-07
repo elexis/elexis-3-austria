@@ -111,7 +111,7 @@ public abstract class WahlarztRnOutputter implements IRnOutputter {
 			return false;
 		
 		for (int i = 0; i < elemList.getLength(); i++) {
-			String content = elemList.item(i).getNodeValue();
+			String content = elemList.item(i).getTextContent();
 			if (content == null)
 				ret = false;
 			else if (content.length() == 0)
