@@ -12,34 +12,20 @@ package at.medevit.elexis.kassen.edivka.rechnung.parser;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 
 import at.medevit.elexis.kassen.edivka.rechnung.model.PKVRechnung.EndsummenRechnung;
-import ch.elexis.data.Konsultation;
 import ch.elexis.data.Rechnung;
-import ch.elexis.data.Verrechnet;
+import ch.rgw.tools.Money;
 
 public class EndsummenRechnungParserUtil {
 	
 	public static EndsummenRechnung getEndsummenRechnung(Rechnung erechnung){
 		EndsummenRechnung rechnung = new EndsummenRechnung();
+		Money openAmount = erechnung.getOffenerBetrag();
 		
-		List<Konsultation> konsultationen = erechnung.getKonsultationen();
-		List<Verrechnet> leistungen = new ArrayList<Verrechnet>();
-		
-		for (Konsultation kons : konsultationen) {
-			leistungen.addAll(kons.getLeistungen());
-		}
-		
-		double brutto = 0.0;
-		for (Verrechnet leistung : leistungen) {
-			double anzahl = leistung.getZahl();
-			brutto += leistung.getNettoPreis().doubleValue() * anzahl;
-		}
-		
-		rechnung.setEndsummeBrutto(new BigDecimal(brutto).setScale(2, RoundingMode.HALF_UP));
-		
+		rechnung.setEndsummeBrutto(
+			new BigDecimal(openAmount.doubleValue()).setScale(2, RoundingMode.HALF_UP));
+			
 		return rechnung;
 	}
 	
