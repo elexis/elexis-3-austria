@@ -19,11 +19,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import ch.elexis.core.ui.importer.div.importers.LabImportUtil;
 import ch.elexis.data.Kontakt;
 import ch.elexis.data.LabItem;
+import ch.elexis.data.LabMapping;
 import ch.elexis.data.LabResult;
-import ch.elexis.data.Labor;
 import ch.elexis.data.Patient;
 import ch.rgw.tools.TimeTool;
 
@@ -408,11 +407,12 @@ public class LabResultTest {
 		List<LabItem> items = null;
 		LabItem item = null;
 		
-		if (labor instanceof Labor) {
+		if (labor != null) {
 			// consider LabMapping to resolve the LabItem
-			item = LabImportUtil.getLabItem(getItemShortDescription(), (Labor) labor);
-			if (item != null) {
-				return item;
+			LabMapping mapping =
+				LabMapping.getByContactAndItemName(labor.getId(), getItemShortDescription());
+			if (mapping != null) {
+				return mapping.getLabItem();
 			}
 		}
 		
