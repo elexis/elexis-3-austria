@@ -14,7 +14,8 @@ Require-Bundle: ch.rgw.utility,
  ch.elexis.core;bundle-version="3.0.0",
  ch.elexis.core.data;bundle-version="3.0.0",
  ch.elexis.core.ui;bundle-version="3.0.0",
- org.smooks;bundle-version="1.4.0"
+ org.smooks;bundle-version="1.4.0",
+ ch.elexis.core.ui.importer.div;bundle-version="3.1.0"
 Export-Package: at.medevit.elexis.befuem.contextservice,
  at.medevit.elexis.befuem.contextservice.finding,
  at.medevit.elexis.befuem.contextservice.formattedoutputconsumer,
