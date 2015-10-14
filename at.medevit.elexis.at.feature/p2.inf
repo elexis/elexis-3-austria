@@ -1,0 +1,2 @@
+instruction.unconfigure= \
+           removeProgramArg(programArg:-Duser.region=CH);
