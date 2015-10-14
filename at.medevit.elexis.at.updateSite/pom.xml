@@ -13,6 +13,40 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.github.goldin</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>0.2.5</version>
+				<executions>
+					<execution>
+						<id>set-properties</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>set-properties</goal>
+						</goals>
+						<configuration>
+							<properties>
+								<property>
+									<name>groovyBuildQualifier</name>
+									<!-- http://evgeny-goldin.com/wiki/Properties-maven-plugin has a 
+										very confusing behaviour: if you reference project.properties.repo_variant 
+										it will always report snapshot as this is default in the parent pom.xml if 
+										your referenc repo_variant it will return the value passed on the command 
+										line or (if not specified there) the default-value Did cost me two hours 
+										to find it and to work around! ! -->
+									<value>
+										{{import java.text.SimpleDateFormat; new
+										<!-- for snapshot we want an 'a' << 'b' (beta) << 'r' (prerelease 
+											and release) -->
+										SimpleDateFormat("'"+repo_variant.substring(0,1).replaceFirst('s','a').replaceFirst('p','r')+"'yyyyMMdd-HHmm").format(Calendar.getInstance().getTime())
+										}}
+									</value>
+								</property>
+							</properties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<version>1.5.2</version>
@@ -59,7 +93,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -80,6 +115,25 @@
 										</versionRange>
 										<goals>
 											<goal>replace</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											com.github.goldin
+										</groupId>
+										<artifactId>
+											properties-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.2.5,)
+										</versionRange>
+										<goals>
+											<goal>set-properties</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
