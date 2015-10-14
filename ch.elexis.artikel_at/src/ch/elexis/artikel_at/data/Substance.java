@@ -63,8 +63,13 @@ public class Substance extends PersistentObject {
 	}
 	
 	public Substance(final String substID, final String name, final String salt){
-		create(substID);
-		set(new String[] {
+		Substance substance = load(substID);
+		if (substance == null || !substance.exists()) {
+			create(substID);
+			substance = this;
+		}
+		
+		substance.set(new String[] {
 			"name", "salt"
 		}, StringTool.limitLength(name, 250), StringTool.limitLength(salt, 25));
 	}
