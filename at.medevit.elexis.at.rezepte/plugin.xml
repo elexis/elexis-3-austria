@@ -4,9 +4,16 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
+            category="at.medevit.elexis.at.rezepte.ui.RezeptATMandatorPreferencePage"
             class="at.medevit.elexis.at.rezepte.ui.RezeptATPreferencePage"
             id="at.medevit.elexis.at.rezepte.ausdruck"
             name="Rezeptausdruck">
+      </page>
+      <page
+            category="at.medevit.elexis.at.rezepte.ausdruck"
+            class="at.medevit.elexis.at.rezepte.ui.RezeptATMandatorPreferencePage"
+            id="at.medevit.elexis.at.rezepte.page.mandant"
+            name="Mandanten-Einstellung">
       </page>
    </extension>
    <extension

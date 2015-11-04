@@ -27,8 +27,8 @@ import at.medevit.elexis.at.rezepte.model.RezeptAT;
 import at.medevit.elexis.at.rezepte.model.Verschreibung;
 import at.medevit.elexis.at.rezepte.ui.FixMediDisplay;
 import at.medevit.elexis.at.rezepte.ui.FixMediOrderingComparator;
+import at.medevit.elexis.at.rezepte.ui.RezeptATMandatorPreferencePage;
 import at.medevit.elexis.at.rezepte.ui.RezeptATPreferencePage;
-import at.medevit.elexis.at.rezepte.ui.RezeptausdruckPreferencePage;
 import at.medevit.elexis.at.rezepte.ui.abgabedialog.AbgabeDialog;
 import ch.elexis.core.data.activator.CoreHub;
 import ch.elexis.core.data.events.ElexisEventDispatcher;
@@ -127,10 +127,10 @@ public class RezeptDrucken extends AbstractHandler {
 		}
 		
 		// arzt daten setzen
-		rezeptOutput.setArztMENummer(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_MENUMMER, "425294"));
-		rezeptOutput.setArztName(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_NAME, "Dr. Max Mustermann"));
-		rezeptOutput.setArztZeile3(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_ZEILE3, "FA f. Innere Med. und Kardiologie"));
-		rezeptOutput.setArztAnschrift(CoreHub.mandantCfg.get(RezeptATPreferencePage.ARZT_ANSCHRIFT, "6840 Götzis, Tel 05572 51332"));
+		rezeptOutput.setArztMENummer(CoreHub.mandantCfg.get(RezeptATMandatorPreferencePage.ARZT_MENUMMER, "425294"));
+		rezeptOutput.setArztName(CoreHub.mandantCfg.get(RezeptATMandatorPreferencePage.ARZT_NAME, "Dr. Max Mustermann"));
+		rezeptOutput.setArztZeile3(CoreHub.mandantCfg.get(RezeptATMandatorPreferencePage.ARZT_ZEILE3, "FA f. Innere Med. und Kardiologie"));
+		rezeptOutput.setArztAnschrift(CoreHub.mandantCfg.get(RezeptATMandatorPreferencePage.ARZT_ANSCHRIFT, "6840 Götzis, Tel 05572 51332"));
 		
 		
 		// Print the recipe
@@ -142,7 +142,7 @@ public class RezeptDrucken extends AbstractHandler {
 	 * preference page.
 	 */
 	private void clearIfOPNull(){
-		if (CoreHub.localCfg.get(RezeptausdruckPreferencePage.NOPRINT_IF_OP_NULL, false)) {
+		if (CoreHub.localCfg.get(RezeptATPreferencePage.NOPRINT_IF_OP_NULL, false)) {
 			List<Verschreibung> lrv = vrs.getVerschreibung();
 			// Need to modify using iterator to get rid of
 			// ConcurrentModificationException

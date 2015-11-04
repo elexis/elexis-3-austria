@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import at.medevit.elexis.at.rezepte.formattedoutputconsumer.DocumentCreator;
 import at.medevit.elexis.at.rezepte.model.RezeptAT;
-import at.medevit.elexis.at.rezepte.ui.RezeptausdruckPreferencePage;
+import at.medevit.elexis.at.rezepte.ui.RezeptATPreferencePage;
 import ch.elexis.core.data.activator.CoreHub;
 
 public class PrintHelper {
@@ -100,7 +100,7 @@ public class PrintHelper {
 		PrintService[] printServices = getPrintServices();
 		String printerName = "undefined";
 		if (printer == REZEPT_PRINTER) {
-			printerName = CoreHub.localCfg.get(RezeptausdruckPreferencePage.LRP, "undefined");
+			printerName = CoreHub.localCfg.get(RezeptATPreferencePage.LRP, "undefined");
 			log.debug("Configured printerName for "+printer+": "+printerName);
 		}
 		
@@ -109,7 +109,7 @@ public class PrintHelper {
 		for (PrintService printService : printServices) {
 			if (printerName.equalsIgnoreCase(printService.getName())) {
 				ps = printService;
-				continue;
+				break;
 			}
 		}
 		
