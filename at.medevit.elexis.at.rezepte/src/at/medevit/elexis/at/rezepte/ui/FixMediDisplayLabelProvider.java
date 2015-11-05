@@ -81,7 +81,7 @@ public class FixMediDisplayLabelProvider implements ITableLabelProvider {
 		if (element instanceof Prescription) {
 			switch (columnIndex) {
 			case 0:
-				return ((Prescription) element).getArtikel().getLabel();
+				return ( ((Prescription) element).getArtikel() !=null) ? ((Prescription) element).getArtikel().getLabel() : "article not found";
 			case 1:
 				return ((Prescription) element).getDosis();
 			case 2:
