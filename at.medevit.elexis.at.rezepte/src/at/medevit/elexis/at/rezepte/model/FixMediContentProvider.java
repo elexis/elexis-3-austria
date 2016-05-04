@@ -10,7 +10,9 @@
  *******************************************************************************/
 package at.medevit.elexis.at.rezepte.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -18,6 +20,7 @@ import org.eclipse.jface.viewers.Viewer;
 import ch.elexis.core.data.events.ElexisEventDispatcher;
 import ch.elexis.data.Patient;
 import ch.elexis.data.Prescription;
+import ch.rgw.tools.TimeTool;
 
 public class FixMediContentProvider implements IStructuredContentProvider {
 	
@@ -39,10 +42,23 @@ public class FixMediContentProvider implements IStructuredContentProvider {
 	 */
 	public Object[] getElements(Object inputElement){
 		Patient act = ElexisEventDispatcher.getSelectedPatient();
-		if (act == null) {
-			return Collections.emptyList().toArray(new Prescription[0]);
+		List<Prescription> ret = new ArrayList<Prescription>();
+		if (act != null) {
+			List<Prescription> fix = Arrays.asList(act.getFixmedikation());
+			TimeTool now = new TimeTool();
+			for (Prescription pr : fix) {
+				// skip stopped prescriptions 
+				String endTimeStr = pr.getEndTime();
+				if (!endTimeStr.isEmpty()) {
+					TimeTool endTime = new TimeTool(endTimeStr);
+					if (endTime.isBefore(now)) {
+						continue;
+					}
+				}
+				ret.add(pr);
+			}
 		}
-		return act.getFixmedikation();
+		return ret.toArray(new Prescription[]{});
 	}
 	
 }

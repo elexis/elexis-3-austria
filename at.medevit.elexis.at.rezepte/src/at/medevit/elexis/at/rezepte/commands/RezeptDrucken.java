@@ -36,6 +36,7 @@ import ch.elexis.data.Anschrift;
 import ch.elexis.data.Patient;
 import ch.elexis.data.Prescription;
 import ch.elexis.data.Rezept;
+import ch.rgw.tools.TimeTool;
 
 public class RezeptDrucken extends AbstractHandler {
 	
@@ -49,6 +50,12 @@ public class RezeptDrucken extends AbstractHandler {
 		Arrays.sort(pres, new FixMediOrderingComparator());
 		Rezept rezept = new Rezept(pat);
 		for (Prescription p : pres) {
+			if (!p.getEndTime().isEmpty()) {
+				TimeTool endTime = new TimeTool(p.getEndTime());
+				if (endTime.isBefore(new TimeTool())) {
+					continue;
+				}
+			}
 			// Requires new Prescription as direct references are passed
 			// and the list of Fixmedikationen is else erased!
 			Prescription pnew = new Prescription(p);

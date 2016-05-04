@@ -36,6 +36,7 @@ import ch.elexis.core.data.events.ElexisEventDispatcher;
 import ch.elexis.data.Anschrift;
 import ch.elexis.data.Patient;
 import ch.elexis.data.Prescription;
+import ch.rgw.tools.TimeTool;
 
 public class Einnahmeliste extends AbstractHandler {
 	
@@ -78,6 +79,13 @@ public class Einnahmeliste extends AbstractHandler {
 		
 		vrs = rezeptOutput.getVerschreibungen();
 		for (Prescription prescription : pres) {
+			if (!prescription.getEndTime().isEmpty()) {
+				TimeTool endTime = new TimeTool(prescription.getEndTime());
+				if (endTime.isBefore(new TimeTool())) {
+					continue;
+				}
+			}
+			
 			Verschreibung v = new Verschreibung();
 			v.setArtikelname(prescription.getArtikel().getLabel());
 			v.setDosierung(prescription.getDosis());
