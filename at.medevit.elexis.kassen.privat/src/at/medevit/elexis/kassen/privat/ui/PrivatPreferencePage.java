@@ -150,6 +150,9 @@ public class PrivatPreferencePage extends FieldEditorPreferencePage implements
 				ISelection selection = viewer.getSelection();
 				if (selection != null & selection instanceof IStructuredSelection) {
 					IStructuredSelection strucSelection = (IStructuredSelection) selection;
+					if(strucSelection==null) {
+						return;
+					}
 					PrivatKasse sel = (PrivatKasse) strucSelection.getFirstElement();
 					
 					EditPrivatKasseDialog dialog =

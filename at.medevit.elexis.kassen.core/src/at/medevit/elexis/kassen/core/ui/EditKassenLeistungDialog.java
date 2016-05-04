@@ -336,6 +336,9 @@ public class EditKassenLeistungDialog extends TitleAreaDialog {
 				ISelection selection = positionFachgebieteList.getSelection();
 				if (selection != null & selection instanceof IStructuredSelection) {
 					IStructuredSelection sel = (IStructuredSelection) selection;
+					if(sel==null) {
+						return;
+					}
 					SpecialityCode code = (KassenCodes.SpecialityCode) sel.getFirstElement();
 					if (code != null) {
 						fachgebiete.remove(code);

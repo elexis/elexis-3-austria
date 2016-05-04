@@ -260,6 +260,9 @@ public class SvbPreferencePage extends FieldEditorPreferencePage implements
 					ISelection selection = viewer.getSelection();
 					if (selection != null & selection instanceof IStructuredSelection) {
 						IStructuredSelection strucSelection = (IStructuredSelection) selection;
+						if(strucSelection==null) {
+							return;
+						}
 						IPointsArea sel = (IPointsArea) strucSelection.getFirstElement();
 						
 						EditPointsAreaDialog dialog =
@@ -284,6 +287,9 @@ public class SvbPreferencePage extends FieldEditorPreferencePage implements
 					ISelection selection = viewer.getSelection();
 					if (selection != null & selection instanceof IStructuredSelection) {
 						IStructuredSelection strucSelection = (IStructuredSelection) selection;
+						if(strucSelection==null) {
+							return;
+						}
 						IPointsArea sel = (IPointsArea) strucSelection.getFirstElement();
 						if (sel.isEnabled())
 							sel.setIsEnabled(false);

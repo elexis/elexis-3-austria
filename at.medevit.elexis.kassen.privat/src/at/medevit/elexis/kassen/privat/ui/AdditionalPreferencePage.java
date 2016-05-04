@@ -139,6 +139,9 @@ public class AdditionalPreferencePage extends FieldEditorPreferencePage implemen
 				ISelection selection = viewer.getSelection();
 				if (selection != null & selection instanceof IStructuredSelection) {
 					IStructuredSelection strucSelection = (IStructuredSelection) selection;
+					if(strucSelection==null) {
+						return;
+					}
 					AdditionalInsurance sel =
 						(AdditionalInsurance) strucSelection.getFirstElement();
 					

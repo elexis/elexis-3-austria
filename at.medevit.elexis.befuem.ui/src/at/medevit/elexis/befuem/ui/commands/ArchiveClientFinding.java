@@ -32,6 +32,9 @@ public class ArchiveClientFinding extends AbstractHandler {
 		
 		if (selection != null & selection instanceof IStructuredSelection) {
 			IStructuredSelection strucSelection = (IStructuredSelection) selection;
+			if(strucSelection==null) {
+				return null;
+			}
 			
 			Object[] sel = strucSelection.toArray();
 			if(sel != null) {

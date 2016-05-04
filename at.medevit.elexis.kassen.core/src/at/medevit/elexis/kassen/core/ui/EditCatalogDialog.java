@@ -302,6 +302,9 @@ public class EditCatalogDialog extends TitleAreaDialog {
 				ISelection selection = viewer.getSelection();
 				if (selection != null & selection instanceof IStructuredSelection) {
 					IStructuredSelection strucSelection = (IStructuredSelection) selection;
+					if(strucSelection==null) {
+						return;
+					}
 					KassenLeistung sel = (KassenLeistung) strucSelection.getFirstElement();
 					
 					EditKassenLeistungDialog dialog =
@@ -408,6 +411,9 @@ public class EditCatalogDialog extends TitleAreaDialog {
 				ISelection selection = viewer.getSelection();
 				if (selection != null & selection instanceof IStructuredSelection) {
 					IStructuredSelection strucSelection = (IStructuredSelection) selection;
+					if(strucSelection==null) {
+						return;
+					}
 					KassenLeistung sel = (KassenLeistung) strucSelection.getFirstElement();
 					boolean confirm =
 						MessageDialog.openConfirm(Display.getCurrent().getActiveShell(), "Confirm",

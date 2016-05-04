@@ -41,17 +41,23 @@ public class CopyPrescriptionClipboard extends AbstractHandler {
 		Clipboard cb = new Clipboard(PlatformUI.getWorkbench().getDisplay());
 		ISelection selection = view.getSite().getSelectionProvider().getSelection();
 		// No specific prescription selected, so copy all of them
-		if(selection.isEmpty()) {
-			Patient act=ElexisEventDispatcher.getSelectedPatient();
+		if (selection.isEmpty()) {
+			Patient act = ElexisEventDispatcher.getSelectedPatient();
+			if (act == null) {
+				return null;
+			}
 			Prescription[] pres = act.getFixmedikation();
 			Arrays.sort(pres, new FixMediOrderingComparator());
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < pres.length; i++) {
-				sb.append(prescriptionToString(pres[i])+"\n");
+				sb.append(prescriptionToString(pres[i]) + "\n");
 			}
 			TextTransfer textTransfer = TextTransfer.getInstance();
-			cb.setContents(new Object[] { sb.toString() },
-					new Transfer[] { textTransfer });
+			cb.setContents(new Object[] {
+				sb.toString()
+			}, new Transfer[] {
+				textTransfer
+			});
 			return null;
 		}
 		// TODO: There where some selected, copy only them!
@@ -59,7 +65,7 @@ public class CopyPrescriptionClipboard extends AbstractHandler {
 		return null;
 	}
 	
-	private String prescriptionToString(Prescription p) {
-		return p.getArtikel().getName()+" "+p.getDosis()+" "+p.getBemerkung();
+	private String prescriptionToString(Prescription p){
+		return p.getArtikel().getName() + " " + p.getDosis() + " " + p.getBemerkung();
 	}
 }

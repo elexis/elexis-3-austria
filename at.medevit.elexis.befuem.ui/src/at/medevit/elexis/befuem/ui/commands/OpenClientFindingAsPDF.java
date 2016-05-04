@@ -35,6 +35,9 @@ public class OpenClientFindingAsPDF extends AbstractHandler {
 				.getActivePage().getSelection();
 		if (selection != null & selection instanceof IStructuredSelection) {
 			IStructuredSelection strucSelection = (IStructuredSelection) selection;
+			if(strucSelection==null) {
+				return null;
+			}
 			Object sel = strucSelection.getFirstElement();
 			// transform the finding to pdf and open external viewer ...
 			if (sel != null && sel instanceof NetClientFinding) {

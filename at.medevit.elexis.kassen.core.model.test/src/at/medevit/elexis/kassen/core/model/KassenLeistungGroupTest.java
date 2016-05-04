@@ -12,6 +12,7 @@ package at.medevit.elexis.kassen.core.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class KassenLeistungGroupTest {
 			lastGroup = new KassenLeistungGroup(group);
 			equal = lastGroup;
 		}
+		assertNotNull(lastGroup);
 		assertTrue(lastGroup.isEqual(equal));
 	}
 	
@@ -65,6 +67,7 @@ public class KassenLeistungGroupTest {
 			equal = lastGroup;
 		}
 		// the objects are equal
+		assertNotNull(lastGroup);
 		assertFalse(lastGroup.isHigherThan(equal));
 	}
 	
@@ -86,6 +89,7 @@ public class KassenLeistungGroupTest {
 			equal = lastGroup;
 		}
 		// the objects are equal
+		assertNotNull(lastGroup);
 		assertFalse(lastGroup.isLowerThan(equal));
 	}
 }

@@ -10,33 +10,39 @@
  *******************************************************************************/
 package at.medevit.elexis.at.rezepte.model;
 
+import java.util.Collections;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 import ch.elexis.core.data.events.ElexisEventDispatcher;
 import ch.elexis.data.Patient;
+import ch.elexis.data.Prescription;
 
 public class FixMediContentProvider implements IStructuredContentProvider {
-
+	
 	@Override
-	public void dispose() {
+	public void dispose(){
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput){
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	/**
 	 * @return {@link Prescription[]}
 	 */
-	public Object[] getElements(Object inputElement) {
+	public Object[] getElements(Object inputElement){
 		Patient act = ElexisEventDispatcher.getSelectedPatient();
+		if (act == null) {
+			return Collections.emptyList().toArray(new Prescription[0]);
+		}
 		return act.getFixmedikation();
 	}
-
+	
 }

@@ -22,21 +22,21 @@ import ch.elexis.data.Rezept;
 
 public class Utilities {
 	private static Logger log = LoggerFactory.getLogger(Utilities.class);
-
+	
 	/**
-	 * Dieses Skript reinigt die patient_artikel_joint Tabelle (in Elexis
-	 * Prescription). Datensätze die weder einen existenten Patient, einen
-	 * existenten Artikel noch ein existentes Rezept vorweisen werden gelöscht.
+	 * Dieses Skript reinigt die patient_artikel_joint Tabelle (in Elexis Prescription). Datensätze
+	 * die weder einen existenten Patient, einen existenten Artikel noch ein existentes Rezept
+	 * vorweisen werden gelöscht.
 	 * 
 	 * Benötigt DELETE_MEDICATION Rechte!
 	 * 
 	 * @author Marco Descher / Herzpraxis Dr. Thomas Wolber
 	 */
-	public static void cleanPrescriptionTable() {
+	public static void cleanPrescriptionTable(){
 		if (!CoreHub.acl.request(AccessControlDefaults.DELETE_MEDICATION)) {
 			return;
 		}
-
+		
 		Query<Prescription> qPres = new Query<Prescription>(Prescription.class);
 		List<Prescription> presList = qPres.execute();
 		int invalidRecipes = 0;
@@ -45,7 +45,7 @@ public class Utilities {
 			boolean validPerson = true;
 			boolean validArticle = true;
 			boolean validRecipe = true;
-
+			
 			String refPerID = prescription.get(Prescription.FLD_PATIENT_ID);
 			if (refPerID == null || refPerID.equals(""))
 				validPerson = false;
@@ -55,7 +55,7 @@ public class Utilities {
 			String refRezID = prescription.get(Prescription.FLD_REZEPT_ID);
 			if (refRezID == null || refRezID.equals(""))
 				validRecipe = false;
-
+			
 			Kontakt refPer = Kontakt.load(refPerID);
 			if (refPer.state() == Kontakt.INEXISTENT)
 				validPerson = false;
@@ -65,36 +65,35 @@ public class Utilities {
 			Rezept refRez = Rezept.load(refRezID);
 			if (refRez.state() == Rezept.INEXISTENT)
 				validRecipe = false;
-
+			
 			if (!validPerson && !validArticle && !validRecipe) {
 				invalidRecipes++;
 				log.trace("Lösche Veschreibung " + prescription.getId()
-						+ ". Weder gültiger Kontakt, Artikel noch Rezept gefunden.");
+					+ ". Weder gültiger Kontakt, Artikel noch Rezept gefunden.");
 				// Werden nicht REAL aus der DB entfernt, wuerde hier aber Sinn
 				// machen!
 				prescription.remove();
 			}
 		}
-		SWTHelper.showInfo(invalidRecipes + " Rezepte gelöscht.", invalidRecipes
-				+ " Rezepte wurden als ungültig gelöscht.");
+		SWTHelper.showInfo(invalidRecipes + " Rezepte gelöscht.",
+			invalidRecipes + " Rezepte wurden als ungültig gelöscht.");
 	}
-
+	
 	/**
-	 * Dieses Skript such von jeder aktuellen Verordnung die zugehörige
-	 * Pharma-Zentralnummer, anschliessend wird unter Artikel das aktuellste
-	 * Medikament mit identischer Pharma-Zentralnummer ausgewählt und die
-	 * Verknüpfung upgedatet.
+	 * Dieses Skript such von jeder aktuellen Verordnung die zugehörige Pharma-Zentralnummer,
+	 * anschliessend wird unter Artikel das aktuellste Medikament mit identischer
+	 * Pharma-Zentralnummer ausgewählt und die Verknüpfung upgedatet.
 	 * 
-	 * FOR ALL m: artikelid IN patient_artikel_joint { String PhZNr =
-	 * m.artikelid->subid; Medikament[] medis = artikel.getsubid(PhZNr);
-	 * Medikament current = medis.getNewest(); // Last updated m.artikelid =
-	 * current.id; medis.remove(!=current && current.PhZNr == medis[i].PhZNr); }
+	 * FOR ALL m: artikelid IN patient_artikel_joint { String PhZNr = m.artikelid->subid;
+	 * Medikament[] medis = artikel.getsubid(PhZNr); Medikament current = medis.getNewest(); // Last
+	 * updated m.artikelid = current.id; medis.remove(!=current && current.PhZNr == medis[i].PhZNr);
+	 * }
 	 * 
 	 * Benötigt DELETE_MEDICATION Rechte!
 	 * 
 	 * @author Marco Descher / Herzpraxis Dr. Thomas Wolber
 	 */
-	public static void updateMediReferences() {
+	public static void updateMediReferences(){
 		if (!CoreHub.acl.request(AccessControlDefaults.DELETE_MEDICATION)) {
 			return;
 		}
@@ -104,14 +103,14 @@ public class Utilities {
 		Query<Prescription> qPres = new Query<Prescription>(Prescription.class);
 		List<Prescription> presList = qPres.execute();
 		Artikel currArtikel;
-
-		File outfile = new File(System.getProperty("user.home") + File.separator + "elexis" + File.separator
-				+ "ArtikelATupdateReferences.log");
+		
+		File outfile = new File(System.getProperty("user.home") + File.separator + "elexis"
+			+ File.separator + "ArtikelATupdateReferences.log");
 		try {
 			PrintWriter pen = new PrintWriter(outfile);
 			int noOfPrescriptions = 0;
 			int noOfUpdates = 0;
-
+			
 			// FOR ALL prescription: patient_artikel_joint
 			for (Iterator<Prescription> iterator = presList.iterator(); iterator.hasNext();) {
 				Prescription prescription = (Prescription) iterator.next();
@@ -119,14 +118,14 @@ public class Utilities {
 				currArtikel = prescription.getArtikel();
 				//
 				String PhZNr = currArtikel.get(Artikel.FLD_SUB_ID);
-
+				
 				if (PhZNr != "" && PhZNr != null) {
 					Query<Artikel> qArt = new Query<Artikel>(Artikel.class);
 					qArt.clear();
 					qArt.add(Artikel.FLD_SUB_ID, "=", PhZNr);
 					List<Artikel> artList = qArt.execute();
 					// List<Artikel> artList = qArt.executeWithDeleted();
-
+					
 					try {
 						Artikel newest = artList.get(0);
 						long newestint = 0;
@@ -141,23 +140,25 @@ public class Utilities {
 								newest = artikel;
 							}
 						}
-
+						
 						if (newest.equals(currArtikel)) {
-							pen.println(prescription.getId() + ":[OK]:" + PhZNr + " No update necessary.");
+							pen.println(
+								prescription.getId() + ":[OK]:" + PhZNr + " No update necessary.");
 							continue;
 						}
 						prescription.set(Prescription.FLD_ARTICLE, newest.storeToString());
 						noOfUpdates++;
-						pen.println(prescription.getId() + ":[OK]:" + PhZNr + " Update to " + newest.getName()
-								+ " from " + newest.get(Artikel.FLD_LASTUPDATE));
-
+						pen.println(prescription.getId() + ":[OK]:" + PhZNr + " Update to "
+							+ newest.getName() + " from " + newest.get(Artikel.FLD_LASTUPDATE));
+						
 					} catch (IndexOutOfBoundsException e) {
 						pen.println(prescription.getId() + ":[ERR]:" + PhZNr
-								+ " No Change - Kein passendes Medikament gefunden. artList.size():" + artList.size());
+							+ " No Change - Kein passendes Medikament gefunden. artList.size():"
+							+ artList.size());
 					}
 				} else {
 					pen.println(prescription.getId() + ":[ERR]:"
-							+ "No Change - Referenzierter Artikel hat keine Pharma-ZentralNr.");
+						+ "No Change - Referenzierter Artikel hat keine Pharma-ZentralNr.");
 				}
 			}
 			pen.println("Anzahl Verschreibungen: " + noOfPrescriptions);
@@ -167,43 +168,42 @@ public class Utilities {
 			e1.printStackTrace();
 		}
 	}
-
+	
 	/**
-	 * Dieses Skript sucht nach Medikamenten mit der gleichen
-	 * Pharma-Zentralnummer. Von den gegebenen Einträgen wird der neueste
-	 * gewählt, dieser wird nicht gelöscht. Von den älteren Einträgen wird
-	 * überprüft ob ein Link auf diese vorhanden ist, falls nein, werden sie
+	 * Dieses Skript sucht nach Medikamenten mit der gleichen Pharma-Zentralnummer. Von den
+	 * gegebenen Einträgen wird der neueste gewählt, dieser wird nicht gelöscht. Von den älteren
+	 * Einträgen wird überprüft ob ein Link auf diese vorhanden ist, falls nein, werden sie
 	 * gelöscht.
 	 * 
-	 * TODO: BlackBox Medikamente können sofern keine Verschreibungen mehr
-	 * darauf referenzieren auch gelöscht werden!
+	 * TODO: BlackBox Medikamente können sofern keine Verschreibungen mehr darauf referenzieren auch
+	 * gelöscht werden!
 	 */
-	public static void cleanMedikamente() {
-		File outfile = new File(System.getProperty("user.home") + File.separator + "elexis" + File.separator
-				+ "ArtikelATcleanMedikamente.log");
+	public static void cleanMedikamente(){
+		File outfile = new File(System.getProperty("user.home") + File.separator + "elexis"
+			+ File.separator + "ArtikelATcleanMedikamente.log");
 		try {
 			PrintWriter pen = new PrintWriter(outfile);
 			pen.println("starting");
 			pen.flush();
-
+			
 			int deleted = 0;
-
+			
 			Query<Prescription> presList = new Query<Prescription>(Prescription.class);
 			List<Prescription> result = presList.execute();
 			LinkedList<Medikament> resultIDMap = new LinkedList<Medikament>();
-
+			
 			for (Prescription p : result) {
 				if (p.getArtikel() instanceof Medikament) {
 					resultIDMap.add((Medikament) p.getArtikel());
 				}
 			}
-
+			
 			Query<Medikament> qMedi = new Query<Medikament>(Medikament.class);
 			List<Medikament> mediList = qMedi.execute();
 			for (Iterator<Medikament> iterator = mediList.iterator(); iterator.hasNext();) {
 				Medikament medikament = (Medikament) iterator.next();
 				String PhZNr = medikament.get(Artikel.FLD_SUB_ID);
-
+				
 				if (PhZNr != "" && PhZNr != null) {
 					Query<Medikament> qMediN = new Query<Medikament>(Medikament.class);
 					qMediN.clear();
@@ -212,7 +212,7 @@ public class Utilities {
 					if (mediListN.size() == 1) {
 						continue;
 					} else {
-
+						
 						pen.println("PhZNr " + PhZNr + " occurences " + mediListN.size());
 						pen.flush();
 						long newestint = 0;
@@ -227,25 +227,29 @@ public class Utilities {
 								newest = medi;
 							}
 						}
-						pen.println("Keeping " + newest.getLabel() + " from " + newest.getLastUpdate());
+						if (newest != null) {
+							pen.println(
+								"Keeping " + newest.getLabel() + " from " + newest.getLastUpdate());
+						}
 						pen.flush();
 						mediListN.remove(newest);
-
+						
 						for (Medikament medidel : mediListN) {
 							if (!resultIDMap.contains(medidel)) {
-								pen.println("Deleting " + medidel.getLabel() + " from " + medidel.getLastUpdate());
+								pen.println("Deleting " + medidel.getLabel() + " from "
+									+ medidel.getLastUpdate());
 								deleted++;
 								medidel.delete();
 							} else {
-								pen.println("Cant delete " + medidel.getLabel() + " from " + medidel.getLastUpdate()
-										+ "reference found!");
+								pen.println("Cant delete " + medidel.getLabel() + " from "
+									+ medidel.getLastUpdate() + "reference found!");
 							}
 						}
-
+						
 					}
 				}
 			}
-
+			
 			// Lösche alle Artikel vom Typ Vidal, die nicht mehr einer
 			// Verschreibung zugeordnet sind
 			// (Alter Datensatz)
@@ -257,14 +261,16 @@ public class Utilities {
 				List<Artikel> artikelList = artQuery.execute();
 				for (Artikel art : artikelList) {
 					if (!resultIDMap.contains(art)) {
-						pen.println("Deleting " + art.getId() + " as its " + art.get(Artikel.FLD_TYP));
+						pen.println(
+							"Deleting " + art.getId() + " as its " + art.get(Artikel.FLD_TYP));
 						art.delete();
 					} else {
-						pen.println("Cant delete " + art.getId() + " as its still referenced in a prescription.");
+						pen.println("Cant delete " + art.getId()
+							+ " as its still referenced in a prescription.");
 					}
 				}
 			}
-
+			
 			boolean deleteNonReferencedBlackBoxes = true;
 			if (deleteNonReferencedBlackBoxes) {
 				Query<Medikament> blackQuery = new Query<Medikament>(Medikament.class);
@@ -274,14 +280,16 @@ public class Utilities {
 				pen.println("Found blackmedis: " + blackMedis.size());
 				for (Medikament medi : blackMedis) {
 					if (!resultIDMap.contains(medi)) {
-						pen.println("Deleting black box " + medi.getId() + " as no more references..");
+						pen.println(
+							"Deleting black box " + medi.getId() + " as no more references..");
 						medi.delete();
 					} else {
-						pen.println("Cant delete blackbox medi " + medi.getId() + " as still referenced.");
+						pen.println(
+							"Cant delete blackbox medi " + medi.getId() + " as still referenced.");
 					}
 				}
 			}
-
+			
 			pen.println("Deleted: " + deleted + " Medikamente");
 			pen.close();
 		} catch (FileNotFoundException e) {

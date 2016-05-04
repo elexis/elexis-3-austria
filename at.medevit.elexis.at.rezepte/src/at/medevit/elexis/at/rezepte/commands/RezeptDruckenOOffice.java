@@ -30,10 +30,13 @@ import ch.elexis.data.Prescription;
 import ch.elexis.data.Rezept;
 
 public class RezeptDruckenOOffice extends AbstractHandler {
-
+	
 	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Patient pat=ElexisEventDispatcher.getSelectedPatient();
+	public Object execute(ExecutionEvent event) throws ExecutionException{
+		Patient pat = ElexisEventDispatcher.getSelectedPatient();
+		if (pat == null) {
+			return null;
+		}
 		Prescription[] pres = pat.getFixmedikation();
 		Arrays.sort(pres, new FixMediOrderingComparator());
 		Rezept rezept = new Rezept(pat);
@@ -43,12 +46,14 @@ public class RezeptDruckenOOffice extends AbstractHandler {
 			rezept.addPrescription(new Prescription(p));
 		}
 		try {
-			RezeptBlatt rpb = (RezeptBlatt) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(RezeptBlatt.ID);
+			RezeptBlatt rpb = (RezeptBlatt) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+				.getActivePage().showView(RezeptBlatt.ID);
 			rpb.createRezept(rezept);
 		} catch (PartInitException e) {
-			Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getLocalizedMessage(), e);
+			Status status =
+				new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getLocalizedMessage(), e);
 			StatusManager.getManager().handle(status, StatusManager.SHOW);
 		}
 		return null;
-	} 
+	}
 }

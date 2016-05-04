@@ -19,6 +19,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import ch.elexis.core.model.LabResultConstants;
+import ch.elexis.core.types.LabItemTyp;
 import ch.elexis.data.Kontakt;
 import ch.elexis.data.LabItem;
 import ch.elexis.data.LabMapping;
@@ -324,7 +326,7 @@ public class LabResultTest {
 		LabResult lr = new LabResult(patient, new TimeTool(
 				date.getTime()), labItem, data, dataInfo);
 		if (pathologic != null && pathologic.length() > 0) {
-			lr.setFlag(LabResult.PATHOLOGIC, true);
+			lr.setFlag(LabResultConstants.PATHOLOGIC, true);
 		}
 		return lr;
 	}
@@ -385,11 +387,11 @@ public class LabResultTest {
 		if(patientGender.equalsIgnoreCase("w")) {
 			item = new LabItem(getItemShortDescription(), desc,
 					labor, null, getRefString(), getDataUnit(),
-					LabItem.typ.NUMERIC, "auto created", Integer.toString(sequenz));
+					LabItemTyp.NUMERIC, "auto created", Integer.toString(sequenz));
 		} else if (patientGender.equalsIgnoreCase("m")) {
 			item = new LabItem(getItemShortDescription(), desc,
 					labor, getRefString(), null, getDataUnit(),
-					LabItem.typ.NUMERIC, "auto created", Integer.toString(sequenz));			
+					LabItemTyp.NUMERIC, "auto created", Integer.toString(sequenz));			
 		}
 		return item;
 	}

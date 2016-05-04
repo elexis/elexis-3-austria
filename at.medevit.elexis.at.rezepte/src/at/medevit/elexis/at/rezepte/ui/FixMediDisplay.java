@@ -39,25 +39,25 @@ import ch.elexis.core.data.events.ElexisEventDispatcher;
 import ch.elexis.core.ui.events.ElexisUiEventListenerImpl;
 import ch.elexis.data.Patient;
 
-public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPageContributor {	
+public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPageContributor {
 	public static final String ID = "at.medevit.elexis.at.rezepte.ui.FixMediDisplay";
 	public static final String BEMERKUNGEN_EINNAHMELISTE = "BemerkungenEinnahmeliste";
 	private Table tableFixMedi;
-
+	
 	private ElexisUiEventListenerImpl eeli_pat;
 	private TableViewer tableViewerFixMedi;
 	
-	public FixMediDisplay() {
+	public FixMediDisplay(){
 		eeli_pat = new ElexisUiEventListenerImpl(Patient.class) {
-			public void runInUi(ElexisEvent ev) {
+			public void runInUi(ElexisEvent ev){
 				reload();
 			}
 		};
 		ElexisEventDispatcher.getInstance().addListeners(eeli_pat);
 	}
-
+	
 	@Override
-	public void createPartControl(Composite parent) {		
+	public void createPartControl(Composite parent){
 		Composite composite = new Composite(parent, SWT.NONE);
 		TableColumnLayout tableColumnLayout = new TableColumnLayout();
 		composite.setLayout(tableColumnLayout);
@@ -72,33 +72,43 @@ public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPage
 		tableColName.setText("Name");
 		tableColumnLayout.setColumnData(tableColName, new ColumnWeightData(34, 100));
 		
-		TableViewerColumn tableViewerColumnSignatur = new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
+		TableViewerColumn tableViewerColumnSignatur =
+			new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
 		TableColumn tblclmnSignatur = tableViewerColumnSignatur.getColumn();
 		tblclmnSignatur.setText("Signatur");
-		tableViewerColumnSignatur.setEditingSupport(new FixMediSignaturEditingSupport(tableViewerFixMedi));
+		tableViewerColumnSignatur
+			.setEditingSupport(new FixMediSignaturEditingSupport(tableViewerFixMedi));
 		tableColumnLayout.setColumnData(tblclmnSignatur, new ColumnWeightData(16, 50));
 		
-		TableViewerColumn tableViewerColumnEinnahmevorschrift = new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
+		TableViewerColumn tableViewerColumnEinnahmevorschrift =
+			new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
 		TableColumn tableColEinnahmevorschr = tableViewerColumnEinnahmevorschrift.getColumn();
 		tableColEinnahmevorschr.setText("Einnahmevorschrift");
-		tableViewerColumnEinnahmevorschrift.setEditingSupport(new FixMediEinnahmevorschriftEditingSupport(tableViewerFixMedi));
+		tableViewerColumnEinnahmevorschrift
+			.setEditingSupport(new FixMediEinnahmevorschriftEditingSupport(tableViewerFixMedi));
 		tableColumnLayout.setColumnData(tableColEinnahmevorschr, new ColumnWeightData(25, 100));
 		
-		TableViewerColumn tableViewerColumnBemerkungen = new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
+		TableViewerColumn tableViewerColumnBemerkungen =
+			new TableViewerColumn(tableViewerFixMedi, SWT.NONE);
 		TableColumn tblclmnBemerkungen = tableViewerColumnBemerkungen.getColumn();
 		tblclmnBemerkungen.setToolTipText("Bemerkungen zur Anzeige auf Einnahmeliste.");
 		tblclmnBemerkungen.setText("Bemerkungen");
-		tableViewerColumnBemerkungen.setEditingSupport(new FixMediBemerkungenEditingSupport(tableViewerFixMedi));
+		tableViewerColumnBemerkungen
+			.setEditingSupport(new FixMediBemerkungenEditingSupport(tableViewerFixMedi));
 		tableColumnLayout.setColumnData(tblclmnBemerkungen, new ColumnWeightData(25, 100));
 		
 		tableViewerFixMedi.setLabelProvider(new FixMediDisplayLabelProvider());
 		tableViewerFixMedi.setContentProvider(new FixMediContentProvider());
 		tableViewerFixMedi.setComparator(new FixMediOrderingComparator());
-
+		
 		int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
-		Transfer[] transferTypes = new Transfer[]{TextTransfer.getInstance() };
-		tableViewerFixMedi.addDragSupport(operations, transferTypes, new FixMediDisplayDragListener(tableViewerFixMedi));
-		tableViewerFixMedi.addDropSupport(operations, transferTypes, new FixMediDisplayDropAdapter(tableViewerFixMedi));	
+		Transfer[] transferTypes = new Transfer[] {
+			TextTransfer.getInstance()
+		};
+		tableViewerFixMedi.addDragSupport(operations, transferTypes,
+			new FixMediDisplayDragListener(tableViewerFixMedi));
+		tableViewerFixMedi.addDropSupport(operations, transferTypes,
+			new FixMediDisplayDropAdapter(tableViewerFixMedi));
 		
 		MenuManager menuManager = new MenuManager();
 		Menu menu = menuManager.createContextMenu(tableFixMedi);
@@ -106,39 +116,43 @@ public class FixMediDisplay extends ViewPart implements ITabbedPropertySheetPage
 		getSite().registerContextMenu(menuManager, tableViewerFixMedi);
 		getSite().setSelectionProvider(tableViewerFixMedi);
 	}
-
+	
 	@Override
-	public void setFocus() {
-		Patient act=ElexisEventDispatcher.getSelectedPatient();
-		if(act!=null) tableViewerFixMedi.setInput(act.getFixmedikation());
+	public void setFocus(){
+		Patient act = ElexisEventDispatcher.getSelectedPatient();
+		if (act != null)
+			tableViewerFixMedi.setInput(act.getFixmedikation());
 	}
 	
-	public void reload() {
+	public void reload(){
 		Patient act = ElexisEventDispatcher.getSelectedPatient();
+		if (act == null) {
+			return;
+		}
 		tableViewerFixMedi.setInput(act.getFixmedikation());
 	}
-
+	
 	@Override
-	public void dispose() {
+	public void dispose(){
 		super.dispose();
 		tableFixMedi.dispose();
 		ElexisEventDispatcher.getInstance().removeListeners(eeli_pat);
 	}
-
-	public TableViewer getTableViewerFixMedi() {
+	
+	public TableViewer getTableViewerFixMedi(){
 		return tableViewerFixMedi;
 	}
-
+	
 	@Override
 	public String getContributorId(){
 		return getSite().getId();
 	}
-
+	
 	@Override
 	public Object getAdapter(Class adapter){
 		if (adapter == IPropertySheetPage.class)
-            return new TabbedPropertySheetPage(this);
-        return super.getAdapter(adapter);
+			return new TabbedPropertySheetPage(this);
+		return super.getAdapter(adapter);
 	}
 	
 }

@@ -334,6 +334,9 @@ public class ClientFindingImportDialog extends TitleAreaDialog {
 					ISelection selection = contentViewer.getSelection();
 					if (selection != null & selection instanceof IStructuredSelection) {
 						IStructuredSelection strucSelection = (IStructuredSelection) selection;
+						if(strucSelection==null) {
+							return;
+						}
 						Object sel = strucSelection.getFirstElement();
 						if(sel instanceof LabResultTest) {
 							LabResultTest test = (LabResultTest)sel;
@@ -373,6 +376,9 @@ public class ClientFindingImportDialog extends TitleAreaDialog {
 					ISelection selection = contentViewer.getSelection();
 					if (selection != null & selection instanceof IStructuredSelection) {
 						IStructuredSelection strucSelection = (IStructuredSelection) selection;
+						if(strucSelection==null) {
+							return;
+						}
 						Object sel = strucSelection.getFirstElement();
 						if(sel instanceof LabResultTest) {
 							LabResultTest test = (LabResultTest)sel;
@@ -423,6 +429,9 @@ public class ClientFindingImportDialog extends TitleAreaDialog {
 					ISelection selection = contentViewer.getSelection();
 					if (selection != null & selection instanceof IStructuredSelection) {
 						IStructuredSelection strucSelection = (IStructuredSelection) selection;
+						if(strucSelection==null) {
+							return;
+						}
 						Object sel = strucSelection.getFirstElement();
 						if(sel instanceof LabResultTest) {
 							LabResultTest test = (LabResultTest)sel;
