@@ -65,6 +65,9 @@ public class Medikament extends Artikel {
 			"inhalt=JOINT:substance:product:" + JOINTTABLE, "keywords=EXT:" + EXTTABLE + ":notes",
 			"description=EXT:" + EXTTABLE + ":description", "KompendiumText=EXT:" + EXTTABLE
 				+ ":KompendiumText", "ATC=JOINT:IDATC:IDMEDI:" + ATCTABLE);
+		
+		transferAllStockInformationToNew32StockModel(new Query<Medikament>(Medikament.class),
+			Medikament.class);
 	}
 	
 	/**
