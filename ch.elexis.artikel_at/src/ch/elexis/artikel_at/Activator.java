@@ -9,6 +9,8 @@ import ch.rgw.io.Settings;
 
 public class Activator extends AbstractUIPlugin {
 	
+	public static final String PLUGIN_ID = "ch.elexis.artikel_at";
+
 	public Activator(){}
 	
 	/*
