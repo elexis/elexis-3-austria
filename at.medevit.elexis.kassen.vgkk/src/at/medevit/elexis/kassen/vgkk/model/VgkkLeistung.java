@@ -16,59 +16,49 @@ import at.medevit.elexis.kassen.core.model.IPointsArea;
 import at.medevit.elexis.kassen.core.model.KassenLeistung;
 import at.medevit.elexis.kassen.core.model.LeistungBean;
 import at.medevit.elexis.kassen.core.model.PointsAreaFactory;
-import ch.elexis.data.Fall;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.data.PersistentObject;
 import ch.rgw.tools.TimeTool;
 import ch.rgw.tools.VersionInfo;
 
 public class VgkkLeistung extends KassenLeistung {
-
+	
 	protected static final String TABLENAME = "at_medevit_elexis_kassen_VGKK_leistungen";
 	protected static final String VERSION = "0.1.0";
 	
 	protected static final String createDB =
-		"CREATE TABLE " + TABLENAME + "("
-			+ "ID					VARCHAR(25) PRIMARY KEY,"	// Elexis internal
-			+ "lastupdate 			BIGINT,"					// Elexis internal
-			+ "deleted				CHAR(1) default '0',"		// Elexis internal
-			+ "gruppeid  			VARCHAR(8),"
-			+ "positiongruppenid	VARCHAR(8),"
-			+ "positionid			VARCHAR(8),"
-			+ "positionneuid		VARCHAR(8),"
-			+ "validfromdate 		CHAR(8),"
-			+ "validtodate 			CHAR(8),"
-			+ "positiontitle		TEXT,"
-			+ "positionhinweis      TEXT,"
-			+ "positionausfach      CHAR(1) default '0',"
-			+ "positionfachgebiete  VARCHAR(64),"
-			+ "positionpunktwert	VARCHAR(16),"
-			+ "positiongeldwert		VARCHAR(16),"
-			+ "positionzusatz		TEXT,"
-			+ "positionlogik		TEXT"
-			+ ");" 		  
-			+ "CREATE INDEX VGKKIDX1 ON " + TABLENAME + " (positionid);"
-			+ "INSERT INTO " + TABLENAME
-			+ " (ID,positionpunktwert) VALUES ('VERSION','" + VERSION + "');";
-
+		"CREATE TABLE " + TABLENAME + "(" + "ID					VARCHAR(25) PRIMARY KEY," // Elexis internal
+			+ "lastupdate 			BIGINT," // Elexis internal
+			+ "deleted				CHAR(1) default '0'," // Elexis internal
+			+ "gruppeid  			VARCHAR(8)," + "positiongruppenid	VARCHAR(8),"
+			+ "positionid			VARCHAR(8)," + "positionneuid		VARCHAR(8),"
+			+ "validfromdate 		CHAR(8)," + "validtodate 			CHAR(8),"
+			+ "positiontitle		TEXT," + "positionhinweis      TEXT,"
+			+ "positionausfach      CHAR(1) default '0'," + "positionfachgebiete  VARCHAR(64),"
+			+ "positionpunktwert	VARCHAR(16)," + "positiongeldwert		VARCHAR(16),"
+			+ "positionzusatz		TEXT," + "positionlogik		TEXT" + ");"
+			+ "CREATE INDEX VGKKIDX1 ON " + TABLENAME + " (positionid);" + "INSERT INTO "
+			+ TABLENAME + " (ID,positionpunktwert) VALUES ('VERSION','" + VERSION + "');";
+	
 	static {
-		addMapping(TABLENAME, FLD_GRUPPEID, FLD_POSITIONGRUPPENID, FLD_POSITIONID, FLD_POSITIONNEUID,
-				FLD_VALIDFROMDATE, FLD_VALIDTODATE,
-				FLD_POSITIONTITLE, FLD_POSITIONHINWEIS, FLD_POSITIONAUSFACH, FLD_POSITIONFACHGEBIETE, FLD_POSITIONPUNKTWERT,
-				FLD_POSITIONGELDWERT, FLD_POSITIONZUSATZ, FLD_POSITIONLOGIK);
-
+		addMapping(TABLENAME, FLD_GRUPPEID, FLD_POSITIONGRUPPENID, FLD_POSITIONID,
+			FLD_POSITIONNEUID, FLD_VALIDFROMDATE, FLD_VALIDTODATE, FLD_POSITIONTITLE,
+			FLD_POSITIONHINWEIS, FLD_POSITIONAUSFACH, FLD_POSITIONFACHGEBIETE,
+			FLD_POSITIONPUNKTWERT, FLD_POSITIONGELDWERT, FLD_POSITIONZUSATZ, FLD_POSITIONLOGIK);
+		
 		VgkkLeistung version = load("VERSION");
 		if (version.state() < PersistentObject.DELETED) {
 			createOrModifyTable(createDB);
 		} else {
 			VersionInfo vi = new VersionInfo(version.get(FLD_POSITIONPUNKTWERT));
-//			if (vi.isOlder(VERSION)) {
-//				createOrModifyTable(update010to011);
-//				version.set(FLD_POSITIONPUNKTWERT, VERSION);
-//			}
+			//			if (vi.isOlder(VERSION)) {
+			//				createOrModifyTable(update010to011);
+			//				version.set(FLD_POSITIONPUNKTWERT, VERSION);
+			//			}
 		}
 	}
-
-	public VgkkLeistung() {
+	
+	public VgkkLeistung(){
 		
 	}
 	
@@ -76,21 +66,21 @@ public class VgkkLeistung extends KassenLeistung {
 		super(id);
 	}
 	
-	public VgkkLeistung(LeistungBean leistung) {
-		 create(null);
-		 setLeistungFromBean(leistung);
+	public VgkkLeistung(LeistungBean leistung){
+		create(null);
+		setLeistungFromBean(leistung);
 	}
-
+	
 	public static VgkkLeistung load(final String id){
 		return new VgkkLeistung(id);
 	}
 	
 	@Override
-	public int getTP(TimeTool date, Fall fall) {
+	public int getTP(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
-		if(money == 0 && points > 0) {
+		if (money == 0 && points > 0) {
 			// return points and getFactor is responsible for locating
 			// the right multiplier for the system state
 			return (int) Math.round((points) * 100.0);
@@ -101,33 +91,35 @@ public class VgkkLeistung extends KassenLeistung {
 			// it is possible that a Leistung has money and point value
 			// so do the calculation for the points here and handle
 			// like money value only
-			List<IPointsArea> areas = PointsAreaFactory.getInstance().getEnabledPointsAreasForClass(getClass());
+			List<IPointsArea> areas =
+				PointsAreaFactory.getInstance().getEnabledPointsAreasForClass(getClass());
 			double mv = Double.NaN;
-			for(IPointsArea area : areas) {
-				if(area.includesPosition(this, date.getTime()))
+			for (IPointsArea area : areas) {
+				if (area.includesPosition(this, date.getTime()))
 					mv = area.getMoneyValue();
 			}
 			
 			return (int) Math.round((points * mv) * 100.0) + (int) Math.round((money) * 100.0);
 		}
 	}
-
+	
 	@Override
-	public double getFactor(TimeTool date, Fall fall) {
+	public double getFactor(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
 		// if caller does not care about the time set it to current time
-		if(date == null)
+		if (date == null)
 			date = new TimeTool();
 		
-		if(money == 0 && points > 0) {
-			List<IPointsArea> areas = PointsAreaFactory.getInstance().getEnabledPointsAreasForClass(getClass());
+		if (money == 0 && points > 0) {
+			List<IPointsArea> areas =
+				PointsAreaFactory.getInstance().getEnabledPointsAreasForClass(getClass());
 			double currentValue = Double.NaN;
 			int currentWeight = -1;
-			for(IPointsArea area : areas) {
-				if(area.includesPosition(this, date.getTime())) {
-					if(currentWeight < area.getWeight()) {
+			for (IPointsArea area : areas) {
+				if (area.includesPosition(this, date.getTime())) {
+					if (currentWeight < area.getWeight()) {
 						currentValue = area.getMoneyValue();
 						currentWeight = area.getWeight();
 					}
@@ -142,25 +134,25 @@ public class VgkkLeistung extends KassenLeistung {
 			return 1.0;
 		}
 	}
-
+	
 	@Override
-	public String getXidDomain() {
+	public String getXidDomain(){
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	protected String getTableName() {
+	protected String getTableName(){
 		return TABLENAME;
 	}
-
+	
 	@Override
-	public String getCodeSystemName() {
+	public String getCodeSystemName(){
 		return "VGKK";
 	}
-
+	
 	@Override
-	public List<Object> getActions(Object context) {
+	public List<Object> getActions(Object context){
 		// TODO Auto-generated method stub
 		return null;
 	}

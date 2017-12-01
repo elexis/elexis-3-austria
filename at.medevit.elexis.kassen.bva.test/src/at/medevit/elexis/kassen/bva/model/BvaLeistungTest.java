@@ -22,6 +22,7 @@ import at.medevit.elexis.kassen.core.model.CorePreferenceConstants;
 import at.medevit.elexis.kassen.core.model.KassenCodes;
 import at.medevit.elexis.kassen.core.model.KassenLeistung;
 import ch.elexis.core.data.activator.CoreHub;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
 
 public class BvaLeistungTest {
@@ -34,11 +35,11 @@ public class BvaLeistungTest {
 	public void testGetTP(){
 		List<? extends KassenLeistung> leistungen =
 			KassenLeistung.getCurrentLeistungenByIds(null, null, "A1", null, BvaLeistung.class);
-		assertEquals(20, leistungen.get(0).getTP(null, null) / 100, 0.0001);
+		assertEquals(20, leistungen.get(0).getTP(null, (IFall) null) / 100, 0.0001);
 		
 		leistungen =
 			KassenLeistung.getCurrentLeistungenByIds(null, null, "TA", null, BvaLeistung.class);
-		assertEquals(11.11, ((double) leistungen.get(0).getTP(null, null)) / 100, 0.0001);
+		assertEquals(11.11, ((double) leistungen.get(0).getTP(null, (IFall)  null)) / 100, 0.0001);
 	}
 	
 	@Test

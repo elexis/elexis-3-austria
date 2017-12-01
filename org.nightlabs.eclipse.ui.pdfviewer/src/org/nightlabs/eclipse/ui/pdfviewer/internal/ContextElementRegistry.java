@@ -110,7 +110,9 @@ public class ContextElementRegistry
 				}
 			}
 		} else {
-			id2contextElement.put(contextElementId, contextElement);
+			if(id2contextElement!=null) {
+				id2contextElement.put(contextElementId, contextElement);
+			}
 		}
 
 		if (id2contextElement != null && id2contextElement.isEmpty()) {

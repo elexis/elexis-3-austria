@@ -16,7 +16,7 @@ import at.medevit.elexis.kassen.core.model.IPointsArea;
 import at.medevit.elexis.kassen.core.model.KassenLeistung;
 import at.medevit.elexis.kassen.core.model.LeistungBean;
 import at.medevit.elexis.kassen.core.model.PointsAreaFactory;
-import ch.elexis.data.Fall;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.data.PersistentObject;
 import ch.rgw.tools.TimeTool;
 import ch.rgw.tools.VersionInfo;
@@ -91,7 +91,7 @@ public class BvaLeistung extends KassenLeistung {
 	}
 	
 	@Override
-	public int getTP(TimeTool date, Fall fall){
+	public int getTP(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
@@ -124,7 +124,7 @@ public class BvaLeistung extends KassenLeistung {
 	}
 	
 	@Override
-	public double getFactor(TimeTool date, Fall fall){
+	public double getFactor(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
@@ -170,9 +170,9 @@ public class BvaLeistung extends KassenLeistung {
 	public String getCodeSystemName(){
 		return "BVA";
 	}
-
+	
 	@Override
-	public List<Object> getActions(Object context) {
+	public List<Object> getActions(Object context){
 		// TODO Auto-generated method stub
 		return null;
 	}

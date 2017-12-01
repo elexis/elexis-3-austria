@@ -16,7 +16,7 @@ import java.util.List;
 import at.medevit.elexis.kassen.edivka.rechnung.model.PKVRechnung.KlinischeInformationDiagnosen;
 import at.medevit.elexis.kassen.edivka.rechnung.model.PKVRechnung.KlinischeInformationDiagnosen.HauptDiagnose;
 import at.medevit.elexis.kassen.edivka.rechnung.model.PKVRechnung.KlinischeInformationDiagnosen.NebenDiagnose;
-import ch.elexis.core.data.interfaces.IDiagnose;
+import ch.elexis.core.model.IDiagnose;
 import ch.elexis.data.Konsultation;
 import ch.elexis.data.Rechnung;
 

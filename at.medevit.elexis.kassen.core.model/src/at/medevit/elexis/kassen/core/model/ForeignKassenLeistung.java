@@ -13,9 +13,9 @@ package at.medevit.elexis.kassen.core.model;
 import java.util.List;
 
 import ch.elexis.core.data.constants.ExtensionPointConstantsData;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.core.data.interfaces.IOptifier;
 import ch.elexis.core.data.util.Extensions;
-import ch.elexis.data.Fall;
 import ch.elexis.data.PersistentObjectFactory;
 import ch.rgw.tools.TimeTool;
 
@@ -43,11 +43,10 @@ public abstract class ForeignKassenLeistung extends KassenLeistung {
 	
 	protected void lazyInit(){
 		if (foreignLeistung == null) {
-			if (foreignClazz == null
-				|| (foreignClazz != null && !foreignClazz.getName().equals(
-					get(FLD_FOREIGNCLASSNAME)))) {
-				List<PersistentObjectFactory> exts =
-					Extensions.getClasses(ExtensionPointConstantsData.PERSISTENT_REFERENCE, "Class");
+			if (foreignClazz == null || (foreignClazz != null
+				&& !foreignClazz.getName().equals(get(FLD_FOREIGNCLASSNAME)))) {
+				List<PersistentObjectFactory> exts = Extensions
+					.getClasses(ExtensionPointConstantsData.PERSISTENT_REFERENCE, "Class");
 				for (PersistentObjectFactory po : exts) {
 					Class ret = po.getClassforName(get(FLD_FOREIGNCLASSNAME));
 					if (ret != null) {
@@ -58,13 +57,12 @@ public abstract class ForeignKassenLeistung extends KassenLeistung {
 				}
 			}
 			
-			foreignLeistung =
-				(KassenLeistung) foreignFactory.createFromString(foreignClazz.getName() + "::"
-					+ get(FLD_FOREIGNID));
+			foreignLeistung = (KassenLeistung) foreignFactory
+				.createFromString(foreignClazz.getName() + "::" + get(FLD_FOREIGNID));
 			
 			if (foreignClazz == null)
-				throw new IllegalStateException("Could not find foreign code for class "
-					+ get(FLD_FOREIGNCLASSNAME));
+				throw new IllegalStateException(
+					"Could not find foreign code for class " + get(FLD_FOREIGNCLASSNAME));
 			if (foreignLeistung == null)
 				throw new IllegalStateException("Could not find foreign code for class "
 					+ get(FLD_FOREIGNCLASSNAME) + " with id " + get(FLD_FOREIGNID));
@@ -98,13 +96,13 @@ public abstract class ForeignKassenLeistung extends KassenLeistung {
 	}
 	
 	@Override
-	public int getTP(TimeTool date, Fall fall){
+	public int getTP(TimeTool date, IFall fall){
 		lazyInit();
 		return foreignLeistung.getTP(date, fall);
 	}
 	
 	@Override
-	public double getFactor(TimeTool date, Fall fall){
+	public double getFactor(TimeTool date, IFall fall){
 		lazyInit();
 		return foreignLeistung.getFactor(date, fall);
 	}

@@ -12,7 +12,7 @@ package at.medevit.elexis.diag.eigene.model;
 
 import java.util.List;
 
-import ch.elexis.core.data.interfaces.IDiagnose;
+import ch.elexis.core.model.IDiagnose;
 import ch.elexis.data.PersistentObject;
 import ch.elexis.data.Query;
 import ch.rgw.tools.JdbcLink;

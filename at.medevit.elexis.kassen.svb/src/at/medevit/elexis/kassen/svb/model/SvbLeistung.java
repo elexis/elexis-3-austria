@@ -20,10 +20,10 @@ import at.medevit.elexis.kassen.core.model.KassenLeistung;
 import at.medevit.elexis.kassen.core.model.PointsAreaFactory;
 import at.medevit.elexis.kassen.svb.ui.SvbPreferenceInitializer;
 import ch.elexis.core.data.activator.CoreHub;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.core.data.interfaces.IVerrechenbar;
 import ch.elexis.core.data.util.Extensions;
 import ch.elexis.core.ui.preferences.SettingsPreferenceStore;
-import ch.elexis.data.Fall;
 import ch.elexis.data.PersistentObject;
 import ch.elexis.data.PersistentObjectFactory;
 import ch.rgw.tools.TimeTool;
@@ -63,10 +63,10 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 		} else {
 			SvbLeistung version = load("VERSION");
 			VersionInfo vi = new VersionInfo(version.get(FLD_FOREIGNCLASSNAME));
-// if (vi.isOlder(VERSION)) {
-// createOrModifyTable(update010to011);
-// version.set(FLD_POSITIONPUNKTWERT, VERSION);
-// }
+			// if (vi.isOlder(VERSION)) {
+			// createOrModifyTable(update010to011);
+			// version.set(FLD_POSITIONPUNKTWERT, VERSION);
+			// }
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 	}
 	
 	@Override
-	public int getTP(TimeTool date, Fall fall){
+	public int getTP(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
@@ -144,7 +144,7 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 	}
 	
 	@Override
-	public double getFactor(TimeTool date, Fall fall){
+	public double getFactor(TimeTool date, IFall fall){
 		double money = getMoneyValue();
 		double points = getPointValue();
 		
@@ -155,9 +155,8 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 		if (money == 0 && points > 0) {
 			SettingsPreferenceStore globalStore = new SettingsPreferenceStore(CoreHub.globalCfg);
 			
-			String useForeignPointValues =
-				globalStore.getString(SvbPreferenceInitializer.SVBPREF
-					+ CorePreferenceConstants.KASSE_USEFOREIGNPOINTVALUES);
+			String useForeignPointValues = globalStore.getString(SvbPreferenceInitializer.SVBPREF
+				+ CorePreferenceConstants.KASSE_USEFOREIGNPOINTVALUES);
 			if (useForeignPointValues.equalsIgnoreCase("true")) {
 				return foreignLeistung.getFactor(date, fall);
 			} else {
@@ -190,13 +189,11 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 		// get class name
 		SettingsPreferenceStore globalStore = new SettingsPreferenceStore(CoreHub.globalCfg);
 		
-		String foreignSystem =
-			globalStore.getString(SvbPreferenceInitializer.SVBPREF
-				+ CorePreferenceConstants.KASSE_FOREIGNCATALOG);
+		String foreignSystem = globalStore.getString(
+			SvbPreferenceInitializer.SVBPREF + CorePreferenceConstants.KASSE_FOREIGNCATALOG);
 		String foreignPreferencePrefix = CorePreferenceConstants.CFG_KEY + "/" + foreignSystem;
-		String foreignClassName =
-			globalStore
-				.getString(foreignPreferencePrefix + CorePreferenceConstants.KASSE_CLASSNAME);
+		String foreignClassName = globalStore
+			.getString(foreignPreferencePrefix + CorePreferenceConstants.KASSE_CLASSNAME);
 		// get class object for name
 		if (foreignClassName != null && foreignClassName.length() > 0) {
 			List<PersistentObjectFactory> exts =
@@ -209,9 +206,9 @@ public class SvbLeistung extends ForeignKassenLeistung implements IVerrechenbar 
 		}
 		return ret;
 	}
-
+	
 	@Override
-	public List<Object> getActions(Object context) {
+	public List<Object> getActions(Object context){
 		// TODO Auto-generated method stub
 		return null;
 	}

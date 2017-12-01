@@ -15,7 +15,7 @@ import java.util.List;
 import at.medevit.elexis.kassen.core.model.CorePreferenceConstants;
 import at.medevit.elexis.kassen.core.model.KassenLeistung;
 import at.medevit.elexis.kassen.core.model.LeistungBean;
-import ch.elexis.data.Fall;
+import ch.elexis.core.data.interfaces.IFall;
 import ch.elexis.data.PersistentObject;
 import ch.rgw.tools.TimeTool;
 import ch.rgw.tools.VersionInfo;
@@ -90,13 +90,13 @@ public class KassenLeistungImpl extends KassenLeistung {
 	}
 	
 	@Override
-	public int getTP(TimeTool date, Fall fall){
+	public int getTP(TimeTool date, IFall fall){
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
-	public double getFactor(TimeTool date, Fall fall){
+	public double getFactor(TimeTool date, IFall fall){
 		// TODO Auto-generated method stub
 		return 0;
 	}
